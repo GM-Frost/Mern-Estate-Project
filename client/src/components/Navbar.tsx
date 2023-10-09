@@ -1,16 +1,19 @@
 import { LogoLight, LogoDark } from "../assets";
-import { Link } from "react-router-dom";
+import { Link, useLocation, Outlet } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState, useEffect } from "react";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   const [nav, setNav] = useState(false);
 
-  const [color, setColor] = useState("transparent");
-  const [textColor, setTextColor] = useState("white");
-  const [logo, setLogo] = useState(`${LogoLight}`);
+  const [color, setColor] = useState(isHomePage ? "transparent" : "white");
+  const [textColor, setTextColor] = useState(isHomePage ? "#ffffff" : "black");
+  const [logo, setLogo] = useState(isHomePage ? `${LogoLight}` : `${LogoDark}`);
   const handleNav = () => {
     setNav(!nav);
   };
@@ -31,9 +34,9 @@ const Navbar = (props: Props) => {
         setTextColor("#000000");
         setLogo(`${LogoDark}`);
       } else {
-        setColor("transparent");
-        setTextColor("#ffffff");
-        setLogo(`${LogoLight}`);
+        setColor(isHomePage ? "transparent" : "white");
+        setTextColor(isHomePage ? "#ffffff" : "black");
+        setLogo(isHomePage ? `${LogoLight}` : `${LogoDark}`);
       }
     };
     window.addEventListener("scroll", changeColor);
@@ -74,7 +77,7 @@ const Navbar = (props: Props) => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div
-                  className={`w-10 rounded-full border-4 ${
+                  className={`w-10 rounded-full border-2 ${
                     window.scrollY >= 90 ? "border-cyan-500 " : " border-white"
                   }`}
                 >

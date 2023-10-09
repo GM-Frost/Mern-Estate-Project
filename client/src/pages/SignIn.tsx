@@ -1,9 +1,13 @@
-import React from "react";
+import Layout from "../components/Layout";
 
 type Props = {};
 
 const SignIn = (props: Props) => {
-  return <div>SignIn</div>;
+  return (
+    <>
+      <Layout />
+    </>
+  );
 };
 
 export default SignIn;
