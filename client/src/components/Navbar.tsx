@@ -56,14 +56,12 @@ const Navbar = (props: Props) => {
             <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/residency">Residency</Link>
             </li>
-            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-              <Link to="/profile">Profile</Link>
-            </li>
+
             <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/Contact">Contact Us</Link>
             </li>
           </ul>
-          <div className="flex-none">
+          <div className="flex-none mr-5">
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div
@@ -76,7 +74,7 @@ const Navbar = (props: Props) => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100  rounded-box w-52 text-gray-700 "
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100  rounded-box w-52 text-gray-700"
               >
                 <li className="hover:text-cyan-600/40  rounded-lg">
                   <a className="justify-between">
@@ -125,9 +123,7 @@ const Navbar = (props: Props) => {
               <li className="p-4 text-4xl hover:text-cyan-500 cursor-pointer transition-all ease-in duration-300">
                 <Link to="/residency">Residency</Link>
               </li>
-              <li className="p-4 text-4xl hover:text-cyan-500 cursor-pointer transition-all ease-in duration-300">
-                <Link to="/profile">Profile</Link>
-              </li>
+
               <li className="p-4 text-4xl hover:text-cyan-500 cursor-pointer transition-all ease-in duration-300">
                 <Link to="/Contact">Contact Us</Link>
               </li>
