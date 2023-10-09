@@ -7,7 +7,10 @@ const Header = (props: Props) => {
   return (
     <>
       <Navbar />
-      <Hero heading="Find your dream home" message="Get Started" />
+      <Hero
+        heading="Buy, Sell, and Invest in Real Estate with Trusted agents and listings"
+        message="lorem ipsum dolor sit amet, consectetur adip"
+      />
     </>
   );
 };

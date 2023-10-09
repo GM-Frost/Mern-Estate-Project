@@ -20,5 +20,8 @@ export default {
       // => @media (min-width: 1536px) { ... }
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark", "cupcake", "emerald"],
+  },
 };
