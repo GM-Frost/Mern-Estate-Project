@@ -16,10 +16,11 @@ import {
   signInSuccess,
   IUserState,
 } from "../redux/userSlice/userSlice";
+import OAuth from "../components/OAuth";
 
-type Props = {};
+type IProps = {};
 
-const SignIn = (props: Props) => {
+const SignIn = (props: IProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -197,7 +198,11 @@ const SignIn = (props: Props) => {
               <div className="absolute flex flex-row text-center justify-center items-center">
                 {error && <p className="text-red-500 mt-5">{error}</p>}
               </div>
-              <div className="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">
+
+              <div className="text-center right-0 left-0 flex  justify-center space-x-4 mt-10">
+                <OAuth googlePage="Sign In" />
+              </div>
+              <div className="p-4 text-center right-0 left-0 flex  justify-center space-x-4 mt-16 lg:hidden ">
                 <span>
                   <a
                     href="#"
