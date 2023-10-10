@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 //IMPORTING ROUTERS
@@ -19,6 +20,9 @@ const app = express();
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
 app.use(express.json());
+
+//COOKIE PARSER
+app.use(cookieParser());
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Listening on ${process.env.SERVER_PORT}`);

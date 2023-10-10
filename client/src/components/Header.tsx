@@ -1,4 +1,3 @@
-import Hero from "./Hero";
 import Navbar from "./Navbar";
 
 type Props = {};
