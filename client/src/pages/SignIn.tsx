@@ -1,15 +1,79 @@
+import React, { useState, useEffect } from "react";
 import { LogoLight } from "../assets";
 import Layout from "../components/Layout";
 import { FiTwitter } from "react-icons/fi";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { BiLogInCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//REDUX IMPORT
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+  IUserState,
+} from "../redux/userSlice/userSlice";
+
 type Props = {};
 
 const SignIn = (props: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    username: "",
+  });
+
+  const { loading, error } = useSelector(
+    (state: { user: IUserState }) => state.user
+  );
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      dispatch(signInStart());
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
+        return;
+      }
+
+      dispatch(signInSuccess(data));
+      toast.success("Signed In Successfully!");
+      toast.info("Navigating...Please wait!");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error: any) {
+      toast.error("Internal Server Error");
+      dispatch(signInFailure(error.message));
+    }
+  };
+
   return (
     <>
       <Layout />
+      <ToastContainer />
       <section className="min-h-screen flex items-stretch text-white ">
         <div
           className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
@@ -83,13 +147,17 @@ const SignIn = (props: Props) => {
               </span>
             </div>
             <p className="text-gray-100">or use email your account</p>
-            <form action="" className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+            <form
+              onSubmit={handleSubmit}
+              className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+            >
               <div className="pb-2 pt-4">
                 <input
                   type="email"
                   name="email"
                   id="email"
                   placeholder="Email"
+                  onChange={handleChange}
                   className="block w-full p-4 text-lg rounded-sm bg-black"
                 />
               </div>
@@ -99,6 +167,7 @@ const SignIn = (props: Props) => {
                   type="password"
                   name="password"
                   id="password"
+                  onChange={handleChange}
                   placeholder="Password"
                 />
               </div>
@@ -106,15 +175,18 @@ const SignIn = (props: Props) => {
                 <a href="#">Forgot your password?</a>
               </div>
               <div className="px-4 pb-2 pt-4">
-                <button className="uppercase justify-center items-center text-center w-full p-4 text-lg rounded-full bg-cyan-500 hover:bg-cyan-600 focus:outline-none flex gap-1 transition-all ease-in-out duration-300 hover:gap-3">
-                  sign in{" "}
+                <button
+                  type="submit"
+                  className="uppercase justify-center items-center text-center w-full p-4 text-lg rounded-full bg-cyan-500 hover:bg-cyan-600 focus:outline-none flex gap-1 transition-all ease-in-out duration-300 hover:gap-3"
+                >
+                  {loading ? "Verifying..." : "sign in"}
                   <span>
                     <BiLogInCircle />
                   </span>
                 </button>
               </div>
               <span>
-                Don't have an account?{" "}
+                Dont have an account?{" "}
                 <Link
                   to={"/sign-up"}
                   className="hover:text-cyan-500 transition-colors ease-in-out duration-300"
@@ -122,6 +194,9 @@ const SignIn = (props: Props) => {
                   Register Here
                 </Link>
               </span>
+              <div className="absolute flex flex-row text-center justify-center items-center">
+                {error && <p className="text-red-500 mt-5">{error}</p>}
+              </div>
               <div className="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">
                 <span>
                   <a
