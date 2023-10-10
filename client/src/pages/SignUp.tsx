@@ -8,11 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { LogoLight } from "../assets";
 import OAuth from "../components/OAuth";
 
-type IProps = {
-  username: string;
-  email: string;
-  password: string;
-};
+type IProps = {};
 
 const SignUp = (props: IProps) => {
   const navigate = useNavigate();

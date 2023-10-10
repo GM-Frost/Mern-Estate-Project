@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IUserState {
-  currentUser: string | null;
+  currentUser: any | null;
   error: string | null;
   loading: boolean;
 }

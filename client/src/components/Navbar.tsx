@@ -2,11 +2,18 @@ import { LogoLight, LogoDark } from "../assets";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { IUserState } from "../redux/userSlice/userSlice";
+import { FaUserTie } from "react-icons/fa";
+import { BsHouseAdd } from "react-icons/bs";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const location = useLocation();
+  const { currentUser } = useSelector(
+    (state: { user: IUserState }) => state.user
+  );
   const isHomePage = location.pathname === "/";
 
   const [nav, setNav] = useState(false);
@@ -73,43 +80,88 @@ const Navbar = (props: Props) => {
               <Link to="/Contact">Contact Us</Link>
             </li>
           </ul>
-          <div className="flex-none mr-5">
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div
-                  className={`w-10 rounded-full border-2 ${
-                    window.scrollY >= 90 ? "border-cyan-500 " : " border-white"
-                  }`}
+          <div className="flex-none sm:mr-5">
+            {currentUser ? (
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div
+                    className={`w-10 rounded-full border-2 ${
+                      window.scrollY >= 90
+                        ? "border-cyan-500 "
+                        : " border-white"
+                    }`}
+                  >
+                    <img src={currentUser?.avatar} alt="" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100  rounded-box w-52 text-gray-700"
                 >
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100  rounded-box w-52 text-gray-700"
-              >
-                <li className="hover:text-cyan-600/40  rounded-lg">
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge bg-cyan-600 text-white border-cyan-600">
-                      Nayan
-                    </span>
-                  </a>
-                </li>
-                <li
-                  onClick={openModal}
-                  className="hover:text-cyan-600/40 rounded-lg "
+                  <li className="hover:text-cyan-600/40  rounded-lg">
+                    <Link to={"/profile"} className="justify-between">
+                      Profile
+                      <span className="badge bg-cyan-600 text-white border-cyan-600">
+                        {currentUser.username.split(" ")[0]}
+                      </span>
+                    </Link>
+                  </li>
+                  <li
+                    onClick={openModal}
+                    className="hover:text-cyan-600/40 rounded-lg "
+                  >
+                    <a>Sign-In</a>
+                  </li>
+                  <li className="hover:text-cyan-600/40 rounded-lg">
+                    <a>Settings</a>
+                  </li>
+                  <li className="hover:text-cyan-600/40  rounded-lg">
+                    <a>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div
+                    className={`w-10 h-10 rounded-full border-2 flex items-center justify-center ${
+                      window.scrollY >= 90
+                        ? "border-cyan-500 text-cyan-500"
+                        : isHomePage
+                        ? " border-white"
+                        : "border-cyan-500 text-cyan-500"
+                    }`}
+                  >
+                    <FaUserTie className="h-7 w-7 m-1" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100  rounded-box w-52 text-gray-700"
                 >
-                  <a>Sign-In</a>
-                </li>
-                <li className="hover:text-cyan-600/40 rounded-lg">
-                  <a>Settings</a>
-                </li>
-                <li className="hover:text-cyan-600/40  rounded-lg">
-                  <a>Logout</a>
-                </li>
-              </ul>
-            </div>
+                  <li className="hover:text-cyan-600/40  rounded-lg">
+                    <Link to={"/profile"} className="justify-between">
+                      Profile
+                      <span className="badge bg-cyan-600 text-white border-cyan-600">
+                        N/A
+                      </span>
+                    </Link>
+                  </li>
+                  <li
+                    onClick={openModal}
+                    className="hover:text-cyan-600/40 rounded-lg "
+                  >
+                    <a>Sign-In</a>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <button className="btn btn-sm flex items-center sm:mr-5">
+              <BsHouseAdd className="w-5 h-5" />
+              <span className="hidden md:block"> Create Listing</span>
+            </button>
           </div>
           <dialog
             id="my_modal_5"
