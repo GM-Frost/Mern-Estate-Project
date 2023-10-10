@@ -23,6 +23,10 @@ type IProps = {};
 const SignIn = (props: IProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector(
+    (state: { user: IUserState }) => state.user
+  );
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",

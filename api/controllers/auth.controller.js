@@ -69,6 +69,7 @@ export const googleAuth = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         avatar: req.body.photo,
+        displayName: req.body.displayName,
       });
       await newUser.save();
 
