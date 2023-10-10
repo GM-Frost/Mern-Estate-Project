@@ -211,9 +211,12 @@ const Navbar = (props: Props) => {
                     </div>
                     <div className="mt-4 flex items-center justify-between">
                       <span className="border-b w-1/5 md:w-1/4"></span>
-                      <a href="#" className="text-xs text-gray-500 uppercase">
+                      <Link
+                        to={"/sign-up"}
+                        className="text-xs text-gray-500 uppercase"
+                      >
                         or sign up
-                      </a>
+                      </Link>
                       <span className="border-b w-1/5 md:w-1/4"></span>
                     </div>
                   </div>

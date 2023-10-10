@@ -92,12 +92,12 @@ const SignUp = (props: IProps) => {
 
       <ToastContainer />
       <div
-        className="relative min-h-screen left-0 right-0 bottom-0 top-14 text-gray-900 flex justify-center bg-blend-overlay"
+        className="relative min-h-screen left-0 right-0 bottom-0 top-14 text-gray-900 flex justify-center bg-no-repeat bg-cover items-center"
         style={{
-          backgroundImage: `url(https://images.pexels.com/photos/1475938/pexels-photo-1475938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          backgroundImage: `url(https://images.unsplash.com/photo-1555636222-cae831e670b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2077&q=80)`,
         }}
       >
+        <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
         <div className="max-w-screen-xl max-h-[1000px]  m-0 sm:m-10 glass shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div className="flex flex-row text-center justify-center items-center">
@@ -149,7 +149,7 @@ const SignUp = (props: IProps) => {
                       className="mt-5 tracking-wide font-semibold bg-cyan-500 text-gray-100 w-full py-4 rounded-lg hover:bg-cyan-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                     >
                       <BsPersonFillAdd className="h-5 w-5" />
-                      <span className="ml-3">
+                      <span className="ml-3 transition-colors ease-in-out duration-300">
                         {loading ? "Loading..." : "Sign Up"}
                       </span>
                     </button>
@@ -157,7 +157,10 @@ const SignUp = (props: IProps) => {
                   <div className="flex font-mono mt-3 text-white text-center justify-center items-center">
                     <p>
                       Have an Account?{" "}
-                      <Link to={"/sign-in"} className="text-cyan-300">
+                      <Link
+                        to={"/sign-in"}
+                        className="text-cyan-300 hover:text-cyan-500 transition-colors ease-in-out duration-300"
+                      >
                         Sign-In Here
                       </Link>
                     </p>
