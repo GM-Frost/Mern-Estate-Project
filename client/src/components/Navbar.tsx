@@ -102,7 +102,7 @@ const Navbar = (props: Props) => {
                     <Link to={"/profile"} className="justify-between">
                       Profile
                       <span className="badge bg-cyan-600 text-white border-cyan-600">
-                        {currentUser.username.split(" ")[0]}
+                        {currentUser.username}
                       </span>
                     </Link>
                   </li>

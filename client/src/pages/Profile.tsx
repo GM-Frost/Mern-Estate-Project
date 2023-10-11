@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { BsHouseAdd } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { IUserState } from "../redux/userSlice/userSlice";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
 
 import {
@@ -13,6 +13,14 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { firebaseApp } from "../firebase";
+
+//IMPORT  USER UPDATE SLICE
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/userSlice/userSlice";
+import { useDispatch } from "react-redux";
 type Props = {};
 
 type IFormData = {
@@ -23,7 +31,12 @@ const Profile = (props: Props) => {
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<IFormData>({});
-  const { currentUser } = useSelector(
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  //UPDATE USER SLICE
+  const dispatch = useDispatch();
+
+  const { currentUser, loading, error } = useSelector(
     (state: { user: IUserState }) => state.user
   );
 
@@ -67,6 +80,35 @@ const Profile = (props: Props) => {
     );
   };
 
+  //UPDATE USER FROM MODAL
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.sucess === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error: any) {
+      dispatch(updateUserFailure(error.message));
+    }
+  };
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -183,52 +225,58 @@ const Profile = (props: Props) => {
           <div className="py-8">
             <div className="flex bg-white rounded-lg justify-center overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
               <div className="w-full p-8 lg:w-1/2">
-                <div className="flex justify-center items-center">
-                  <div className="relative h-24 w-24 rounded-full overflow-hidden">
-                    <img
-                      src={formData.avatar || currentUser.avatar}
-                      alt="Profile Pic"
-                      className="object-cover h-full w-full"
-                    />
-                    <div className="absolute inset-0 bg-black opacity-50"></div>
-                    <div
-                      className="absolute inset-0 flex items-center justify-center cursor-pointer hover:-translate-y-2 transition-all duration-300 ease-in-out"
-                      onClick={() => fileRef.current!.click()}
-                    >
-                      <p className="text-white text-lg font-semibold">
-                        <AiOutlinePicture className="text-3xl" />
-                      </p>
+                <form onSubmit={handleSubmit}>
+                  <div className="flex justify-center items-center">
+                    <div className="relative h-24 w-24 rounded-full overflow-hidden">
+                      <img
+                        src={formData.avatar || currentUser.avatar}
+                        alt="Profile Pic"
+                        className="object-cover h-full w-full"
+                      />
+                      <div className="absolute inset-0 bg-black opacity-50"></div>
+                      <div
+                        className="absolute inset-0 flex items-center justify-center cursor-pointer hover:-translate-y-2 transition-all duration-300 ease-in-out"
+                        onClick={() => fileRef.current!.click()}
+                      >
+                        <p className="text-white text-lg font-semibold">
+                          <AiOutlinePicture className="text-3xl" />
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <p className="flex justify-center items-center mt-2">
-                  {fileUploadError ? (
-                    <span className="text-red-700 text-sm">
-                      Error Image Upload (Image must be less than 2MB)
-                    </span>
-                  ) : filePercentage > 0 && filePercentage < 100 ? (
-                    <span className="text-slate-700">
-                      {`Uploading ${filePercentage} %...`}
-                    </span>
-                  ) : filePercentage === 100 ? (
-                    <span className="text-green-600">
-                      Image Successfully Uploaded
-                    </span>
-                  ) : (
-                    ""
-                  )}
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="border-b w-1/5 lg:w-1/4"></span>
-                  <a
-                    href="#"
-                    className="text-xs text-center text-gray-500 uppercase"
-                  >
-                    Update your Profile
-                  </a>
-                  <span className="border-b w-1/5 lg:w-1/4"></span>
-                </div>
-                <form>
+                  <p className="flex justify-center items-center mt-2">
+                    {fileUploadError ? (
+                      <span className="text-red-700 text-sm">
+                        Error Image Upload (Image must be less than 2MB)
+                      </span>
+                    ) : filePercentage > 0 && filePercentage < 100 ? (
+                      <span className="text-slate-700">
+                        {`Uploading ${filePercentage} %...`}
+                      </span>
+                    ) : filePercentage === 100 ? (
+                      <span className="text-green-600">
+                        Image Successfully Uploaded
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    <p className="text-red-700 text-sm">{error ? error : ""}</p>
+                    <p className="text-green-700 text-sm">
+                      {updateSuccess ? "User Updated Successfully" : ""}
+                    </p>
+                  </p>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="border-b w-1/5 lg:w-1/4"></span>
+                    <a
+                      href="#"
+                      className="text-xs text-center text-gray-500 uppercase"
+                    >
+                      Update your Profile
+                    </a>
+                    <span className="border-b w-1/5 lg:w-1/4"></span>
+                  </div>
+
                   <div className="mt-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                       Username
@@ -237,6 +285,8 @@ const Profile = (props: Props) => {
                       className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                       type="text"
                       id="username"
+                      defaultValue={currentUser.username}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mt-4">
@@ -249,6 +299,8 @@ const Profile = (props: Props) => {
                       className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                       type="email"
                       id="email"
+                      defaultValue={currentUser.email}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mt-4">
@@ -261,11 +313,15 @@ const Profile = (props: Props) => {
                       className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                       type="password"
                       id="password"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mt-8">
-                    <button className="bg-gray-800 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600 transition-colors duration-500">
-                      Update
+                    <button
+                      disabled={loading}
+                      className="bg-gray-800 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600 transition-colors duration-500"
+                    >
+                      {loading ? "Saving Changes..." : "Update"}
                     </button>
                   </div>
                 </form>
