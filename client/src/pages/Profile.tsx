@@ -2,7 +2,15 @@ import { BiEdit, BiLogInCircle } from "react-icons/bi";
 import Layout from "../components/Layout";
 import { BsHouseAdd } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { IUserState } from "../redux/userSlice/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import {
+  IUserState,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+} from "../redux/userSlice/userSlice";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
 
@@ -21,6 +29,7 @@ import {
   updateUserFailure,
 } from "../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
+import DeleteUser from "../components/DeleteUser";
 type Props = {};
 
 type IFormData = {
@@ -101,14 +110,50 @@ const Profile = (props: Props) => {
       const data = await res.json();
       if (data.sucess === false) {
         dispatch(updateUserFailure(data.message));
+        toast.error("Failed to Update");
         return;
       }
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
+      toast.success("User updated successfully");
     } catch (error: any) {
       dispatch(updateUserFailure(error.message));
+      toast.error("Something went wrong updating");
     }
   };
+
+  const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    setConfirmationModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setConfirmationModalOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        toast.error(data.message);
+        return;
+      }
+      toast.success("User deleted successfully");
+      dispatch(deleteUserSuccess(data));
+    } catch (error: any) {
+      dispatch(deleteUserFailure(error.message));
+      toast.error(error.message);
+    }
+
+    setConfirmationModalOpen(false);
+  };
+
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -118,6 +163,7 @@ const Profile = (props: Props) => {
   return (
     <>
       <Layout />
+      <ToastContainer />
       <div>
         <div className="p-16">
           <div className="p-8 bg-white shadow mt-24">
@@ -197,11 +243,19 @@ const Profile = (props: Props) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-end mt-3 text-red-500 cursor-pointer hover:text-red-700">
+          <div
+            onClick={handleDeleteClick}
+            className="flex justify-end mt-3 text-red-500 cursor-pointer hover:text-red-700"
+          >
             <p>Delete Account</p>
           </div>
         </div>
       </div>
+      <DeleteUser
+        isOpen={isConfirmationModalOpen}
+        onCancel={handleCancel}
+        onConfirmDelete={handleConfirmDelete}
+      />
 
       <dialog
         id="profile_modal"
