@@ -10,6 +10,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signoutUserFailure,
+  signoutUserStart,
+  signoutUserSuccess,
 } from "../redux/userSlice/userSlice";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
@@ -90,7 +93,6 @@ const Profile = (props: Props) => {
   };
 
   //UPDATE USER FROM MODAL
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -122,6 +124,24 @@ const Profile = (props: Props) => {
     }
   };
 
+  //HANDLE SIGNOUT
+  const handleSignOut = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutUserFailure(data.message));
+        return;
+      }
+      toast.info("Signing out...");
+      dispatch(signoutUserSuccess(data));
+    } catch (error: any) {
+      dispatch(signoutUserFailure(error.message));
+    }
+  };
+
+  //DELETE USER FROM MODAL
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -202,7 +222,10 @@ const Profile = (props: Props) => {
                     <BiEdit className="text-lg" />
                   </span>
                 </button>
-                <button className="btn btn-outline rounded-md border-gray-800 flex gap-2 justify-center items-center text-gray-800 uppercase  hover:text-cyan-600 hover:bg-white hover:border-cyan-600  shadow hover:shadow-lg font-medium  transition-all duration-300 transform hover:-translate-y-0.5">
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-outline rounded-md border-gray-800 flex gap-2 justify-center items-center text-gray-800 uppercase  hover:text-cyan-600 hover:bg-white hover:border-cyan-600  shadow hover:shadow-lg font-medium  transition-all duration-300 transform hover:-translate-y-0.5"
+                >
                   Sign out
                   <span>
                     <BiLogInCircle className="text-lg" />

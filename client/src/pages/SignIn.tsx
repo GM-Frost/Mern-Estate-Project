@@ -36,6 +36,7 @@ const SignIn = (props: IProps) => {
   const { loading, error } = useSelector(
     (state: { user: IUserState }) => state.user
   );
+
   const handleChange = (e: any) => {
     e.preventDefault();
     setFormData({
@@ -65,10 +66,12 @@ const SignIn = (props: IProps) => {
 
       dispatch(signInSuccess(data));
       toast.success("Signed In Successfully!");
-      toast.info("Navigating...Please wait!");
       setTimeout(() => {
-        navigate("/");
-      }, 3000);
+        toast.info("Navigating...Please wait!");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }, 1000);
     } catch (error: any) {
       toast.error("Internal Server Error");
       dispatch(signInFailure(error.message));
@@ -199,12 +202,12 @@ const SignIn = (props: IProps) => {
                   Register Here
                 </Link>
               </span>
-              <div className="absolute flex flex-row text-center justify-center items-center">
-                {error && <p className="text-red-500 mt-5">{error}</p>}
-              </div>
 
               <div className="text-center right-0 left-0 flex  justify-center space-x-4 mt-10">
                 <OAuth googlePage="Sign In" />
+              </div>
+              <div className="flex flex-row text-center justify-center items-center">
+                {error && <p className="text-red-500 mt-5">{error}</p>}
               </div>
               <div className="p-4 text-center right-0 left-0 flex  justify-center space-x-4 mt-16 lg:hidden ">
                 <span>

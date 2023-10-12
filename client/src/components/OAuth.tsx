@@ -4,6 +4,10 @@ import { firebaseApp } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/userSlice/userSlice";
 import { useNavigate } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type IProps = {
   googlePage: string;
 };
@@ -33,9 +37,14 @@ const OAuth = ({ googlePage }: IProps) => {
       });
       const data = await res.json();
       dispatch(signInSuccess(data));
-      navigate("/");
+      toast.success("Signed In Successfully!");
+      setTimeout(() => {
+        toast.info("Navigating...Please wait!");
+        navigate("/");
+      }, 3000);
     } catch (error) {
       console.log("Could not sign in with google", error);
+      toast.error("Could not sign in with google");
     }
   };
   return (
