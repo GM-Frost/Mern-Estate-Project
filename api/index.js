@@ -7,7 +7,7 @@ dotenv.config();
 //IMPORTING ROUTERS
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
-
+import listingRouter from "./routes/listing.route.js";
 mongoose
   .connect(process.env.MONGODB_SERVER_PORT)
   .then(() => {
@@ -31,6 +31,7 @@ app.listen(process.env.SERVER_PORT, () => {
 // API endpoint
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
 
 //CREATE MIDDLEWARE
 app.use((err, req, res, next) => {

@@ -32,7 +32,7 @@ import {
   updateUserFailure,
 } from "../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
-import DeleteUser from "../components/DeleteUser";
+import DeleteUser from "../components/Navbar/DeleteUser";
 type Props = {};
 
 type IFormData = {
@@ -134,7 +134,8 @@ const Profile = (props: Props) => {
         dispatch(signoutUserFailure(data.message));
         return;
       }
-      toast.info("Signing out...");
+
+      toast.warning("Signing out...");
       dispatch(signoutUserSuccess(data));
     } catch (error: any) {
       dispatch(signoutUserFailure(error.message));

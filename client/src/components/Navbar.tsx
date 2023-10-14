@@ -177,12 +177,6 @@ const Navbar = (props: Props) => {
               </div>
             )}
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <button className="btn btn-sm flex items-center sm:mr-5">
-              <BsHouseAdd className="w-5 h-5" />
-              <span className="hidden md:block"> Create Listing</span>
-            </button>
-          </div>
 
           <LoginModal isOpen={isModalOpen} onClose={closeSigninModal} />
 
