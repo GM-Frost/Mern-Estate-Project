@@ -33,6 +33,7 @@ import {
 } from "../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
 import DeleteUser from "../components/Navbar/DeleteUser";
+import { Link } from "react-router-dom";
 type Props = {};
 
 type IFormData = {
@@ -207,11 +208,13 @@ const Profile = (props: Props) => {
                 <div
                   className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500"
                   style={{
-                    backgroundImage: `url(${currentUser.avatar})`,
+                    backgroundImage: `url(${
+                      currentUser?.avatar || formData?.avatar
+                    })`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
-                ></div>
+                />
               </div>
               <div className="space-x-4 flex justify-evenly mt-32 md:mt-0 md:justify-center">
                 <button
@@ -233,12 +236,17 @@ const Profile = (props: Props) => {
                   </span>
                 </button>
               </div>
-              <button className="mt-2 flex gap-2 justify-center items-center text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition-all duration-300 transform hover:-translate-y-0.5 md:py-3 md:px-6 md:text-lg">
-                Create Listing
-                <span>
-                  <BsHouseAdd className="text-lg" />
-                </span>
-              </button>
+              <Link
+                to={"/create-listing"}
+                className="mt-2 flex justify-center items-center text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition-all duration-300 transform hover:-translate-y-0.5 md:py-3 md:px-6 md:text-lg"
+              >
+                <button className="flex gap-2 justify-center items-center">
+                  Create Listing
+                  <span>
+                    <BsHouseAdd className="text-lg" />
+                  </span>
+                </button>
+              </Link>
             </div>
             <div className="mt-20 text-center border-b pb-12">
               <h1 className="xl:text-4xl font-medium text-gray-700 sm:text-2xl">
@@ -307,7 +315,7 @@ const Profile = (props: Props) => {
                   <div className="flex justify-center items-center">
                     <div className="relative h-24 w-24 rounded-full overflow-hidden">
                       <img
-                        src={formData.avatar || currentUser.avatar}
+                        src={formData?.avatar || currentUser?.avatar}
                         alt="Profile Pic"
                         className="object-cover h-full w-full"
                       />
