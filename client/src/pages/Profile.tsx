@@ -39,13 +39,15 @@ type Props = {};
 type IFormData = {
   avatar?: string;
 };
-const Profile = (props: Props) => {
+const Profile = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<IFormData>({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
+  const [showListingsError, setShowListingsError] = useState<boolean>(false);
+  const [userListings, setUserListings] = useState([]);
   //UPDATE USER SLICE
   const dispatch = useDispatch();
 
@@ -182,6 +184,23 @@ const Profile = (props: Props) => {
     }
   }, [file]);
 
+  ////// SHOW LISTINGS
+
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
   return (
     <>
       <Layout />
@@ -270,9 +289,54 @@ const Profile = (props: Props) => {
                 feel with a solid groove structure. An artist of considerable
                 range.
               </p>
-              <button className="text-indigo-500 py-2 px-4  font-medium mt-4">
-                Show more
+              <button
+                onClick={handleShowListings}
+                className="text-indigo-500 py-2 px-4  font-medium mt-4"
+              >
+                Show Listings
               </button>
+            </div>
+            <div className="flex justify-center text-center">
+              <p className="text-red-500 mt-5">
+                {showListingsError ? "Error Showing Listings" : ""}
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <h1
+                className={`flex justify-center items-center font-semibold text-3xl my-3 ${
+                  userListings.length > 0 ? "" : "hidden"
+                }`}
+              >
+                {userListings.length > 0
+                  ? "Your Listing"
+                  : "You have no Listings"}
+              </h1>
+              {userListings &&
+                userListings.length > 0 &&
+                userListings.map((listing) => (
+                  <div
+                    key={listing._id}
+                    className="border rounded-lg p-3 my-2 flex justify-between items-center bg-gray-100"
+                  >
+                    <Link to={`/listings/${listing._id}`}>
+                      <img
+                        src={listing.imageUrls[0]}
+                        alt="listing cover"
+                        className="h-16 w-16 object-contain rounded-lg"
+                      />
+                    </Link>
+
+                    <Link to={`/listings/${listing._id}`}>
+                      <p className="text-slate-700 font-semibold flex-1 hover:underline">
+                        {listing.name}
+                      </p>
+                    </Link>
+                    <div className="flex flex-col items-center">
+                      <button className="text-red-700 uppercase">Delete</button>
+                      <button className="text-cyan-700 uppercase">Edit</button>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
           <div

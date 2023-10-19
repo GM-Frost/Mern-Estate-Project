@@ -183,8 +183,8 @@ const CreateListing = () => {
     <>
       <Layout />
 
-      <form onSubmit={handleFormSubmit} className="sm:mt-40 lg:mt-0">
-        <div className="flex  justify-center items-center w-screen h-screen bg-white">
+      <form onSubmit={handleFormSubmit} className="sm:mt-48 md:mt-16">
+        <div className="flex justify-center items-center w-screen h-screen bg-white ">
           <div className="container mx-auto my-4 px-4 lg:px-20">
             <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
               <div className="flex">
