@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Layout from "../components/Layout";
+import { useState, useEffect } from "react";
+import Layout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -7,10 +7,11 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { firebaseApp } from "../firebase";
-import { IUserState } from "../redux/userSlice/userSlice";
-import { useNavigate } from "react-router-dom";
-const CreateListing = () => {
+import { firebaseApp } from "../../firebase";
+import { IUserState } from "../../redux/userSlice/userSlice";
+import { useNavigate, useParams } from "react-router-dom";
+
+const UpdateListing = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
@@ -31,7 +32,7 @@ const CreateListing = () => {
     furnished: false,
   });
   const navigate = useNavigate();
-
+  const params = useParams();
   const [error, setError] = useState<string | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -41,6 +42,20 @@ const CreateListing = () => {
   const [imageUploadError, setImageUploadError] = useState<string | boolean>(
     false
   );
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.listingId;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+    fetchListing();
+  }, []);
 
   const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -189,7 +204,7 @@ const CreateListing = () => {
             <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
               <div className="flex">
                 <h1 className="font-bold uppercase text-3xl">
-                  Create a New Listing
+                  Update your Listings
                 </h1>
               </div>
               <div className="grid justify-center items-center grid-cols-1 gap-5 md:grid-cols-2 mt-5">
@@ -387,7 +402,7 @@ const CreateListing = () => {
                         />
                         <div className="cursor-pointer">
                           <svg
-                            className="text-cyan-500 w-24 mx-auto mb-4"
+                            className="text-yellow-600 w-24 mx-auto mb-4"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -403,7 +418,7 @@ const CreateListing = () => {
                         </div>
                       </label>
 
-                      <div className="title text-cyan-500 uppercase">
+                      <div className="title text-yellow-500 uppercase">
                         or drop files here <br /> and Upload
                       </div>
                     </div>
@@ -460,10 +475,10 @@ const CreateListing = () => {
               <div className="my-2 md:w-1/2 justify-center items-center  lg:w-1/4">
                 <button
                   disabled={loading || uploading}
-                  className="uppercase text-sm font-bold tracking-wide bg-gray-700 hover:bg-gray-800 text-gray-100 p-3 rounded-lg w-full 
+                  className="uppercase text-sm font-bold tracking-wide bg-yellow-600 hover:bg-yellow-700 text-gray-100 p-3 rounded-lg w-full 
                       focus:outline-none focus:shadow-outline transition-all ease-in-out duration-300"
                 >
-                  {loading ? "Creating..." : "Create Listing"}
+                  {loading ? "Updating..." : "Update Listing"}
                 </button>
                 <div className="flex justify-center items-center text-center">
                   {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -477,4 +492,4 @@ const CreateListing = () => {
   );
 };
 
-export default CreateListing;
+export default UpdateListing;
