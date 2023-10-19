@@ -1,7 +1,7 @@
 import { BiEdit, BiLogInCircle } from "react-icons/bi";
 import Layout from "../components/Layout";
 import { BsHouseAdd } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,6 +13,9 @@ import {
   signoutUserFailure,
   signoutUserStart,
   signoutUserSuccess,
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess,
 } from "../redux/userSlice/userSlice";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
@@ -26,15 +29,9 @@ import {
 import { firebaseApp } from "../firebase";
 
 //IMPORT  USER UPDATE SLICE
-import {
-  updateUserStart,
-  updateUserSuccess,
-  updateUserFailure,
-} from "../redux/userSlice/userSlice";
-import { useDispatch } from "react-redux";
+
 import DeleteUser from "../components/Navbar/DeleteUser";
 import { Link } from "react-router-dom";
-type Props = {};
 
 type IFormData = {
   avatar?: string;
@@ -84,7 +81,7 @@ const Profile = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePercentage(Math.round(progress));
       },
-      (error: any) => {
+      (error) => {
         setFileUploadError(true);
       },
       () => {
@@ -121,7 +118,7 @@ const Profile = () => {
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
       toast.success("User updated successfully");
-    } catch (error: any) {
+    } catch (error) {
       dispatch(updateUserFailure(error.message));
       toast.error("Something went wrong updating");
     }
@@ -140,7 +137,7 @@ const Profile = () => {
 
       toast.warning("Signing out...");
       dispatch(signoutUserSuccess(data));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(signoutUserFailure(error.message));
     }
   };
@@ -170,7 +167,7 @@ const Profile = () => {
       }
       toast.success("User deleted successfully");
       dispatch(deleteUserSuccess(data));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(deleteUserFailure(error.message));
       toast.error(error.message);
     }
@@ -356,7 +353,12 @@ const Profile = () => {
                       >
                         Delete
                       </button>
-                      <button className="text-cyan-700 uppercase">Edit</button>
+                      <Link to={`/update-listing/${listing._id}`}>
+                        {" "}
+                        <button className="text-cyan-700 uppercase">
+                          Edit
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 ))}

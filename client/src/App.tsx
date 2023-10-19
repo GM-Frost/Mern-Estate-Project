@@ -1,18 +1,13 @@
 import "./global.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import About from "./pages/About";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
-import CreateListing from "./pages/CreateListing";
+import CreateListing from "./pages/listing/CreateListing";
+import UpdateListing from "./pages/listing/UpdateListing";
 
 function App() {
   const router = createBrowserRouter([
@@ -45,6 +40,14 @@ function App() {
       element: (
         <PrivateRoute>
           <CreateListing />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/update-listing/:listingId",
+      element: (
+        <PrivateRoute>
+          <UpdateListing />
         </PrivateRoute>
       ),
     },
