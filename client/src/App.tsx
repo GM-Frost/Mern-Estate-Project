@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/listing/CreateListing";
 import UpdateListing from "./pages/listing/UpdateListing";
+import Listing from "./pages/Listing";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,6 +51,10 @@ function App() {
           <UpdateListing />
         </PrivateRoute>
       ),
+    },
+    {
+      path: "/listing/:listingId",
+      element: <Listing />,
     },
   ]);
 
