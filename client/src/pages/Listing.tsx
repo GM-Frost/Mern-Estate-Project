@@ -1,6 +1,8 @@
 import React, { useEffect, useState, CSSProperties } from "react";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
+
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { PropagateLoader } from "react-spinners";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -20,7 +22,20 @@ const Listing = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [coverImage, setCoverImage] = useState<string>("");
+  const slideLeft = () => {
+    const slider: HTMLElement | null = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft - 500;
+  };
 
+  const slideRight = () => {
+    const slider: HTMLElement | null = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft + 500;
+  };
+
+  const changeCover = (url: string) => {
+    setCoverImage(url);
+  };
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -46,7 +61,7 @@ const Listing = () => {
   return (
     <>
       <Layout />
-      <main className="mt-24">
+      <main className="mt-24 flex flex-col items-center">
         {loading && (
           <p className="text-center my-7 text-2xl">
             Please Wait.
@@ -65,19 +80,40 @@ const Listing = () => {
         )}
         {listing && !loading && !error && (
           <>
-            <Swiper navigation>
-              {listing?.imageUrls.map((url: string) => (
-                <SwiperSlide key={url}>
-                  <div
-                    className="h-[550px]"
-                    style={{
-                      background: `url(${url}) center no-repeat`,
-                      backgroundSize: "cover",
-                    }}
-                  ></div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <img
+              className="w-full h-[550px] object-cover bg-center transition-opacity"
+              src={coverImage ? coverImage : listing?.imageUrls[0]}
+              alt="Property Image"
+              style={{ opacity: coverImage ? 1 : 0 }}
+            />
+            <div className="relative flex items-center justify-center">
+              <MdChevronLeft
+                onClick={slideLeft}
+                size={40}
+                className="bg-cyan-500 text-white rounded-full hover:bg-cyan-600 cursor-pointer"
+              />
+              <div
+                id="slider"
+                className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+              >
+                {listing.imageUrls.map((url: string) => (
+                  <img
+                    key={url}
+                    src={url}
+                    onClick={() => changeCover(url)}
+                    alt="Slider Image"
+                    className={`w-[220px] inline-block p-2 cursor-pointer rounded-3xl hover:scale-105 ease-in-out duration-300 ${
+                      url === coverImage ? "opacity-800" : "opacity-50"
+                    }`}
+                  />
+                ))}
+              </div>
+              <MdChevronRight
+                onClick={slideRight}
+                size={40}
+                className="bg-cyan-500 text-white rounded-full hover:bg-cyan-600 cursor-pointer"
+              />
+            </div>
           </>
         )}
       </main>
