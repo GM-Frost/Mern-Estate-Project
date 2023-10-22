@@ -166,7 +166,11 @@ const CreateListing = () => {
       const res = await fetch("/api/listing/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, userRef: currentUser._id }),
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+          agentProfile: currentUser?.avatar,
+        }),
       });
       const data = await res.json();
       setLoading(false);

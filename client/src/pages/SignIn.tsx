@@ -80,7 +80,6 @@ const SignIn = (props: IProps) => {
 
   return (
     <>
-      <Layout />
       <ToastContainer />
       <section className="min-h-screen flex items-stretch text-white ">
         <div

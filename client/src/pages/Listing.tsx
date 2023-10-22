@@ -15,6 +15,8 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import PropertyDetails from "./listing/PropertyDetails";
+import { Abstract8 } from "../assets";
+
 const override: CSSProperties = {
   display: "block",
   margin: "0 auto",
@@ -43,6 +45,31 @@ const Listing = () => {
   const changeCover = (url: string) => {
     setCoverImage(url);
   };
+
+  const data = [
+    {
+      label: "Property Details",
+      value: "propertyDetails",
+      desc: <PropertyDetails />,
+    },
+    {
+      label: "Locations",
+      value: "location",
+      desc: `Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden end to main to marked.`,
+    },
+
+    {
+      label: "Reviews",
+      value: "reviews",
+      desc: `“There are many variations of passages of Lorem Ipsum available, in majority have into the find end to suffered.”`,
+    },
+  ];
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -65,30 +92,9 @@ const Listing = () => {
     };
     fetchListing();
   }, []);
-
-  const data = [
-    {
-      label: "Property Details",
-      value: "propertyDetails",
-      desc: <PropertyDetails />,
-    },
-    {
-      label: "Locations",
-      value: "location",
-      desc: `Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden end to main to marked.`,
-    },
-
-    {
-      label: "Reviews",
-      value: "reviews",
-      desc: `“There are many variations of passages of Lorem Ipsum available, in majority have into the find end to suffered.”`,
-    },
-  ];
-
   return (
     <>
-      <Layout />
-      <main className="mt-20 flex flex-col items-center">
+      <main className="mt-20 min-h-screen w-screen flex flex-col items-center">
         {loading && (
           <p className="text-center my-7 text-2xl">
             Please Wait.
@@ -145,7 +151,7 @@ const Listing = () => {
                     src={url}
                     onClick={() => changeCover(url)}
                     alt="Slider Image"
-                    className={`my-8 w-[220px] md:w-[220px] sm:w-[190px] inline-block p-2 cursor-pointer rounded-2xl hover:scale-105 ease-in-out duration-300 ${
+                    className={`my-8 h-[100px] md:h-[130px] w-[100px] md:w-[220px] sm:w-[190px] inline-block p-2 cursor-pointer rounded-2xl hover:scale-105 ease-in-out duration-300 ${
                       url === coverImage ? "opacity-800" : "opacity-50"
                     }
                    
@@ -167,7 +173,15 @@ const Listing = () => {
                 </div>
               </div>
             </div>
-            <div className="relative bg-gray-200 w-full">
+            <div
+              className="relative bg-gray-200 w-full bg-cover bg-center inset-0 mix-blend-grayscale"
+              style={{
+                backgroundImage: `url(${Abstract8})`,
+                backgroundBlendMode: "soft-light",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
               <div className="md:container mx-auto p-4">
                 <div className="flex flex-col md:flex-row">
                   {/* Left side */}
@@ -208,42 +222,59 @@ const Listing = () => {
                       </TabsBody>
                     </Tabs>
                   </div>
+
                   {/* Right side (Form) */}
                   <div className="w-full md:w-2/3 p-4">
-                    <div className="relative bg-cyan-800 rounded-lg p-4 glass ">
+                    <div className="relative w-full bg-cover bg-center p-4 rounded-lg glass bg-cyan-800">
                       <form>
                         {/* Form fields and submit button */}
-                        <div className="mb-4">
-                          <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700 "
-                          >
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                          />
+                        <div className="flex flex-col flex-wrap ">
+                          <h1 className="my-5 text-white font-bold text-3xl">
+                            Property Agent
+                          </h1>
+                          <div className="flex flex-row justify-start gap-4">
+                            <div className="avatar">
+                              <div className="w-24 rounded-full ring ring-[#000000] ring-offset-base-100 ring-offset-2">
+                                <img src={listing.agentProfile} />
+                              </div>
+                            </div>
+                            <div className="text-white">
+                              <h2 className="font-bold text-xl">Agent Name</h2>
+                              <p className="font-bold text-md">
+                                Real Estate Broker
+                              </p>
+                            </div>
+                          </div>
+                          <hr className="my-8   bg-neutral-100 opacity-50 dark:opacity-50" />
                         </div>
 
-                        <div className="mb-4">
-                          <label
-                            htmlFor="email"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                          />
+                        <div className="space-y-3">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Full Name"
+                              className="input input-bordered w-full  bg-transparent text-white placeholder:text-gray-300"
+                            />
+                          </div>
+                          <div>
+                            <input
+                              type="email"
+                              placeholder="Your email"
+                              className="input input-bordered w-full bg-transparent text-white placeholder:text-gray-300"
+                            />
+                          </div>
+                          <div>
+                            <textarea
+                              placeholder="Your message"
+                              className="textarea textarea-bordered textarea-lg w-full  bg-transparent text-white placeholder:text-gray-300"
+                            />
+                          </div>
+                          <div className="flex flex-wrap justify-center">
+                            <Button className=" p-5 hover:bg-white hover:text-cyan-500 transition-colors duration-300 ease-in-out">
+                              Send Message Now
+                            </Button>
+                          </div>
                         </div>
-
-                        <Button>Button</Button>
                       </form>
                     </div>
                   </div>
@@ -253,6 +284,7 @@ const Listing = () => {
           </>
         )}
       </main>
+      <Layout />
     </>
   );
 };
