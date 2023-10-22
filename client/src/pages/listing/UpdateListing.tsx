@@ -178,7 +178,7 @@ const UpdateListing = () => {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, userRef: currentUser._id }),
@@ -197,9 +197,11 @@ const UpdateListing = () => {
   return (
     <>
       <Layout />
-
-      <form onSubmit={handleFormSubmit} className="sm:mt-48 md:mt-16">
-        <div className="flex justify-center items-center w-screen h-screen bg-white ">
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex justify-center items-center"
+      >
+        <div className="flex-1 justify-center items-center w-screen h-auto mt-20 bg-white ">
           <div className="container mx-auto my-4 px-4 lg:px-20">
             <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
               <div className="flex">

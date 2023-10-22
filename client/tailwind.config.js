@@ -20,7 +20,7 @@ export default {
       // => @media (min-width: 1536px) { ... }
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("tailwind-scrollbar-hide")],
   daisyui: {
     themes: ["light", "dark", "cupcake", "emerald"],
   },

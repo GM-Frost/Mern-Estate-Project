@@ -226,11 +226,15 @@ const Profile = () => {
             <div className="grid grid-cols-1 md:grid-cols-3">
               <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
                 <div>
-                  <p className="font-bold text-gray-700 text-xl">22</p>
+                  <p className="font-bold text-gray-700 text-xl">
+                    {userListings?.length}
+                  </p>
                   <p className="text-gray-400"> Listing</p>
                 </div>
                 <div>
-                  <p className="font-bold text-gray-700 text-xl">10</p>
+                  <p className="font-bold text-gray-700 text-xl">
+                    {userListings?.length > 0 ? 4 : 0}
+                  </p>
                   <p className="text-gray-400">Photos</p>
                 </div>
                 <div>
@@ -333,7 +337,7 @@ const Profile = () => {
                     key={listing._id}
                     className="border rounded-lg p-3 my-2 flex justify-between items-center bg-gray-100"
                   >
-                    <Link to={`/listings/${listing._id}`}>
+                    <Link to={`/listing/${listing._id}`}>
                       <img
                         src={listing.imageUrls[0]}
                         alt="listing cover"
@@ -341,7 +345,7 @@ const Profile = () => {
                       />
                     </Link>
 
-                    <Link to={`/listings/${listing._id}`}>
+                    <Link to={`/listing/${listing._id}`}>
                       <p className="text-slate-700 font-semibold flex-1 hover:underline">
                         {listing.name}
                       </p>

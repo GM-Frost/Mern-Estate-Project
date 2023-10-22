@@ -1,7 +1,7 @@
 import { LogoLight, LogoDark } from "../assets";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IUserState,
@@ -82,7 +82,7 @@ const Navbar = (props: Props) => {
         style={{ backgroundColor: `${color}` }}
         className="fixed left-0 top-0 w-full z-10 ease-in-out duration-300"
       >
-        <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-white h-20 ">
+        <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-white h-20">
           <Link to="/">
             <img src={logo} alt="" className="w-1/2 object-fit" />
           </Link>
@@ -98,7 +98,7 @@ const Navbar = (props: Props) => {
             </li>
 
             <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-              <Link to="/Contact">Contact Us</Link>
+              <Link to="/Contact">Contact</Link>
             </li>
           </ul>
           {/********************************************** Dropdown **********************************************/}
