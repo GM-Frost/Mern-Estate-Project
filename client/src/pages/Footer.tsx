@@ -39,7 +39,7 @@ const Footer = (props: Props) => {
               <div className="w-full md:w-2/3 ">
                 <div className="space-y-2">
                   <p className="text-primary">For Rent and Sell Offer</p>
-                  <h1 className="text-2xl font-bold text-black ">
+                  <h1 className="text-2xl font-bold text-baseDark">
                     Join the Nova Community
                   </h1>
                 </div>
@@ -50,70 +50,134 @@ const Footer = (props: Props) => {
                     <input
                       type="text"
                       placeholder="Enter your email address"
-                      className="  bg-gray-100 placeholder:text-cyan-500 text-cyan-500 mr-2 p-2"
+                      className="  bg-gray-100 w-56 placeholder:text-primary text-primary mr-2 p-2"
                     />
-                    <Button className="inline-block bg-cyan-400 hover:bg-cyan-600">
+                    <Button className="inline-block bg-primary hover:bg-primaryDark">
                       Subscribe Now
                     </Button>
                   </label>
                 </div>
               </div>
             </div>
-            <div className="footer ">
-              <aside>
-                <img src={LogoLight} alt="Nova Real Estate" className=" w-52" />
-                <p>
-                  <br />
-                  Providing reliable Real Estate Service since 1992
-                </p>
-                <header className="footer-title">Social</header>
-                <div className="grid grid-flow-col gap-4">
-                  <a>
-                    <FaFacebookF className="w-5 h-5 cursor-pointer hover:text-cyan-400 transition-colors ease-in-out duration-300" />
-                  </a>
-                  <a>
-                    <FaTwitter className="w-5 h-5 cursor-pointer hover:text-cyan-400 transition-colors ease-in-out duration-300" />
-                  </a>
-                  <a>
-                    <FaYoutube className="w-5 h-5 cursor-pointer hover:text-cyan-400 transition-colors ease-in-out duration-300" />
-                  </a>
-                  <a>
-                    <FaLinkedin className="w-5 h-5 cursor-pointer hover:text-cyan-400 transition-colors ease-in-out duration-300" />
-                  </a>
+            <div className="footer text-baseLight">
+              <footer className="flex flex-col items-center bg-neutral-100 text-center dark:bg-neutral-600 lg:text-left">
+                <div className="container p-6">
+                  <div className="grid place-items-center md:grid-cols-2 lg:grid-cols-4">
+                    <div className="mb-6">
+                      <img
+                        src={LogoLight}
+                        alt="Nova Real Estate"
+                        className=" w-52"
+                      />
+                      <p>
+                        <br />
+                        Providing reliable Real Estate Service since 1992
+                      </p>
+                      <header className="my-5 footer-title text-baseLight">
+                        Social
+                      </header>
+                      <div className="grid grid-flow-col gap-4 text-baseLight">
+                        <a>
+                          <FaFacebookF className="w-5 h-5 cursor-pointer hover:text-primaryLight transition-colors ease-in-out duration-300" />
+                        </a>
+                        <a>
+                          <FaTwitter className="w-5 h-5 cursor-pointer hover:text-primaryLight transition-colors ease-in-out duration-300" />
+                        </a>
+                        <a>
+                          <FaYoutube className="w-5 h-5 cursor-pointer hover:text-primaryLight transition-colors ease-in-out duration-300" />
+                        </a>
+                        <a>
+                          <FaLinkedin className="w-5 h-5 cursor-pointer hover:text-primaryLight transition-colors ease-in-out duration-300" />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="mb-6">
+                      <h5 className="mb-2.5 font-bold uppercase text-neutral-800 dark:text-neutral-200">
+                        Listings
+                      </h5>
+
+                      <ul className="mb-0 list-none">
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - Properties
+                          </a>
+                        </li>
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - Add Properties
+                          </a>
+                        </li>
+                        <a className="hover:text-light cursor-pointer">
+                          - Login
+                        </a>
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - Signup
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="mb-6">
+                      <h5 className="mb-2.5 font-bold uppercase text-neutral-800 dark:text-neutral-200">
+                        Importants
+                      </h5>
+
+                      <ul className="mb-0 list-none">
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - About Us
+                          </a>
+                        </li>
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - Pricing
+                          </a>
+                        </li>
+                        <a className="hover:text-light cursor-pointer">
+                          - Blog
+                        </a>
+                        <li>
+                          <a className="hover:text-light cursor-pointer">
+                            - FAQ's
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="mb-6">
+                      <h5 className="mb-2.5 font-bold uppercase text-neutral-800 dark:text-neutral-200">
+                        Contact Us
+                      </h5>
+
+                      <ul className="mb-0 list-none">
+                        <li>
+                          <a className="flex gap-2">
+                            <FaPhone /> +1 (666)-666-6666
+                          </a>
+                        </li>
+                        <li>
+                          <a className="flex gap-2">
+                            <FaEnvelope />
+                            nayanbastola777@gmail.com
+                          </a>
+                        </li>
+                        <li>
+                          <a className="flex gap-2">
+                            <FaLocationArrow />
+                            Toronto, Canada
+                          </a>
+                        </li>
+                        <li>
+                          <a className="flex gap-2">
+                            <FaSimplybuilt />
+                            Developed by Nayan Bastola
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </aside>
-              <nav>
-                <header className="footer-title">Listings</header>
-                <a className="link link-hover">- Properties</a>
-                <a className="link link-hover">- Add Properties</a>
-                <a className="link link-hover">- Login</a>
-                <a className="link link-hover">- Signup</a>
-              </nav>
-              <nav>
-                <header className="footer-title">Importants</header>
-                <a className="link link-hover">- About Us</a>
-                <a className="link link-hover">- Pricing</a>
-                <a className="link link-hover">- Blog</a>
-                <a className="link link-hover">- FAQ's</a>
-              </nav>
-              <nav>
-                <header className="footer-title">Contact Us</header>
-                <a className="link link-hover flex gap-2">
-                  <FaPhone /> +1 (666)-666-6666
-                </a>
-                <a className="link link-hover flex gap-2">
-                  <FaEnvelope />
-                  nayanbastola777@gmail.com
-                </a>
-                <a className="link link-hover flex gap-2">
-                  <FaLocationArrow />
-                  Toronto, Canada
-                </a>
-                <a className="link link-hover flex gap-2">
-                  <FaSimplybuilt />
-                  Developed by Nayan Bastola
-                </a>
-              </nav>
+              </footer>
             </div>
           </footer>
         </div>

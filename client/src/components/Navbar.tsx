@@ -3,14 +3,14 @@ import { Link, useLocation, Outlet } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import {
   IUserState,
   signoutUserFailure,
   signoutUserStart,
   signoutUserSuccess,
 } from "../redux/userSlice/userSlice";
-import { FaUserTie } from "react-icons/fa";
-import { BsHouseAdd } from "react-icons/bs";
+
 import LoginModal from "./Navbar/LoginModal";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -96,6 +96,27 @@ const Navbar = (props: Props) => {
     };
   }, []);
 
+  const subMenuAnimate = {
+    enter: {
+      opacity: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.5,
+      },
+      display: "block",
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.7,
+        delay: 0.3,
+      },
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
+
   return (
     <>
       <div
@@ -127,7 +148,7 @@ const Navbar = (props: Props) => {
             <div className="relative">
               <button
                 onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className="relative z-10  block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white"
+                className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
               >
                 <img
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=880&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -143,26 +164,36 @@ const Navbar = (props: Props) => {
                     onClick={() => setDropdownIsOpen(false)}
                     className="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
                   ></button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-xl text-black rounded-lg py-2">
+                  <motion.div
+                    initial="exit"
+                    animate={dropdownIsOpen ? "enter" : "exit"}
+                    variants={subMenuAnimate}
+                    className="absolute ease-in-out right-0 mt-2 w-48 bg-white shadow-xl text-black rounded-lg py-2"
+                  >
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-indigo-400 hover:text-white"
+                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
-                      Profile
+                      <Link to={"/profile"} className="flex justify-between">
+                        Profile
+                        <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary ">
+                          Badge
+                        </span>
+                      </Link>
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-indigo-400 hover:text-white"
+                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
                       Account Setting
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-indigo-400 hover:text-white"
+                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
                       Sign Out
                     </a>
-                  </div>
+                  </motion.div>
                 </>
               ) : (
                 ""
@@ -193,7 +224,20 @@ const Navbar = (props: Props) => {
                 onClick={() => setSidebarIsOpen(false)}
                 className="fixed inset-0 h-full w-full  cursor-default"
               ></button>
-              <div className="md:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-2/3 h-screen  bg-black/30 backdrop-blur-2xl  text-center">
+              <motion.aside
+                initial={{
+                  x: -200,
+                  opacity: 0,
+                }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.4,
+                }}
+                className="md:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-2/3 h-screen  bg-black/30 backdrop-blur-2xl  text-center"
+              >
                 <ul>
                   <li className="p-4 text-4xl cursor-pointer">
                     <img src={LogoLight} alt="" className="w-1/2 object-fit" />
@@ -212,7 +256,7 @@ const Navbar = (props: Props) => {
                     <Link to="/Contact">Contact Us</Link>
                   </li>
                 </ul>
-              </div>
+              </motion.aside>
             </>
           ) : (
             ""
