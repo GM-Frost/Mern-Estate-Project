@@ -185,8 +185,6 @@ const CreateListing = () => {
   };
   return (
     <>
-      <Layout />
-
       <form
         onSubmit={handleFormSubmit}
         className="flex justify-center items-center"
@@ -480,6 +478,7 @@ const CreateListing = () => {
           </div>
         </div>
       </form>
+      <Layout />
     </>
   );
 };

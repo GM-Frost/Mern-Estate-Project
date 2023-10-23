@@ -38,7 +38,7 @@ const Footer = (props: Props) => {
             <div className="w-full flex flex-col md:flex-row justify-between text-gray-500 bg-white p-4 rounded-lg">
               <div className="w-full md:w-2/3 ">
                 <div className="space-y-2">
-                  <p className="text-cyan-700">For Rent and Sell Offer</p>
+                  <p className="text-primary">For Rent and Sell Offer</p>
                   <h1 className="text-2xl font-bold text-black ">
                     Join the Nova Community
                   </h1>

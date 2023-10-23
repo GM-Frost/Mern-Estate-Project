@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LogoLight } from "../assets";
 import OAuth from "../components/OAuth";
+import Header from "../components/Header";
 
 type IProps = {};
 
@@ -85,11 +86,10 @@ const SignUp = (props: IProps) => {
 
   return (
     <>
-      <Layout />
-
+      <Header />
       <ToastContainer />
       <div
-        className="relative min-h-screen left-0 right-0 bottom-0 top-14 text-gray-900 flex justify-center bg-no-repeat bg-cover items-center"
+        className="relative min-h-screen left-0 right-0 bottom-0 text-gray-900 flex justify-center bg-no-repeat bg-cover items-center"
         style={{
           backgroundImage: `url(https://images.unsplash.com/photo-1555636222-cae831e670b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2077&q=80)`,
         }}
