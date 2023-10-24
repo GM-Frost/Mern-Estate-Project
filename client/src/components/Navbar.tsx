@@ -15,6 +15,7 @@ import LoginModal from "./Navbar/LoginModal";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaUserTie } from "react-icons/fa";
 
 type Props = {};
 
@@ -146,16 +147,23 @@ const Navbar = (props: Props) => {
 
           <div className="mr-6">
             <div className="relative">
-              <button
-                onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=880&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Profile"
-                  className="h-full w-full object-cover"
+              {currentUser ? (
+                <button
+                  onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+                  className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
+                >
+                  <img
+                    src={currentUser?.avatar}
+                    alt="Profile"
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ) : (
+                <FaUserTie
+                  onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+                  className="relative cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
                 />
-              </button>
+              )}
 
               {dropdownIsOpen ? (
                 <>
@@ -187,12 +195,21 @@ const Navbar = (props: Props) => {
                     >
                       Account Setting
                     </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
-                    >
-                      Sign Out
-                    </a>
+                    {currentUser ? (
+                      <a
+                        onClick={handleSignOut}
+                        className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      >
+                        Sign Out
+                      </a>
+                    ) : (
+                      <a
+                        onClick={openSigninModal}
+                        className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      >
+                        Sign-In
+                      </a>
+                    )}
                   </motion.div>
                 </>
               ) : (
