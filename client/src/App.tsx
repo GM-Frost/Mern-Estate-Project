@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/listing/CreateListing";
 import UpdateListing from "./pages/listing/UpdateListing";
 import Listing from "./pages/Listing";
+import ProfileDash from "./pages/ProfileDash";
 
 function App() {
   const router = createBrowserRouter([
@@ -32,10 +33,18 @@ function App() {
       path: "/profile",
       element: (
         <PrivateRoute>
-          <Profile />
+          <ProfileDash />
         </PrivateRoute>
       ),
     },
+    // {
+    //   path: "/profile",
+    //   element: (
+    //     <PrivateRoute>
+    //       <Profile />
+    //     </PrivateRoute>
+    //   ),
+    // },
     {
       path: "/create-listing",
       element: (

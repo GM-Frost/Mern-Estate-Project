@@ -1,7 +1,7 @@
 import { LogoLight, LogoDark } from "../assets";
-import { Link, useLocation, Outlet } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import {
@@ -13,11 +13,8 @@ import {
 
 import LoginModal from "./Navbar/LoginModal";
 
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaUserTie } from "react-icons/fa";
-
-type Props = {};
 
 const Navbar = (props: Props) => {
   const location = useLocation();
@@ -30,16 +27,12 @@ const Navbar = (props: Props) => {
     location.pathname === "/sign-up" ||
     location.pathname === "/sign-in";
 
-  const [nav, setNav] = useState(false);
   const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
 
   const [color, setColor] = useState(isHeroNav ? "transparent" : "white");
   const [textColor, setTextColor] = useState(isHeroNav ? "#ffffff" : "black");
   const [logo, setLogo] = useState(isHeroNav ? `${LogoLight}` : `${LogoDark}`);
-  const handleNav = () => {
-    setNav(!nav);
-  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -124,22 +117,22 @@ const Navbar = (props: Props) => {
         style={{ backgroundColor: `${color}` }}
         className="fixed left-0 top-0 w-full z-50 ease-in-out duration-300"
       >
-        <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-white h-20">
+        <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-light h-20">
           <Link to="/">
             <img src={logo} alt="" className="w-1/2 object-fit" />
           </Link>
           <ul className="hidden md:flex" style={{ color: `${textColor}` }}>
-            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
+            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/">Home</Link>
             </li>
-            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
+            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/about">About</Link>
             </li>
-            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
+            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/residency">Residency</Link>
             </li>
 
-            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-cyan-500 after:content-[''] after:absolute after:h-[2px] after:bg-cyan-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
+            <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
               <Link to="/Contact">Contact</Link>
             </li>
           </ul>
@@ -150,7 +143,7 @@ const Navbar = (props: Props) => {
               {currentUser ? (
                 <button
                   onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                  className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
+                  className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight hover:border-primaryLight"
                 >
                   <img
                     src={currentUser?.avatar}

@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <>
-      <div className="flex flex-row h-auto  w-screen overflow-hidden">
+      <div className="flex flex-row h-auto  mx-auto overflow-hidden">
         <Header />
         <div className="p-4">{<Outlet />}</div>
       </div>
