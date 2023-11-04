@@ -1,8 +1,6 @@
 import Navbar from "./Navbar";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   return (
     <>
       <Navbar />

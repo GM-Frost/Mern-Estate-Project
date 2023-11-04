@@ -1,0 +1,316 @@
+import {
+  FaEnvelope,
+  FaInstagram,
+  FaLinkedin,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaTwitter,
+} from "react-icons/fa";
+import { FiPhoneCall } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  IUserState,
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+} from "../../redux/userSlice/userSlice";
+import { useRef, useState } from "react";
+import { AiOutlinePicture } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const PersonalInfo = () => {
+  //User Details
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const { currentUser, loading, error } = useSelector(
+    (state: { user: IUserState }) => state.user
+  );
+
+  //EDIT FORM DETAILS
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [formData, setFormData] = useState({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleEditClick = () => {
+    setEditMode(!editMode);
+  };
+  const handleEditChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.sucess === false) {
+        dispatch(updateUserFailure(data.message));
+        toast.error("Failed to Update");
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+      toast.success("User updated successfully");
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+      toast.error("Something went wrong updating");
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer />
+      {editMode ? (
+        <>
+          <input
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+            onChange={handleEditChange}
+          />
+
+          <div className="flex flex-col flex-wrap w-full h-full space-y-3">
+            <p className="text-red-700 text-sm">{error ? error : ""}</p>
+            <p className="text-green-700 text-sm">
+              {updateSuccess ? "User Updated Successfully" : ""}
+            </p>
+            <div className="font-bold">
+              <h1>Personal Info - Edit</h1>
+            </div>
+            <form onSubmit={handleEditSubmit} className="space-y-5">
+              <div className="flex justify-center items-center">
+                <div className="relative h-24 w-24 rounded-full overflow-hidden">
+                  <img
+                    src={currentUser?.avatar}
+                    alt="Profile Pic"
+                    className="object-cover h-full w-full"
+                  />
+                  <div className="absolute inset-0 bg-black opacity-50"></div>
+                  <div
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer hover:-translate-y-2 transition-all duration-300 ease-in-out"
+                    onClick={() => fileRef.current!.click()}
+                  >
+                    <p className="text-white text-lg font-semibold">
+                      <AiOutlinePicture className="text-3xl" />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="Property Title">First Name*</label>
+                  <input
+                    type="text"
+                    placeholder="Firstname"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.firstname}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="Property Title">Last Name*</label>
+                  <input
+                    type="text"
+                    placeholder="Lastname"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.lastname}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Email*</label>
+                  <input
+                    type="text"
+                    placeholder="Firstname"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.email}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Username*</label>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.username}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Title*</label>
+                  <input
+                    type="text"
+                    placeholder="Title"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.title}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="Property Title">Phone</label>
+                  <input
+                    type="text"
+                    placeholder="Phone"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.phone}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="Property Title">Address</label>
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.address}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">About</label>
+                  <textarea
+                    placeholder="Something about yourself"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.about}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">LinkedIn</label>
+                  <input
+                    type="text"
+                    placeholder="www.linkedin.com/username"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.socialLinks.linkedin}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Instagram</label>
+                  <input
+                    type="text"
+                    placeholder="www.instagram.com/username"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.socialLinks.instagram}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Twitter</label>
+                  <input
+                    type="text"
+                    placeholder="www.twitter.com/profile"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.socialLinks.twitter}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex  space-y-4 md:space-y-0 ">
+                <div className="w-full">
+                  <label htmlFor="Property Title">Facebook</label>
+                  <input
+                    type="text"
+                    placeholder="www.facebook.com/username"
+                    className="bg-primary/10 p-2 rounded-md w-full"
+                    defaultValue={currentUser.socialLinks.facebook}
+                    onChange={handleEditChange}
+                  />
+                </div>
+              </div>
+              <div className="flex space-y-4 md:space-y-0 justify-center items-center ">
+                <div className="p-4 bg-neutral rounded-md hover:bg-neutralDark text-center">
+                  <button type="submit" className="">
+                    Update Profile
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col flex-wrap w-full h-full space-y-3">
+          <div className="font-bold">
+            <h1>Personal Info</h1>
+          </div>
+
+          <div className="sm:flex-row gap-5 md:flex">
+            <img
+              className="h-[200px] object-cover w-full md:w-1/3 rounded-md"
+              src={currentUser.avatar}
+              alt="Profile Picture"
+            />
+            <div className="sm:flex sm:flex-col items-center justify-center">
+              <h2 className="font-bold">
+                {currentUser.firstname} {currentUser.lastname}
+              </h2>
+              <h3 className="text-xs">({currentUser.username})</h3>
+              <div className="text-sm text-baseLight">{currentUser.title}</div>
+              <div className="mt-5 flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <FiPhoneCall className=" text-primary  text-xl" />{" "}
+                  {currentUser.phone ? currentUser.phone : "N/A"}
+                </div>
+                <div className="flex  gap-2">
+                  <FaEnvelope className=" text-primary text-xl" />{" "}
+                  {currentUser.email}
+                </div>
+                <div className="flex  gap-2">
+                  <FaMapMarkerAlt className=" text-primary text-xl" />
+                  {currentUser.address ? currentUser.address : "N/A"}
+                </div>
+                <div className="flex  space-x-20 mt-3 items-center text-center justify-center">
+                  <FaPhone className="hover:text-primary cursor-pointer" />
+                  <FaLinkedin className="hover:text-primary cursor-pointer" />
+                  <FaTwitter className="hover:text-primary cursor-pointer" />
+                  <FaInstagram className="hover:text-primary cursor-pointer" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-primary/10 p-4 rounded-lg flex-wrap">
+            <h1 className="font-bold">About Me</h1>
+            <p className="mt-4 text-sm ">{currentUser.about}</p>
+          </div>
+          <div className="justify-end items-end flex">
+            <button
+              onClick={handleEditClick}
+              className="p-4 bg-neutral items-center justify-center text-center rounded-md hover:bg-yellow-600 transition-colors duration-500 ease-in-out"
+            >
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default PersonalInfo;

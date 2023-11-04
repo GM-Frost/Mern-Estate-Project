@@ -17,6 +17,7 @@ import {
   IUserState,
 } from "../redux/userSlice/userSlice";
 import OAuth from "../components/OAuth";
+import Header from "../components/Header";
 
 type IProps = {};
 
@@ -80,7 +81,7 @@ const SignIn = (props: IProps) => {
 
   return (
     <>
-      <Layout />
+      <Header />
       <ToastContainer />
       <section className="min-h-screen flex items-stretch text-white ">
         <div

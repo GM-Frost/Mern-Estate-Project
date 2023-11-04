@@ -62,7 +62,14 @@ export const googleAuth = async (req, res, next) => {
         Math.random().toString(36).slice(-8); //Creating 16 Characters Password
 
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const nameParts = req.body.name.split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ");
+
       const newUser = new User({
+        firstname: firstName,
+        lastname: lastName,
+        title: "Customer",
         username:
           req.body.name.split(" ").join("").toLowerCase() +
           Math.random().toString(36).slice(-4),

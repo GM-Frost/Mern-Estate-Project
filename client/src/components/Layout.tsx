@@ -1,13 +1,15 @@
+import Footer from "../pages/Footer";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 
-type Props = {};
-
-const Layout = (props: Props) => {
+const Layout = () => {
   return (
     <>
-      <Header />
-      <div>{<Outlet />}</div>
+      <div className="flex flex-row h-auto  mx-auto overflow-hidden">
+        <Header />
+        <div>{<Outlet />}</div>
+      </div>
+      <Footer />
     </>
   );
 };
