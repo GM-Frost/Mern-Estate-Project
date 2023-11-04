@@ -30,6 +30,7 @@ export default withMT({
       secondaryDark: "#1c737e",
       secondaryLight: "#00bcd4",
       neutral: "#f2c94c",
+      neutralDark: "#d9ab21",
       light: "#ffffff",
       dark: "#111111",
       baseDark: "#424242",

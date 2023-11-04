@@ -1,9 +1,7 @@
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 
-type Props = {};
-
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <>
       <Hero

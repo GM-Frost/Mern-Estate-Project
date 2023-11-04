@@ -3,7 +3,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
-const ForSale = () => {
+const ForRent = () => {
   return (
     <>
       <div
@@ -29,7 +29,7 @@ const ForSale = () => {
                     <li>Listing</li>
                   </Link>
                   <span>&#62;</span>
-                  <li>For Sale</li>
+                  <li>For Rent</li>
                 </ul>
               </p>
             </div>
@@ -41,7 +41,7 @@ const ForSale = () => {
       <div className="w-full flex-col space-y-10 bg-white-50 mx-auto flex items-center justify-center p-6">
         <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
           <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
-            Property Information - FOR SALE
+            Property Information - FOR RENT
           </div>
           <div className="flex flex-col p-4 space-y-4">
             <div className="flex flex-col w-full space-y-2">
@@ -298,4 +298,4 @@ const ForSale = () => {
   );
 };
 
-export default ForSale;
+export default ForRent;

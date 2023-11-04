@@ -12,6 +12,8 @@ import Listing from "./pages/Listing";
 import ProfileDash from "./pages/ProfileDash";
 import AddListing from "./pages/listing/AddListing";
 import ForSale from "./pages/listing/ForSale";
+import ForRent from "./pages/listing/ForRent";
+import AllListings from "./pages/AllListings";
 
 function App() {
   const router = createBrowserRouter([
@@ -62,6 +64,18 @@ function App() {
           <ForSale />
         </PrivateRoute>
       ),
+    },
+    {
+      path: "/profile/addlisting/forrent",
+      element: (
+        <PrivateRoute>
+          <ForRent />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/listings",
+      element: <AllListings />,
     },
     // {
     //   path: "/profile",

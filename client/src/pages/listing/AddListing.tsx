@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ForRent, ForSale } from "../../assets";
+import Layout from "../../components/Layout";
 
 const AddListing = () => {
   return (
@@ -32,8 +33,8 @@ const AddListing = () => {
         </div>
       </div>
       {/*--------------------- Dashboard Section ---------------- */}
-      <div className="w-full bg-indigo-50 mx-auto flex items-center justify-center p-6">
-        <div className="p-4 w-full h-auto md:h-[800px] lg:w-[80%]">
+      <div className="w-full  min-h-[400px] bg-indigo-50 mx-auto flex items-center justify-center p-6">
+        <div className=" w-full  lg:w-[80%]">
           <div className="flex flex-col md:flex-row gap-2">
             <div className="w-full md:w-1/2 space-y-4 rounded-md bg-primary/10 flex flex-col justify-center items-center">
               <div className="mt-5 relative text-center bg-primary/20 w-32 h-32 justify-center items-center rounded-full">
@@ -47,9 +48,11 @@ const AddListing = () => {
               </div>
               <h1 className="font-bold text-xl">Add Property for Rent</h1>
               <p>Your email address will not be published.</p>
-              <button className="p-5 bg-primary hover:bg-primaryDark rounded-md text-white">
-                Create for Rent
-              </button>
+              <Link to={"/profile/addlisting/forrent"}>
+                <button className="p-5 bg-primary hover:bg-primaryDark rounded-md text-white">
+                  Create for Rent
+                </button>
+              </Link>
               <div></div>
             </div>
             <div className="w-full md:w-1/2 space-y-4 rounded-md bg-primary/10 flex flex-col justify-center items-center">
@@ -74,6 +77,7 @@ const AddListing = () => {
           </div>
         </div>
       </div>
+      <Layout />
     </>
   );
 };

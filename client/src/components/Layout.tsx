@@ -7,7 +7,7 @@ const Layout = () => {
     <>
       <div className="flex flex-row h-auto  mx-auto overflow-hidden">
         <Header />
-        <div className="p-4">{<Outlet />}</div>
+        <div>{<Outlet />}</div>
       </div>
       <Footer />
     </>

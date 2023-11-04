@@ -11,9 +11,12 @@ import Dashboard from "../components/Profile/Dashboard";
 import MyProperties from "../components/Profile/MyProperties";
 import PersonalInfo from "../components/Profile/PersonalInfo";
 import ChangePassword from "../components/Profile/ChangePassword";
+import Layout from "../components/Layout";
 
 const ProfileDash = () => {
   const [selectedItem, setSelectedItem] = useState<string>("Dashboard");
+
+  //USER DETAILS
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
@@ -166,6 +169,7 @@ const ProfileDash = () => {
           </div>
         </div>
       </div>
+      <Layout />
     </>
   );
 };
