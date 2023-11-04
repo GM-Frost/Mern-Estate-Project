@@ -10,6 +10,8 @@ import CreateListing from "./pages/listing/CreateListing";
 import UpdateListing from "./pages/listing/UpdateListing";
 import Listing from "./pages/Listing";
 import ProfileDash from "./pages/ProfileDash";
+import AddListing from "./pages/listing/AddListing";
+import ForSale from "./pages/listing/ForSale";
 
 function App() {
   const router = createBrowserRouter([
@@ -30,10 +32,34 @@ function App() {
       element: <SignUp />,
     },
     {
+      path: "/profileold",
+      element: (
+        <PrivateRoute>
+          <Profile />
+        </PrivateRoute>
+      ),
+    },
+    {
       path: "/profile",
       element: (
         <PrivateRoute>
           <ProfileDash />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/profile/addlisting",
+      element: (
+        <PrivateRoute>
+          <AddListing />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/profile/addlisting/forsale",
+      element: (
+        <PrivateRoute>
+          <ForSale />
         </PrivateRoute>
       ),
     },

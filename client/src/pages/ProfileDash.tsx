@@ -46,7 +46,7 @@ const ProfileDash = () => {
       </div>
       {/*--------------------- Dashboard Section ---------------- */}
       <div className="w-full bg-indigo-50 mx-auto flex items-center justify-center p-6">
-        <div className="bg-white rounded-md shadow-md p-4 w-full md:w-[80%]">
+        <div className="bg-white rounded-md shadow-md p-4 w-full  lg:w-[80%]">
           <div className="flex flex-col md:flex-row">
             <div className="leftside sm:w-30 md:w-1/4 p-2 flex items-center justify-center">
               <div className="flex flex-col w-full md:justify-start sm:justify-center sm:items-center bg-primary/10 h-full overflow-y-auto">

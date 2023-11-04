@@ -1,14 +1,17 @@
 import { FaEdit, FaEye } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const MyProperties = () => {
   return (
     <div className="flex flex-col flex-wrap w-full h-full space-y-3">
       <div className="flex flex-wrap font-bold justify-between items-start text-start">
         <h1>My Properties</h1>
-        <div className="p-3 bg-primaryLight rounded-lg text-white flex flex-wrap gap-3 hover:bg-primaryDark cursor-pointer transition-colors duration-300 ease-in-out">
-          Add Listing +
-        </div>
+        <Link to={"/profile/addlisting"}>
+          <div className="p-3 bg-primaryLight rounded-lg text-white flex flex-wrap gap-3 hover:bg-primaryDark cursor-pointer transition-colors duration-300 ease-in-out">
+            Add Listing +
+          </div>
+        </Link>
       </div>
       <div className="bg-primaryLight/10 p-4 mt-10 gap-1 flex flex-wrap flex-col  md:flex-row items-center justify-center">
         <div className="relative md:w-[25%] w-full ">
@@ -31,7 +34,7 @@ const MyProperties = () => {
             <div>(10 Ratings)</div>
           </div>
         </div>
-        <div className="md:w-[5%] w-full justify-evenly flex flex-row md:flex-col flex-wrap md:space-y-2">
+        <div className="md:w-[5%] w-full items-center justify-evenly lg:justify-center text-center flex flex-row md:flex-col flex-wrap md:space-y-2">
           <div className="p-2 bg-primaryDark/40 rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
             <FaEye />
           </div>

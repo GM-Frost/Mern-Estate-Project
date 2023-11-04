@@ -36,9 +36,11 @@ const PersonalInfo = () => {
               <FaMapMarkerAlt className=" text-primary text-xl" /> 2972
               Westheimer Rd. Santa Ana, Illinois 85486
             </div>
-            <div className="flex space-x-20 mt-3 items-center text-center justify-center">
-              <FaPhone /> <FaLinkedin /> <FaTwitter />
-              <FaInstagram />
+            <div className="flex  space-x-20 mt-3 items-center text-center justify-center">
+              <FaPhone className="hover:text-primary cursor-pointer" />
+              <FaLinkedin className="hover:text-primary cursor-pointer" />
+              <FaTwitter className="hover:text-primary cursor-pointer" />
+              <FaInstagram className="hover:text-primary cursor-pointer" />
             </div>
           </div>
         </div>

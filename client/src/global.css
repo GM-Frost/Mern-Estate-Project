@@ -20,3 +20,31 @@ textarea:focus {
 .custom-img {
   background-image: url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
 }
+
+#check-box-1:checked ~ .check-1 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+
+#check-box-2:checked ~ .check-2 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#check-box-3:checked ~ .check-3 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#check-box-4:checked ~ .check-4 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+
+@keyframes check-animation {
+  0%,
+  100% {
+    @apply transform scale-100;
+  }
+  50% {
+    @apply transform scale-150 text-opacity-0;
+  }
+}

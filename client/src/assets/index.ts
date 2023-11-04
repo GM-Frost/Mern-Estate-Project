@@ -13,6 +13,9 @@ import Abstract9 from "./abstract9.jpg";
 import Building1 from "./building1.jpg";
 import Building2 from "./building2.jpg";
 import Building3 from "./building3.jpg";
+
+import ForRent from "./ForRent.png";
+import ForSale from "./ForSale.png";
 export {
   LogoLight,
   LogoDark,
@@ -28,4 +31,6 @@ export {
   Building1,
   Building2,
   Building3,
+  ForSale,
+  ForRent,
 };
