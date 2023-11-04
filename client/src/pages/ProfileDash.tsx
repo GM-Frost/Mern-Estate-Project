@@ -46,8 +46,8 @@ const ProfileDash = () => {
       <div className="w-full bg-indigo-50 mx-auto flex items-center justify-center p-6">
         <div className="bg-white rounded-md shadow-md p-4 w-full md:w-[80%]">
           <div className="flex flex-col md:flex-row">
-            <div className="sm:w-30 md:w-1/4 p-2  flex items-center justify-center">
-              <div className="flex flex-col w-full md:justify-start sm:justify-center sm:items-center bg-primary/10 ">
+            <div className="leftside sm:w-30 md:w-1/4 p-2 flex items-center justify-center">
+              <div className="flex flex-col w-full md:justify-start sm:justify-center sm:items-center bg-primary/10 h-full overflow-y-auto">
                 <ul className="text-center items-center w-full text-baseLight">
                   <li
                     onClick={() => handleItemClick("Dashboard")}
@@ -154,7 +154,7 @@ const ProfileDash = () => {
                 </ul>
               </div>
             </div>
-            <div className="sm:w-70 md:w-3/4 p-2 flex items-center justify-center">
+            <div className="rightside h-auto overflow-y-scroll sm:w-70 md:w-3/4 p-2 flex items-center justify-center">
               {selectedItem === "Dashboard" && <Dashboard />}
               {selectedItem === "MyProperties" && <MyProperties />}
             </div>
