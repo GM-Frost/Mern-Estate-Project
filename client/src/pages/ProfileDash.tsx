@@ -9,6 +9,8 @@ import {
 } from "react-icons/bi";
 import Dashboard from "../components/Profile/Dashboard";
 import MyProperties from "../components/Profile/MyProperties";
+import PersonalInfo from "../components/Profile/PersonalInfo";
+import ChangePassword from "../components/Profile/ChangePassword";
 
 const ProfileDash = () => {
   const [selectedItem, setSelectedItem] = useState<string>("Dashboard");
@@ -157,6 +159,9 @@ const ProfileDash = () => {
             <div className="rightside h-auto overflow-y-scroll sm:w-70 md:w-3/4 p-2 flex items-center justify-center">
               {selectedItem === "Dashboard" && <Dashboard />}
               {selectedItem === "MyProperties" && <MyProperties />}
+              {selectedItem === "PersonalInfo" && <PersonalInfo />}
+              {selectedItem === "mySaved" && <PersonalInfo />}
+              {selectedItem === "changePassword" && <ChangePassword />}
             </div>
           </div>
         </div>
