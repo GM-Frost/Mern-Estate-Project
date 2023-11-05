@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ListingScheme = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
@@ -10,7 +10,23 @@ const ListingScheme = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    type: {
+      type: String,
+      require: true,
+    },
+    addressCity: {
+      type: String,
+      required: true,
+    },
+    addressProvince: {
+      type: String,
+      required: true,
+    },
+    addressLine: {
+      type: String,
+      required: true,
+    },
+    addressGoogle: {
       type: String,
       required: true,
     },
@@ -30,20 +46,24 @@ const ListingScheme = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    furnished: {
+    amenityFurnished: {
       type: Boolean,
       required: true,
     },
-    parking: {
+    amenityParking: {
       type: Boolean,
       required: true,
     },
-    type: {
+    amenityAC: {
+      type: Boolean,
+      required: true,
+    },
+    amenityWasher: {
+      type: Boolean,
+      required: true,
+    },
+    propertyType: {
       type: String,
-      required: true,
-    },
-    offer: {
-      type: Boolean,
       required: true,
     },
     imageUrls: {

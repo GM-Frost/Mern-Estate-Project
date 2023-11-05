@@ -1,9 +1,12 @@
-import { FaEdit, FaEye } from "react-icons/fa";
+import { FaEdit, FaEye, FaParking } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IUserState } from "../../redux/userSlice/userSlice";
 import { useEffect, useState } from "react";
+import { AiFillCar } from "react-icons/ai";
+import { TbAirConditioning } from "react-icons/tb";
+import { LuSofa } from "react-icons/lu";
 
 const MyProperties = () => {
   const [showListingsError, setShowListingsError] = useState<boolean>(false);
@@ -47,40 +50,77 @@ const MyProperties = () => {
           </div>
         </Link>
       </div>
-      {userListings.length > 0 ? (
-        <div className="bg-primaryLight/10 p-4 mt-10 gap-1 flex flex-wrap flex-col  md:flex-row items-center justify-center">
-          <div className="relative md:w-[25%] w-full ">
-            <img
-              className="rounded-md object-cover h-48 w-full"
-              src="https://source.unsplash.com/random"
-              alt="Listing Image"
-            />
-            <div className="absolute -top-4 -right-4 text-white bg-green-500 p-2">
-              Active
+
+      {userListings && userListings.length > 0 ? (
+        userListings.map((listing: any) => (
+          <div
+            key={listing._id}
+            className="bg-primaryLight/10 p-4 mt-10 gap-1 flex flex-wrap flex-col  md:flex-row items-center justify-center"
+          >
+            <div className="relative md:w-[25%] w-full ">
+              <img
+                className="rounded-md object-cover h-48 w-full"
+                src={listing.imageUrls[0]}
+                alt="Listing Image"
+              />
+              <div className="absolute -top-4 -right-4 text-white bg-green-500 p-2">
+                Active
+              </div>
+            </div>
+            <div className="md:w-[68%] w-full  flex flex-col p-2 flex-wrap">
+              <div className="flex justify-center">
+                <h2 className="text-sm p-1 bg-neutral md:w-1/5 md:h-8 w-full rounded-lg text-center items-center ">
+                  For {listing.type}
+                </h2>
+              </div>
+              <div className="mt-2 space-y-3">
+                <h1 className="font-bold">{listing.title}</h1>
+                <div>
+                  {listing.addressLine}, {listing.addressCity},{" "}
+                  {listing.addressProvince}
+                </div>
+                <div>
+                  Property Type:{" "}
+                  <span className="font-bold text-primaryDark">
+                    {listing.propertyType}
+                  </span>
+                </div>
+                <div className="flex">
+                  <label htmlFor="amenities">
+                    Amenities
+                    {listing.amenityParking ? (
+                      <FaParking className="text-2xl" />
+                    ) : (
+                      ""
+                    )}
+                    {listing.amenityAC ? (
+                      <TbAirConditioning className="text-2xl" />
+                    ) : (
+                      ""
+                    )}
+                    {listing.amenityFurnished ? (
+                      <LuSofa className="text-2xl" />
+                    ) : (
+                      ""
+                    )}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="md:w-[5%] w-full items-center justify-evenly lg:justify-center text-center flex flex-row md:flex-col flex-wrap md:space-y-2">
+              <div className="p-2 bg-primaryDark/40 hover:bg-primaryDark rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
+                <FaEye />
+              </div>
+              <div className="p-2 bg-primaryDark/40 hover:bg-neutralDark rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
+                <FaEdit />
+              </div>
+              <div className="p-2 bg-primaryDark/40 hover:bg-red-700 rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
+                <RiDeleteBin5Fill />
+              </div>
             </div>
           </div>
-          <div className="md:w-[68%] w-full  flex flex-col p-2   flex-wrap">
-            <h2 className="text-sm p-1 bg-neutral md:w-1/3 w-full rounded-lg text-center items-center">
-              For to Sale
-            </h2>
-            <div className="mt-2 space-y-1">
-              <h1 className="font-bold">Northwest Office Space</h1>
-              <div>1901 Thornridge Cir. Shiloh, Hawaii 81063</div>
-              <div>(10 Ratings)</div>
-            </div>
-          </div>
-          <div className="md:w-[5%] w-full items-center justify-evenly lg:justify-center text-center flex flex-row md:flex-col flex-wrap md:space-y-2">
-            <div className="p-2 bg-primaryDark/40 hover:bg-primaryDark rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
-              <FaEye />
-            </div>
-            <div className="p-2 bg-primaryDark/40 hover:bg-neutralDark rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
-              <FaEdit />
-            </div>
-            <div className="p-2 bg-primaryDark/40 hover:bg-red-700 rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
-              <RiDeleteBin5Fill />
-            </div>
-          </div>
-        </div>
+        ))
       ) : (
         <p className="flex justify-center text-center">
           "You have no Listings"
