@@ -180,7 +180,7 @@ const Navbar = () => {
                     <Link to={"/profile"} className="flex justify-between">
                       Profile
                       <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary ">
-                        {currentUser.firstname}
+                        {currentUser ? currentUser.firstname : "N/A"}
                       </span>
                     </Link>
                   </a>

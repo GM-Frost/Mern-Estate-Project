@@ -123,7 +123,13 @@ const ForSale = () => {
       e.target.id === "amenityParking" ||
       e.target.id === "amenityFurnished" ||
       e.target.id === "amenityAC" ||
-      e.target.id === "amenityWasher"
+      e.target.id === "amenityHeating" ||
+      e.target.id === "amenityWasher" ||
+      e.target.id === "amenityDryer" ||
+      e.target.id === "amenityWifi" ||
+      e.target.id === "amenityGym" ||
+      e.target.id === "amenitySwimming" ||
+      e.target.id === "amenitySecurity"
     ) {
       if (isCheckboxInput(e.target)) {
         setFormData({ ...formData, [e.target.id]: e.target.checked });
@@ -151,6 +157,7 @@ const ForSale = () => {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload atleast one image");
@@ -314,7 +321,7 @@ const ForSale = () => {
                 </div>
               </div>
               <div className="flex flex-col md:gap-5 md:flex-row md:justify-evenly space-y-4 md:space-y-0">
-                <div className="flex flex-col w-full md:w-1/2 space-y-2">
+                <div className="flex flex-col w-full md:w-1/3 space-y-2">
                   <label htmlFor="PropertyType">Total Bedroom*</label>
                   <input
                     type="number"
@@ -325,7 +332,7 @@ const ForSale = () => {
                     value={formData.bedrooms}
                   />
                 </div>
-                <div className="flex flex-col  w-full md:w-1/2 space-y-2">
+                <div className="flex flex-col  w-full md:w-1/3 space-y-2">
                   <label htmlFor="PropertyType">Total Bathroom*</label>
                   <input
                     type="number"
@@ -334,6 +341,17 @@ const ForSale = () => {
                     id="bathrooms"
                     onChange={handleFormChange}
                     value={formData.bathrooms}
+                  />
+                </div>
+                <div className="flex flex-col  w-full md:w-1/3 space-y-2">
+                  <label htmlFor="PropertyType">Total Kitchen*</label>
+                  <input
+                    type="number"
+                    placeholder="1"
+                    className="bg-primary/10 p-2 rounded-md"
+                    id="kitchen"
+                    onChange={handleFormChange}
+                    value={formData.kitchen}
                   />
                 </div>
               </div>
@@ -506,8 +524,8 @@ const ForSale = () => {
             <div className="flex flex-wrap p-4 space-y-4">
               <div className="flex flex-wrap md:gap-5 md:flex-row md:justify-evenly space-y-4 md:space-y-0">
                 <div className="space-x-2">
-                  <div className="inline-flex items-center">
-                    <div className="flex space-x-10 justify-evenly flex-wrap gap-4">
+                  <div className="inline-flex items-center justify-center">
+                    <div className="grid grid-cols-3 md:grid-cols-5 items-center  gap-4">
                       <label
                         htmlFor="amenityParking"
                         className="cursor-pointer relative"
@@ -555,6 +573,22 @@ const ForSale = () => {
                           className="check-3 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
                         />{" "}
                         A/C
+                      </label>{" "}
+                      <label
+                        htmlFor="amenityHeating"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenityHeating"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-4 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Heating
                       </label>
                       <label
                         htmlFor="amenityWasher"
@@ -568,9 +602,89 @@ const ForSale = () => {
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
-                          className="check-4 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                          className="check-5 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
                         />{" "}
-                        Washer/Dryer
+                        Washer
+                      </label>
+                      <label
+                        htmlFor="amenityDryer"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenityDryer"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-6 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Dryer
+                      </label>
+                      <label
+                        htmlFor="amenityWifi"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenityWifi"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-7 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Wifi
+                      </label>
+                      <label
+                        htmlFor="amenityGym"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenityGym"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-8 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Gym
+                      </label>
+                      <label
+                        htmlFor="amenitySwimming"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenitySwimming"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-9 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Swimming Pool
+                      </label>
+                      <label
+                        htmlFor="amenitySecurity"
+                        className="cursor-pointer relative"
+                      >
+                        <input
+                          type="checkbox"
+                          id="amenitySecurity"
+                          className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                          onChange={handleFormChange}
+                        />
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="check-10 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                        />{" "}
+                        Security System
                       </label>
                     </div>
                   </div>

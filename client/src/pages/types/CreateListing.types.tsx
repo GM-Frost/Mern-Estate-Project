@@ -1,23 +1,30 @@
 export interface IListingFormData {
-  imageUrls: string[];
   title: string;
-  type: string;
   description: string;
-  propertyType: string;
-  bedrooms: number;
-  bathrooms: number;
-  regularPrice: number;
-  discountPrice: number;
-  totalArea: number;
-  totalUnit: number;
+  type: string;
   addressCity: string;
   addressProvince: string;
   addressLine: string;
   addressGoogle: string;
+  regularPrice: number;
+  discountPrice: number;
+  totalArea: number;
+  totalUnit: number;
+  bathrooms: number;
+  bedrooms: number;
+  kitchen: number;
   amenityParking: boolean;
   amenityFurnished: boolean;
   amenityAC: boolean;
+  amenityHeating: boolean;
   amenityWasher: boolean;
+  amenityDryer: boolean;
+  amenityWifi: boolean;
+  amenityGym: boolean;
+  amenitySwimming: boolean;
+  amenitySecurity: boolean;
+  propertyType: string;
+  imageUrls: string[];
 }
 export const lFormInitialValue: IListingFormData = {
   imageUrls: [],
@@ -27,6 +34,7 @@ export const lFormInitialValue: IListingFormData = {
   propertyType: "",
   bedrooms: 1,
   bathrooms: 1,
+  kitchen: 1,
   regularPrice: 50,
   discountPrice: 0,
   totalArea: 0.0,
@@ -38,5 +46,11 @@ export const lFormInitialValue: IListingFormData = {
   amenityParking: false,
   amenityFurnished: false,
   amenityAC: false,
+  amenityHeating: false,
   amenityWasher: false,
+  amenityDryer: false,
+  amenityWifi: false,
+  amenityGym: false,
+  amenitySwimming: false,
+  amenitySecurity: false,
 };

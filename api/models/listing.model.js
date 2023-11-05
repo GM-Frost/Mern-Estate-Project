@@ -38,6 +38,14 @@ const ListingScheme = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    totalArea: {
+      type: Number,
+      required: true,
+    },
+    totalUnit: {
+      type: Number,
+      required: true,
+    },
     bathrooms: {
       type: Number,
       required: true,
@@ -46,11 +54,15 @@ const ListingScheme = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    amenityFurnished: {
-      type: Boolean,
+    kitchen: {
+      type: Number,
       required: true,
     },
     amenityParking: {
+      type: Boolean,
+      required: true,
+    },
+    amenityFurnished: {
       type: Boolean,
       required: true,
     },
@@ -58,7 +70,31 @@ const ListingScheme = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    amenityHeating: {
+      type: Boolean,
+      required: true,
+    },
     amenityWasher: {
+      type: Boolean,
+      required: true,
+    },
+    amenityDryer: {
+      type: Boolean,
+      required: true,
+    },
+    amenityWifi: {
+      type: Boolean,
+      required: true,
+    },
+    amenityGym: {
+      type: Boolean,
+      required: true,
+    },
+    amenitySwimming: {
+      type: Boolean,
+      required: true,
+    },
+    amenitySecurity: {
       type: Boolean,
       required: true,
     },

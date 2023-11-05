@@ -1,12 +1,17 @@
-import { FaEdit, FaEye, FaParking } from "react-icons/fa";
+import { FaBed, FaEdit, FaEye, FaParking, FaShower } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IUserState } from "../../redux/userSlice/userSlice";
 import { useEffect, useState } from "react";
-import { AiFillCar } from "react-icons/ai";
-import { TbAirConditioning } from "react-icons/tb";
+
+import { TbAirConditioning, TbWashMachine } from "react-icons/tb";
 import { LuSofa } from "react-icons/lu";
+import { GiWifiRouter } from "react-icons/gi";
+import { Tooltip } from "@material-tailwind/react";
+import { BsThermometerSnow } from "react-icons/bs";
+import { BiCctv, BiSolidDryer } from "react-icons/bi";
+import { CgGym } from "react-icons/cg";
 
 const MyProperties = () => {
   const [showListingsError, setShowListingsError] = useState<boolean>(false);
@@ -69,7 +74,13 @@ const MyProperties = () => {
             </div>
             <div className="md:w-[68%] w-full  flex flex-col p-2 flex-wrap">
               <div className="flex justify-center">
-                <h2 className="text-sm p-1 bg-neutral md:w-1/5 md:h-8 w-full rounded-lg text-center items-center ">
+                <h2
+                  className={`text-sm p-1 ${
+                    listing.type === "Sale"
+                      ? "bg-neutral text-black"
+                      : "bg-red-600 text-white"
+                  } md:w-1/5 md:h-8 w-full rounded-lg text-center items-center`}
+                >
                   For {listing.type}
                 </h2>
               </div>
@@ -85,24 +96,187 @@ const MyProperties = () => {
                     {listing.propertyType}
                   </span>
                 </div>
-                <div className="flex">
+                <div>
                   <label htmlFor="amenities">
                     Amenities
-                    {listing.amenityParking ? (
-                      <FaParking className="text-2xl" />
-                    ) : (
-                      ""
-                    )}
-                    {listing.amenityAC ? (
-                      <TbAirConditioning className="text-2xl" />
-                    ) : (
-                      ""
-                    )}
-                    {listing.amenityFurnished ? (
-                      <LuSofa className="text-2xl" />
-                    ) : (
-                      ""
-                    )}
+                    <div className="flex space-x-3">
+                      {listing.bedrooms ? (
+                        <Tooltip
+                          content="Bedrooms"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <FaBed className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityFurnished ? (
+                        <Tooltip
+                          content="Furnished"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <LuSofa className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.bathrooms ? (
+                        <Tooltip
+                          content="Bathrooms"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <FaShower className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityWifi ? (
+                        <Tooltip
+                          content="Wifi"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <GiWifiRouter className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityAC ? (
+                        <Tooltip
+                          content="Cooling"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <TbAirConditioning className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityHeating ? (
+                        <Tooltip
+                          content="Heating"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <BsThermometerSnow className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityWasher ? (
+                        <Tooltip
+                          content="Washer"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <TbWashMachine className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityDryer ? (
+                        <Tooltip
+                          content="Dryer"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <BiSolidDryer className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityGym ? (
+                        <Tooltip
+                          content="Gym Access"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <CgGym className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenitySecurity ? (
+                        <Tooltip
+                          content="Security"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <BiCctv className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                      {listing.amenityParking ? (
+                        <Tooltip
+                          content="Parking"
+                          placement="top"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <div>
+                            <FaParking className="text-lg md:text-2xl" />
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </label>
                 </div>
               </div>

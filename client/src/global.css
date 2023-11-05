@@ -34,7 +34,32 @@ textarea:focus {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
-#amenityWasher:checked ~ .check-4 {
+#amenityHeating:checked ~ .check-4 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#amenityWasher:checked ~ .check-5 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#amenityDryer:checked ~ .check-6 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+
+#amenityWifi:checked ~ .check-7 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#amenityGym:checked ~ .check-8 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#amenitySwimming:checked ~ .check-9 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#amenitySecurity:checked ~ .check-10 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
