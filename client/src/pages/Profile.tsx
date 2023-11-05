@@ -37,6 +37,7 @@ import Header from "../components/Header";
 type IFormData = {
   avatar?: string;
 };
+
 const Profile = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
@@ -82,7 +83,7 @@ const Profile = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePercentage(Math.round(progress));
       },
-      (error) => {
+      () => {
         setFileUploadError(true);
       },
       () => {

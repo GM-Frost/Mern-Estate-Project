@@ -12,14 +12,37 @@ import MyProperties from "../components/Profile/MyProperties";
 import PersonalInfo from "../components/Profile/PersonalInfo";
 import ChangePassword from "../components/Profile/ChangePassword";
 import Layout from "../components/Layout";
+import {
+  signoutUserFailure,
+  signoutUserStart,
+  signoutUserSuccess,
+} from "../redux/userSlice/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileDash = () => {
+  const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<string>("Dashboard");
 
   //USER DETAILS
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
+  };
+
+  //HANDLE SIGNOUT
+  const handleSignOut = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutUserFailure(data.message));
+        return;
+      }
+      dispatch(signoutUserSuccess(data));
+    } catch (error) {
+      dispatch(signoutUserFailure(error.message));
+    }
   };
 
   return (
