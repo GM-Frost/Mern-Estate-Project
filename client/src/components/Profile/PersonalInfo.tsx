@@ -1,5 +1,6 @@
 import {
   FaEnvelope,
+  FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaMapMarkerAlt,
@@ -390,11 +391,19 @@ const PersonalInfo = () => {
                   <FaMapMarkerAlt className=" text-primary text-xl" />
                   {currentUser.address ? currentUser.address : "N/A"}
                 </div>
-                <div className="flex  space-x-20 mt-3 items-center text-center justify-center">
-                  <FaPhone className="hover:text-primary cursor-pointer" />
-                  <FaLinkedin className="hover:text-primary cursor-pointer" />
-                  <FaTwitter className="hover:text-primary cursor-pointer" />
-                  <FaInstagram className="hover:text-primary cursor-pointer" />
+                <div className="flex text-lg space-x-20 mt-3 items-center text-center justify-center">
+                  <a href={currentUser?.socialLinks.facebook ?? "#"}>
+                    <FaFacebook className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.linkedin ?? "#"}>
+                    <FaLinkedin className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.twitter ?? "#"}>
+                    <FaTwitter className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.instagram ?? "#"}>
+                    <FaInstagram className="hover:text-primary cursor-pointer" />
+                  </a>
                 </div>
               </div>
             </div>
