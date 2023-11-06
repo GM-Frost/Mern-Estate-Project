@@ -61,7 +61,7 @@ const PropertyDetails = ({ listing }) => {
         <h1 className="text-lg font-bold text-primaryDark">Amenities</h1>
         <div className="mt-3">
           <div className="grid grid-cols-1 md:grid-cols-3  gap-3">
-            <div className="flex justify-evenly">
+            <div className="flex justify-center gap-4 flex-wrap">
               {listing.bedrooms ? (
                 <Tooltip
                   content="Bedrooms"
@@ -72,7 +72,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <FaBed className="text-lg md:text-2xl" />
+                    <FaBed className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -88,7 +88,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <LuSofa className="text-lg md:text-2xl" />
+                    <LuSofa className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -104,7 +104,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <FaShower className="text-lg md:text-2xl" />
+                    <FaShower className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -120,7 +120,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <GiWifiRouter className="text-lg md:text-2xl" />
+                    <GiWifiRouter className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -136,7 +136,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <TbAirConditioning className="text-lg md:text-2xl" />
+                    <TbAirConditioning className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -152,7 +152,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <BsThermometerSnow className="text-lg md:text-2xl" />
+                    <BsThermometerSnow className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -168,7 +168,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <TbWashMachine className="text-lg md:text-2xl" />
+                    <TbWashMachine className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -184,7 +184,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <BiSolidDryer className="text-lg md:text-2xl" />
+                    <BiSolidDryer className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -200,7 +200,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <CgGym className="text-lg md:text-2xl" />
+                    <CgGym className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -216,7 +216,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <BiCctv className="text-lg md:text-2xl" />
+                    <BiCctv className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -232,7 +232,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <FaSwimmer className="text-lg md:text-2xl" />
+                    <FaSwimmer className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (
@@ -248,7 +248,7 @@ const PropertyDetails = ({ listing }) => {
                   }}
                 >
                   <div>
-                    <FaParking className="text-lg md:text-2xl" />
+                    <FaParking className="text-2xl" />
                   </div>
                 </Tooltip>
               ) : (

@@ -6,7 +6,7 @@ type Props = {
 const Hero = ({ heading, message }: Props) => {
   return (
     <>
-      <div className="relative flex items-center justify-center h-screen mb-[12rem] bg-fixed bg-center bg-cover custom-img">
+      <div className="relative flex items-center justify-center h-screen  bg-fixed bg-center bg-cover custom-img">
         <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/70 z-[2] " />
         <div className="p-5 text-white z-[2]  mt-[-30rem] text-center  translate-y-3/4">
           <div className="flex items-center justify-center text-center flex-col flex-wrap">

@@ -25,6 +25,7 @@ import Layout from "../../../components/Layout";
 
 const EditListing = () => {
   const params = useParams();
+
   const [files, setFiles] = useState<FileList | null>(null);
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
@@ -189,7 +190,7 @@ const EditListing = () => {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-          type: "Sale",
+          type: listType,
           agentProfile: currentUser?.avatar,
         }),
       });
@@ -209,6 +210,7 @@ const EditListing = () => {
     }
   };
 
+  const listType = formData.type;
   return (
     <>
       <ToastContainer />
@@ -235,7 +237,7 @@ const EditListing = () => {
                     <li>Update Listing</li>
                   </Link>
                   <span>&#62;</span>
-                  <li>For Sale</li>
+                  <li>For {formData.type}</li>
                 </ul>
               </p>
             </div>
@@ -254,7 +256,7 @@ const EditListing = () => {
         >
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
             <div className="flex bg-neutral/60  text-baseDark w-full m-0 p-4 rounded-t-lg">
-              Update Property Information - FOR SALE
+              Update Property Information - {formData.type.toUpperCase()}
             </div>
             <div className="flex flex-col p-4 space-y-8">
               <div className="flex flex-col w-full space-y-2">
