@@ -17,7 +17,6 @@ import PropertyDetails from "./listing/PropertyDetails";
 import { Abstract8 } from "../assets";
 import Loading from "../components/Loading";
 import { IListingFormData } from "./types/CreateListing.types";
-import { FaLinkedinIn } from "react-icons/fa";
 import {
   BsEnvelope,
   BsFacebook,
@@ -27,6 +26,8 @@ import {
   BsPhoneFlip,
   BsTwitter,
 } from "react-icons/bs";
+import Page404 from "../components/Page404";
+import { IAgentDetails, InitialAgentDetails } from "./types/AgentDetails.types";
 
 const Listing = () => {
   const params = useParams();
@@ -39,7 +40,7 @@ const Listing = () => {
   const [coverImage, setCoverImage] = useState<string>("");
 
   //AGENT USESTATE
-  const [agent, setAgent] = useState(null);
+  const [agent, setAgent] = useState<IAgentDetails>(InitialAgentDetails);
   const [loadingAgent, setLoadingAgent] = useState(true);
   const [errorAgent, setErrorAgent] = useState(false);
 
@@ -61,7 +62,7 @@ const Listing = () => {
     {
       label: "Property Details",
       value: "propertyDetails",
-      desc: <PropertyDetails />,
+      desc: <PropertyDetails listing={listing} />,
     },
     {
       label: "Locations",
@@ -129,9 +130,7 @@ const Listing = () => {
     <>
       <main className="mt-20 min-h-screen w-screen flex flex-col items-center">
         {loading && <Loading loadingactive />}
-        {error && (
-          <p className="text-center my-7 text-2xl">Something went wrong!</p>
-        )}
+        {error && <Page404 />}
         {listing && !loading && !error && (
           <>
             <div className="relative w-full">
@@ -258,53 +257,58 @@ const Listing = () => {
                           <h1 className="my-5 text-start text-white font-bold text-3xl">
                             Property Agent
                           </h1>
-                          <div className="flex flex-row justify-start gap-4 ">
-                            <div className="avatar">
-                              <div className="w-24 rounded-full ring ring-primaryDark ring-offset-base-100 ring-offset-2">
-                                <img
-                                  src={agent?.avatar}
-                                  className="rounded-full object-cover"
-                                />
+                          {loadingAgent ? (
+                            "Loading..."
+                          ) : (
+                            <div className="flex flex-row justify-start gap-4 ">
+                              <div className="avatar">
+                                <div className="w-24 rounded-full ring ring-primaryDark ring-offset-base-100 ring-offset-2">
+                                  <img
+                                    src={agent?.avatar}
+                                    className="rounded-full object-cover"
+                                  />
+                                </div>
+                              </div>
+                              <div className="space-y-5">
+                                <div className="text-white">
+                                  <h2 className="font-bold text-xl">
+                                    {agent?.firstname} {agent?.lastname}
+                                  </h2>
+                                  <p className="font-bold text-sm">
+                                    {agent?.title}
+                                  </p>
+                                </div>
+                                <div className="text-white">
+                                  <p className="flex gap-2">
+                                    <BsEnvelope className="text-xl" />
+                                    {agent?.email}
+                                  </p>
+                                  <p className="flex gap-2">
+                                    <BsPhoneFlip className="text-xl" />
+                                    {agent?.phone}
+                                  </p>
+                                </div>
+                                <div className="text-white flex gap-4">
+                                  <a href={agent?.socialLinks.linkedin}>
+                                    <BsLinkedin className="text-xl hover:text-neutral cursor-pointer" />
+                                  </a>
+                                  <a href={agent?.socialLinks.facebook}>
+                                    <BsFacebook className="text-xl hover:text-neutral cursor-pointer" />
+                                  </a>
+                                  <a href={agent?.socialLinks.instagram}>
+                                    <BsInstagram className="text-xl hover:text-neutral cursor-pointer" />
+                                  </a>
+                                  <a href={agent?.socialLinks.twitter}>
+                                    <BsTwitter className="text-xl hover:text-neutral cursor-pointer" />
+                                  </a>
+                                  <a href={agent?.socialLinks.portfolio}>
+                                    <BsGlobe2 className="text-xl hover:text-neutral cursor-pointer" />
+                                  </a>
+                                </div>
                               </div>
                             </div>
-                            <div className="space-y-5">
-                              <div className="text-white">
-                                <h2 className="font-bold text-xl">
-                                  {agent?.firstname} {agent?.lastname}
-                                </h2>
-                                <p className="font-bold text-sm">
-                                  {agent?.title}
-                                </p>
-                              </div>
-                              <div className="text-white">
-                                <p className="flex gap-2">
-                                  <BsEnvelope className="text-xl" />
-                                  {agent?.email}
-                                </p>
-                                <p className="flex gap-2">
-                                  <BsPhoneFlip className="text-xl" />
-                                  {agent?.phone}
-                                </p>
-                              </div>
-                              <div className="text-white flex gap-4">
-                                <a href={agent?.socialLinks.linkedin}>
-                                  <BsLinkedin className="text-xl hover:text-neutral cursor-pointer" />
-                                </a>
-                                <a href={agent?.socialLinks.facebook}>
-                                  <BsFacebook className="text-xl hover:text-neutral cursor-pointer" />
-                                </a>
-                                <a href={agent?.socialLinks.instagram}>
-                                  <BsInstagram className="text-xl hover:text-neutral cursor-pointer" />
-                                </a>
-                                <a href={agent?.socialLinks.twitter}>
-                                  <BsTwitter className="text-xl hover:text-neutral cursor-pointer" />
-                                </a>
-                                <a href={agent?.socialLinks.portfolio}>
-                                  <BsGlobe2 className="text-xl hover:text-neutral cursor-pointer" />
-                                </a>
-                              </div>
-                            </div>
-                          </div>
+                          )}
+                          {errorAgent ?? "Error: Agent not found"}
                           <hr className="my-8   bg-neutral-100 opacity-50 dark:opacity-50" />
                         </div>
 

@@ -22,7 +22,8 @@ const Navbar = () => {
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
   );
-  const isNotHeroNav = location.pathname === "/about";
+  const isNotHeroNav =
+    location.pathname === "/about" || /^\/listing\/\w+/.test(location.pathname);
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);

@@ -16,6 +16,9 @@ import Building3 from "./building3.jpg";
 
 import ForRent from "./ForRent.png";
 import ForSale from "./ForSale.png";
+
+import Background404 from "./404Background.png";
+
 export {
   LogoLight,
   LogoDark,
@@ -33,4 +36,5 @@ export {
   Building3,
   ForSale,
   ForRent,
+  Background404,
 };

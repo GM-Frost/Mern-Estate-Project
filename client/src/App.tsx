@@ -14,6 +14,7 @@ import AddListing from "./pages/listing/AddListing";
 import ForSale from "./pages/listing/ForSale";
 import ForRent from "./pages/listing/ForRent";
 import AllListings from "./pages/AllListings";
+import Page404 from "./components/Page404";
 
 function App() {
   const router = createBrowserRouter([
@@ -77,14 +78,6 @@ function App() {
       path: "/listings",
       element: <AllListings />,
     },
-    // {
-    //   path: "/profile",
-    //   element: (
-    //     <PrivateRoute>
-    //       <Profile />
-    //     </PrivateRoute>
-    //   ),
-    // },
     {
       path: "/create-listing",
       element: (
@@ -104,6 +97,10 @@ function App() {
     {
       path: "/listing/:listingId",
       element: <Listing />,
+    },
+    {
+      path: "*",
+      element: <Page404 />,
     },
   ]);
 
