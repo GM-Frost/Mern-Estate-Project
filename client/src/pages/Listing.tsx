@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
-import { PropagateLoader } from "react-spinners";
 
 import {
   Button,
@@ -16,22 +15,34 @@ import {
 } from "@material-tailwind/react";
 import PropertyDetails from "./listing/PropertyDetails";
 import { Abstract8 } from "../assets";
-
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
+import Loading from "../components/Loading";
+import { IListingFormData } from "./types/CreateListing.types";
+import { FaLinkedinIn } from "react-icons/fa";
+import {
+  BsEnvelope,
+  BsFacebook,
+  BsGlobe2,
+  BsInstagram,
+  BsLinkedin,
+  BsPhoneFlip,
+  BsTwitter,
+} from "react-icons/bs";
 
 const Listing = () => {
   const params = useParams();
 
   const [activeTab, setActiveTab] = React.useState("propertyDetails");
 
-  const [listing, setListing] = useState(null);
+  const [listing, setListing] = useState<IListingFormData>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [coverImage, setCoverImage] = useState<string>("");
+
+  //AGENT USESTATE
+  const [agent, setAgent] = useState(null);
+  const [loadingAgent, setLoadingAgent] = useState(true);
+  const [errorAgent, setErrorAgent] = useState(false);
+
   const slideLeft = () => {
     const slider: HTMLElement | null = document.getElementById("slider");
     slider.scrollLeft = slider.scrollLeft - 500;
@@ -92,22 +103,32 @@ const Listing = () => {
     };
     fetchListing();
   }, []);
+
+  useEffect(() => {
+    const fetchAgentDetails = async () => {
+      try {
+        const res = await fetch(`/api/agent/listings/${params.listingId}`);
+        const data = await res.json();
+        if (data.success === false) {
+          setError(true);
+          setLoading(false);
+          return;
+        }
+        setAgent(data);
+        setLoadingAgent(false);
+        setErrorAgent(false);
+      } catch (error) {
+        setErrorAgent(true);
+        setLoadingAgent(false);
+      }
+    };
+    fetchAgentDetails();
+  }, []);
+
   return (
     <>
       <main className="mt-20 min-h-screen w-screen flex flex-col items-center">
-        {loading && (
-          <p className="text-center my-7 text-2xl">
-            Please Wait.
-            <PropagateLoader
-              color={"#36a6b9"}
-              loading={loading}
-              cssOverride={override}
-              size={15}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          </p>
-        )}
+        {loading && <Loading loadingactive />}
         {error && (
           <p className="text-center my-7 text-2xl">Something went wrong!</p>
         )}
@@ -121,16 +142,19 @@ const Listing = () => {
                 style={{ opacity: coverImage ? 1 : 0 }}
               />
               <div className="absolute bottom-10 left-0 p-4 space-y-5 text-white bg-black bg-opacity-50">
-                <h1 className="font-semibold text-5xl">{listing.name}</h1>
+                <h1 className="font-semibold text-5xl">{listing.title}</h1>
                 <p className="flex gap-2 text-xl text-white">
                   <IoLocationOutline className="text-white" />
-                  {listing.address}
+                  {listing.addressLine}, {listing.addressCity},{" "}
+                  {listing.addressProvince}
                 </p>
               </div>
-              <div className="absolute right-4 -bottom-8 hidden md:block  md:px-8 md:py-12 ml-auto bg-[#f2c94c] rounded-2xl">
+              <div className="absolute right-4 -bottom-8 hidden md:block  md:px-8 md:py-12 ml-auto bg-neutral rounded-2xl">
                 <div className="flex flex-col text-black">
-                  <h1 className="font-bold uppercase text-4xl my-4">$ 3000</h1>
-                  <p className="text-gray-800">Per Month</p>
+                  <h1 className="font-bold uppercase text-4xl my-4">
+                    $ {listing.regularPrice}
+                  </h1>
+                  <p className="text-gray-800 text-center">{listing.type}</p>
                 </div>
               </div>
             </div>
@@ -139,7 +163,7 @@ const Listing = () => {
               <MdChevronLeft
                 onClick={slideLeft}
                 size={40}
-                className="absolute -left-2 md:-left-2 sm:left-1 z-10 bg-cyan-500 text-white rounded-full hover:bg-cyan-600 cursor-pointer"
+                className="absolute -left-2 md:-left-2 sm:left-1 z-10 bg-primary text-white rounded-full hover:bg-primaryDark cursor-pointer"
               />
               <div
                 id="slider"
@@ -162,14 +186,16 @@ const Listing = () => {
               <MdChevronRight
                 onClick={slideRight}
                 size={40}
-                className="absolute -right-2 md:-right-2 sm:right-1 z-10 bg-cyan-500 text-white rounded-full hover:bg-cyan-600 cursor-pointer "
+                className="absolute -right-2 md:-right-2 sm:right-1 z-10 bg-primary text-white rounded-full hover:bg-primaryDark cursor-pointer "
               />
             </div>
             <div className="relative md:hidden bg-gray-200 w-full py-7">
-              <div className="absolute flex w-full text-center md:hidden justify-center -top-8  ml-auto bg-[#f2c94c]">
-                <div className="flex flex-col text-black">
-                  <h1 className="font-bold uppercase text-4xl ">$ 3000</h1>
-                  <p className="text-gray-800">Per Month</p>
+              <div className="absolute flex w-full text-center md:hidden justify-center -top-8  ml-auto bg-neutral">
+                <div className="flex flex-col">
+                  <h1 className="font-bold uppercase text-4xl ">
+                    $ {listing.regularPrice}
+                  </h1>
+                  <p className="text-gray-800">{listing.type}</p>
                 </div>
               </div>
             </div>
@@ -191,7 +217,7 @@ const Listing = () => {
                         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
                         indicatorProps={{
                           className:
-                            "bg-transparent border-b-2 border-cyan-600 shadow-none rounded-none",
+                            "bg-transparent border-b-2 border-primary shadow-none rounded-none",
                         }}
                       >
                         {data.map(({ label, value }) => (
@@ -200,7 +226,7 @@ const Listing = () => {
                             value={value}
                             onClick={() => setActiveTab(value)}
                             className={
-                              activeTab === value ? "text-cyan-600" : ""
+                              activeTab === value ? "text-primary" : ""
                             }
                           >
                             {label}
@@ -225,24 +251,58 @@ const Listing = () => {
 
                   {/* Right side (Form) */}
                   <div className="w-full md:w-2/3 p-4">
-                    <div className="relative w-full bg-cover bg-center p-4 rounded-lg glass bg-cyan-800">
+                    <div className="relative w-full bg-cover bg-center p-4 rounded-lg glass bg-primaryDark/80">
                       <form>
                         {/* Form fields and submit button */}
                         <div className="flex flex-col flex-wrap ">
-                          <h1 className="my-5 text-white font-bold text-3xl">
+                          <h1 className="my-5 text-start text-white font-bold text-3xl">
                             Property Agent
                           </h1>
-                          <div className="flex flex-row justify-start gap-4">
+                          <div className="flex flex-row justify-start gap-4 ">
                             <div className="avatar">
-                              <div className="w-24 rounded-full ring ring-[#000000] ring-offset-base-100 ring-offset-2">
-                                <img src={listing.agentProfile} />
+                              <div className="w-24 rounded-full ring ring-primaryDark ring-offset-base-100 ring-offset-2">
+                                <img
+                                  src={agent?.avatar}
+                                  className="rounded-full object-cover"
+                                />
                               </div>
                             </div>
-                            <div className="text-white">
-                              <h2 className="font-bold text-xl">Agent Name</h2>
-                              <p className="font-bold text-md">
-                                Real Estate Broker
-                              </p>
+                            <div className="space-y-5">
+                              <div className="text-white">
+                                <h2 className="font-bold text-xl">
+                                  {agent?.firstname} {agent?.lastname}
+                                </h2>
+                                <p className="font-bold text-sm">
+                                  {agent?.title}
+                                </p>
+                              </div>
+                              <div className="text-white">
+                                <p className="flex gap-2">
+                                  <BsEnvelope className="text-xl" />
+                                  {agent?.email}
+                                </p>
+                                <p className="flex gap-2">
+                                  <BsPhoneFlip className="text-xl" />
+                                  {agent?.phone}
+                                </p>
+                              </div>
+                              <div className="text-white flex gap-4">
+                                <a href={agent?.socialLinks.linkedin}>
+                                  <BsLinkedin className="text-xl hover:text-neutral cursor-pointer" />
+                                </a>
+                                <a href={agent?.socialLinks.facebook}>
+                                  <BsFacebook className="text-xl hover:text-neutral cursor-pointer" />
+                                </a>
+                                <a href={agent?.socialLinks.instagram}>
+                                  <BsInstagram className="text-xl hover:text-neutral cursor-pointer" />
+                                </a>
+                                <a href={agent?.socialLinks.twitter}>
+                                  <BsTwitter className="text-xl hover:text-neutral cursor-pointer" />
+                                </a>
+                                <a href={agent?.socialLinks.portfolio}>
+                                  <BsGlobe2 className="text-xl hover:text-neutral cursor-pointer" />
+                                </a>
+                              </div>
                             </div>
                           </div>
                           <hr className="my-8   bg-neutral-100 opacity-50 dark:opacity-50" />
@@ -253,24 +313,24 @@ const Listing = () => {
                             <input
                               type="text"
                               placeholder="Full Name"
-                              className="input input-bordered w-full  bg-transparent text-white placeholder:text-gray-300"
+                              className="input input-bordered w-full border border-1 rounded-md p-2 border-baseLight focus:border-neutral bg-transparent text-white placeholder:text-gray-300"
                             />
                           </div>
                           <div>
                             <input
                               type="email"
                               placeholder="Your email"
-                              className="input input-bordered w-full bg-transparent text-white placeholder:text-gray-300"
+                              className="input input-bordered w-full bg-transparent border border-1 border-baseLight focus:border-neutral rounded-md p-2  text-white placeholder:text-gray-300"
                             />
                           </div>
                           <div>
                             <textarea
                               placeholder="Your message"
-                              className="textarea textarea-bordered textarea-lg w-full  bg-transparent text-white placeholder:text-gray-300"
+                              className="textarea textarea-bordered textarea-lg w-full  bg-transparent border border-1 border-baseLight focus:border-neutral rounded-md p-2  text-white placeholder:text-gray-300"
                             />
                           </div>
                           <div className="flex flex-wrap justify-center">
-                            <Button className=" p-5 hover:bg-white hover:text-cyan-500 transition-colors duration-300 ease-in-out">
+                            <Button className=" p-5 hover:bg-white hover:text-primary transition-colors duration-300 ease-in-out">
                               Send Message Now
                             </Button>
                           </div>

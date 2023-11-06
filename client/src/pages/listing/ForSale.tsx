@@ -694,10 +694,11 @@ const ForSale = () => {
           </div>
           <div>
             <button
+              disabled={loading || uploading}
               type="submit"
               className="p-4 bg-neutral rounded-md hover:bg-neutralDark transition-all duration-300 hover:scale-105"
             >
-              Create Listing
+              {loading ? "Creating..." : "Create Listing"}
             </button>
           </div>
         </form>
