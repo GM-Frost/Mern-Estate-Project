@@ -19,6 +19,7 @@ import ForSale from "./ForSale.png";
 
 import Background404 from "./404Background.png";
 
+import floorplans from "./floorplans.png";
 export {
   LogoLight,
   LogoDark,
@@ -37,4 +38,5 @@ export {
   ForSale,
   ForRent,
   Background404,
+  floorplans,
 };

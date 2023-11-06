@@ -1,5 +1,5 @@
 import React, { useEffect, useState, CSSProperties } from "react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { useParams } from "react-router-dom";
 
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -13,10 +13,10 @@ import {
   TabsBody,
   TabsHeader,
 } from "@material-tailwind/react";
-import PropertyDetails from "./listing/PropertyDetails";
-import { Abstract8 } from "../assets";
-import Loading from "../components/Loading";
-import { IListingFormData } from "./types/CreateListing.types";
+import PropertyDetails from "./propertydetails/PropertyDetails";
+import { Abstract8 } from "../../assets";
+import Loading from "../../components/Loading";
+import { IListingFormData } from "../types/CreateListing.types";
 import {
   BsEnvelope,
   BsFacebook,
@@ -26,8 +26,13 @@ import {
   BsPhoneFlip,
   BsTwitter,
 } from "react-icons/bs";
-import Page404 from "../components/Page404";
-import { IAgentDetails, InitialAgentDetails } from "./types/AgentDetails.types";
+import Page404 from "../../components/Page404";
+import {
+  IAgentDetails,
+  InitialAgentDetails,
+} from "../types/AgentDetails.types";
+import LocationDetails from "./propertydetails/LocationDetails";
+import FloorPlans from "./propertydetails/FloorPlans";
 
 const Listing = () => {
   const params = useParams();
@@ -67,7 +72,12 @@ const Listing = () => {
     {
       label: "Locations",
       value: "location",
-      desc: `Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden end to main to marked.`,
+      desc: <LocationDetails listing={listing} />,
+    },
+    {
+      label: "Floor Plans",
+      value: "floorplans",
+      desc: <FloorPlans listing={listing} />,
     },
 
     {
@@ -148,12 +158,18 @@ const Listing = () => {
                   {listing.addressProvince}
                 </p>
               </div>
-              <div className="absolute right-4 -bottom-8 hidden md:block  md:px-8 md:py-12 ml-auto bg-neutral rounded-2xl">
-                <div className="flex flex-col text-black">
+              <div
+                className={`absolute right-4 -bottom-8 hidden md:block  md:px-8 md:py-12 ml-auto ${
+                  listing.type === "Sale"
+                    ? "bg-neutral text-black"
+                    : "bg-blue-600 text-white"
+                } rounded-2xl`}
+              >
+                <div className={`flex flex-col`}>
                   <h1 className="font-bold uppercase text-4xl my-4">
                     $ {listing.regularPrice}
                   </h1>
-                  <p className="text-gray-800 text-center">{listing.type}</p>
+                  <p className="text-center">{listing.type}</p>
                 </div>
               </div>
             </div>

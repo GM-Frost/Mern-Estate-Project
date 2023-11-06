@@ -1,4 +1,11 @@
-import { FaBed, FaEdit, FaEye, FaParking, FaShower } from "react-icons/fa";
+import {
+  FaBed,
+  FaEdit,
+  FaEye,
+  FaParking,
+  FaShower,
+  FaSwimmer,
+} from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -112,7 +119,7 @@ const MyProperties = () => {
                         className={`text-sm p-1 ${
                           listing.type === "Sale"
                             ? "bg-neutral text-black"
-                            : "bg-red-600 text-white"
+                            : "bg-blue-600 text-white"
                         } md:w-1/5 md:h-8 w-full rounded-lg text-center items-center`}
                       >
                         For {listing.type}
@@ -278,6 +285,22 @@ const MyProperties = () => {
                             ) : (
                               ""
                             )}
+                            {listing.amenitySwimming ? (
+                              <Tooltip
+                                content="Swimming Pool"
+                                placement="top"
+                                animate={{
+                                  mount: { scale: 1, y: 0 },
+                                  unmount: { scale: 0, y: 25 },
+                                }}
+                              >
+                                <div>
+                                  <FaSwimmer className="text-lg md:text-2xl" />
+                                </div>
+                              </Tooltip>
+                            ) : (
+                              ""
+                            )}
                             {listing.amenitySecurity ? (
                               <Tooltip
                                 content="Security"
@@ -323,7 +346,9 @@ const MyProperties = () => {
                       </div>
                     </Link>
                     <div className="p-2 bg-primaryDark/40 hover:bg-neutralDark rounded-md items-center justify-center text-center cursor-pointer hover:text-white transition-colors ease-in-out duration-300">
-                      <FaEdit />
+                      <Link to={`/update-listing/${listing._id}`}>
+                        <FaEdit />
+                      </Link>
                     </div>
                     <div
                       onClick={() => handleDeleteListing(listing._id)}
