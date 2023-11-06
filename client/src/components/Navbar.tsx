@@ -22,7 +22,8 @@ const Navbar = () => {
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
   );
-  const isNotHeroNav = location.pathname === "/about";
+  const isNotHeroNav =
+    location.pathname === "/about" || /^\/listing\/\w+/.test(location.pathname);
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
@@ -180,7 +181,7 @@ const Navbar = () => {
                     <Link to={"/profile"} className="flex justify-between">
                       Profile
                       <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary ">
-                        Badge
+                        {currentUser ? currentUser.firstname : "N/A"}
                       </span>
                     </Link>
                   </a>

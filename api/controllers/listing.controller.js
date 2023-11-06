@@ -65,7 +65,6 @@ export const getListing = async (req, res, next) => {
 };
 
 //SEARCH GET LISTINGS
-
 export const getListings = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
@@ -79,7 +78,6 @@ export const getListings = async (req, res, next) => {
     }
 
     //For Furnished
-
     let furnished = req.query.furnished;
     if (furnished === undefined || furnished === "false") {
       furnished = { $in: [false, true] };

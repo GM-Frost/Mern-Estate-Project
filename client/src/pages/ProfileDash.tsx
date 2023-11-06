@@ -12,14 +12,37 @@ import MyProperties from "../components/Profile/MyProperties";
 import PersonalInfo from "../components/Profile/PersonalInfo";
 import ChangePassword from "../components/Profile/ChangePassword";
 import Layout from "../components/Layout";
+import {
+  signoutUserFailure,
+  signoutUserStart,
+  signoutUserSuccess,
+} from "../redux/userSlice/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileDash = () => {
+  const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<string>("Dashboard");
 
   //USER DETAILS
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
+  };
+
+  //HANDLE SIGNOUT
+  const handleSignOut = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutUserFailure(data.message));
+        return;
+      }
+      dispatch(signoutUserSuccess(data));
+    } catch (error) {
+      dispatch(signoutUserFailure(error.message));
+    }
   };
 
   return (
@@ -105,6 +128,7 @@ const ProfileDash = () => {
                     </div>
                     Personal Info
                   </li>
+
                   <li
                     onClick={() => handleItemClick("mySaved")}
                     className={`flex w-full items-center gap-3 p-6 border-b-[1px] border-gray-300 group hover:text-black group-hover:border-primaryDark  transition-colors duration-400 ease-in-out cursor-pointer ${
@@ -140,17 +164,11 @@ const ProfileDash = () => {
                     Change Password
                   </li>
                   <li
-                    onClick={() => handleItemClick("logout")}
-                    className={`flex w-full items-center gap-3 p-6 border-b-[1px] border-gray-300 group hover:text-black group-hover:border-primaryDark  transition-colors duration-400 ease-in-out cursor-pointer ${
-                      selectedItem === "logout" ? "text-black " : ""
-                    }`}
+                    onClick={handleSignOut}
+                    className={`flex w-full items-center gap-3 p-6 border-b-[1px] border-gray-300 group hover:text-black group-hover:border-primaryDark  transition-colors duration-400 ease-in-out cursor-pointer`}
                   >
                     <div
-                      className={` text-baseDark rounded-full p-1 text-2xl group-hover:text-white group-hover:bg-primaryDark transition-colors duration-400 ease-in-out ${
-                        selectedItem === "logout"
-                          ? "bg-primaryDark text-white "
-                          : "bg-[#dcdafa]"
-                      }`}
+                      className={` text-baseDark rounded-full p-1 text-2xl group-hover:text-white group-hover:bg-primaryDark transition-colors duration-400 ease-in-out`}
                     >
                       <BiLogOut />
                     </div>

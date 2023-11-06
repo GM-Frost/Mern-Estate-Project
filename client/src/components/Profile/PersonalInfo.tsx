@@ -1,5 +1,6 @@
 import {
   FaEnvelope,
+  FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaMapMarkerAlt,
@@ -14,10 +15,17 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../../redux/userSlice/userSlice";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { firebaseApp } from "../../firebase";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const PersonalInfo = () => {
   //User Details
@@ -31,7 +39,57 @@ const PersonalInfo = () => {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
+  const [socialLinks, setSocialLinks] = useState({
+    linkedin: currentUser.socialLinks.linkedin || "",
+    twitter: currentUser.socialLinks.twitter || "",
+    instagram: currentUser.socialLinks.instagram || "",
+    facebook: currentUser.socialLinks.facebook || "",
+    portfolio: currentUser.socialLinks.portfolio || "",
+  });
+
   const dispatch = useDispatch();
+
+  const handleSocialLinksChange = (e) => {
+    const { id, value } = e.target;
+    setSocialLinks({ ...socialLinks, [id]: value });
+  };
+
+  ////////////////////////////////////////////////////////////////
+  //////////// --------  FILE IMAGE UPLOAD -------- //////////////
+  ////////////////////////////////////////////////////////////////
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [filePercentage, setFilePercentage] = useState(0);
+  const [fileUploadError, setFileUploadError] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files ? e.target.files[0] : undefined;
+    setFile(selectedFile);
+  };
+
+  const handleFileUpload = (file: File) => {
+    const storage = getStorage(firebaseApp);
+    const fileName = new Date().getTime() + file.name;
+
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setFilePercentage(Math.round(progress));
+      },
+      (error) => {
+        setFileUploadError(true);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+          setFormData({ ...formData, avatar: downloadUrl });
+        });
+      }
+    );
+  };
 
   const handleEditClick = () => {
     setEditMode(!editMode);
@@ -44,12 +102,17 @@ const PersonalInfo = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
+      const updatedData = {
+        ...formData,
+        socialLinks: { ...socialLinks },
+      };
+
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedData),
       });
       const data = await res.json();
       if (data.sucess === false) {
@@ -66,6 +129,12 @@ const PersonalInfo = () => {
     }
   };
 
+  useEffect(() => {
+    if (file) {
+      handleFileUpload(file);
+    }
+  }, [file]);
+
   return (
     <>
       <ToastContainer />
@@ -76,7 +145,7 @@ const PersonalInfo = () => {
             ref={fileRef}
             hidden
             accept="image/*"
-            onChange={handleEditChange}
+            onChange={handleFileChange}
           />
 
           <div className="flex flex-col flex-wrap w-full h-full space-y-3">
@@ -91,7 +160,7 @@ const PersonalInfo = () => {
               <div className="flex justify-center items-center">
                 <div className="relative h-24 w-24 rounded-full overflow-hidden">
                   <img
-                    src={currentUser?.avatar}
+                    src={formData?.avatar || currentUser?.avatar}
                     alt="Profile Pic"
                     className="object-cover h-full w-full"
                   />
@@ -106,12 +175,32 @@ const PersonalInfo = () => {
                   </div>
                 </div>
               </div>
+              <p className="flex justify-center items-center mt-2">
+                {fileUploadError && (
+                  <span className="text-red-700 text-sm">
+                    Error Image Upload (Image must be less than 2MB)
+                  </span>
+                )}
+                {filePercentage > 0 && filePercentage < 100 && (
+                  <span className="text-slate-700">
+                    {`Uploading ${filePercentage} %...`}
+                  </span>
+                )}
+                {filePercentage === 100 && (
+                  <span className="text-green-600">
+                    Image Successfully Uploaded
+                  </span>
+                )}
+                <p className="text-red-700 text-sm">{error ?? ""}</p>
+              </p>
+
               <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div className="w-full md:w-1/2">
                   <label htmlFor="Property Title">First Name*</label>
                   <input
                     type="text"
                     placeholder="Firstname"
+                    id="firstname"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.firstname}
                     onChange={handleEditChange}
@@ -121,6 +210,7 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">Last Name*</label>
                   <input
                     type="text"
+                    id="lastname"
                     placeholder="Lastname"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.lastname}
@@ -133,7 +223,9 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">Email*</label>
                   <input
                     type="text"
-                    placeholder="Firstname"
+                    placeholder="Email"
+                    id="email"
+                    disabled
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.email}
                     onChange={handleEditChange}
@@ -146,6 +238,7 @@ const PersonalInfo = () => {
                   <input
                     type="text"
                     placeholder="Username"
+                    id="username"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.username}
                     onChange={handleEditChange}
@@ -158,6 +251,7 @@ const PersonalInfo = () => {
                   <input
                     type="text"
                     placeholder="Title"
+                    id="title"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.title}
                     onChange={handleEditChange}
@@ -170,6 +264,7 @@ const PersonalInfo = () => {
                   <input
                     type="text"
                     placeholder="Phone"
+                    id="phone"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.phone}
                     onChange={handleEditChange}
@@ -180,6 +275,7 @@ const PersonalInfo = () => {
                   <input
                     type="text"
                     placeholder="Address"
+                    id="address"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.address}
                     onChange={handleEditChange}
@@ -191,6 +287,7 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">About</label>
                   <textarea
                     placeholder="Something about yourself"
+                    id="about"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.about}
                     onChange={handleEditChange}
@@ -202,10 +299,12 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">LinkedIn</label>
                   <input
                     type="text"
+                    id="linkedin"
                     placeholder="www.linkedin.com/username"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.socialLinks.linkedin}
-                    onChange={handleEditChange}
+                    value={socialLinks.linkedin}
+                    onChange={handleSocialLinksChange}
                   />
                 </div>
               </div>
@@ -214,10 +313,12 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">Instagram</label>
                   <input
                     type="text"
+                    id="instagram"
                     placeholder="www.instagram.com/username"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.socialLinks.instagram}
-                    onChange={handleEditChange}
+                    value={socialLinks.instagram}
+                    onChange={handleSocialLinksChange}
                   />
                 </div>
               </div>
@@ -226,10 +327,12 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">Twitter</label>
                   <input
                     type="text"
+                    id="twitter"
                     placeholder="www.twitter.com/profile"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.socialLinks.twitter}
-                    onChange={handleEditChange}
+                    value={socialLinks.twitter}
+                    onChange={handleSocialLinksChange}
                   />
                 </div>
               </div>
@@ -238,17 +341,19 @@ const PersonalInfo = () => {
                   <label htmlFor="Property Title">Facebook</label>
                   <input
                     type="text"
+                    id="facebook"
                     placeholder="www.facebook.com/username"
                     className="bg-primary/10 p-2 rounded-md w-full"
                     defaultValue={currentUser.socialLinks.facebook}
-                    onChange={handleEditChange}
+                    value={socialLinks.facebook}
+                    onChange={handleSocialLinksChange}
                   />
                 </div>
               </div>
               <div className="flex space-y-4 md:space-y-0 justify-center items-center ">
                 <div className="p-4 bg-neutral rounded-md hover:bg-neutralDark text-center">
                   <button type="submit" className="">
-                    Update Profile
+                    {loading ? "Saving Changes..." : "Update Profile"}
                   </button>
                 </div>
               </div>
@@ -274,23 +379,31 @@ const PersonalInfo = () => {
               <h3 className="text-xs">({currentUser.username})</h3>
               <div className="text-sm text-baseLight">{currentUser.title}</div>
               <div className="mt-5 flex flex-col gap-2">
-                <div className="flex gap-2">
-                  <FiPhoneCall className=" text-primary  text-xl" />{" "}
+                <div className="flex gap-6">
+                  <FiPhoneCall className=" text-primary  text-xl" />
                   {currentUser.phone ? currentUser.phone : "N/A"}
                 </div>
-                <div className="flex  gap-2">
-                  <FaEnvelope className=" text-primary text-xl" />{" "}
+                <div className="flex  gap-6">
+                  <FaEnvelope className=" text-primary text-xl" />
                   {currentUser.email}
                 </div>
-                <div className="flex  gap-2">
+                <div className="flex  gap-6">
                   <FaMapMarkerAlt className=" text-primary text-xl" />
                   {currentUser.address ? currentUser.address : "N/A"}
                 </div>
-                <div className="flex  space-x-20 mt-3 items-center text-center justify-center">
-                  <FaPhone className="hover:text-primary cursor-pointer" />
-                  <FaLinkedin className="hover:text-primary cursor-pointer" />
-                  <FaTwitter className="hover:text-primary cursor-pointer" />
-                  <FaInstagram className="hover:text-primary cursor-pointer" />
+                <div className="flex text-lg space-x-20 mt-3 items-center text-center justify-center">
+                  <a href={currentUser?.socialLinks.facebook ?? "#"}>
+                    <FaFacebook className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.linkedin ?? "#"}>
+                    <FaLinkedin className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.twitter ?? "#"}>
+                    <FaTwitter className="hover:text-primary cursor-pointer" />
+                  </a>
+                  <a href={currentUser?.socialLinks.instagram ?? "#"}>
+                    <FaInstagram className="hover:text-primary cursor-pointer" />
+                  </a>
                 </div>
               </div>
             </div>
