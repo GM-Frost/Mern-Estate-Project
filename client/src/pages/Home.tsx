@@ -3,6 +3,8 @@ import Layout from "../components/Layout";
 import AboutSection from "./Homepage/AboutSection";
 import ExploreSearch from "./Homepage/ExploreSearch";
 import LatestProperty from "./Homepage/LatestProperty";
+import MeetAgents from "./Homepage/MeetAgents";
+import WhyChooseUs from "./Homepage/WhyChooseUs";
 
 const Home = () => {
   return (
@@ -14,6 +16,8 @@ const Home = () => {
       <ExploreSearch />
       <AboutSection />
       <LatestProperty />
+      <WhyChooseUs />
+      <MeetAgents />
       <Layout />
     </>
   );
