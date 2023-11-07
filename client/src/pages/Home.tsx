@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import AboutSection from "./Homepage/AboutSection";
 import ExploreSearch from "./Homepage/ExploreSearch";
+import FAQSection from "./Homepage/FAQSection";
 import LatestProperty from "./Homepage/LatestProperty";
 import MeetAgents from "./Homepage/MeetAgents";
 import WhyChooseUs from "./Homepage/WhyChooseUs";
@@ -18,6 +19,7 @@ const Home = () => {
       <LatestProperty />
       <WhyChooseUs />
       <MeetAgents />
+      <FAQSection />
       <Layout />
     </>
   );
