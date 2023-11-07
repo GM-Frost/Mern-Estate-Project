@@ -1,5 +1,5 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { AbstractAgentBg } from "../../assets";
+import { Abstract10, AbstractAgentBg, AbstractLatestNews } from "../../assets";
 import { Link } from "react-router-dom";
 
 const MeetAgents = () => {
@@ -7,12 +7,12 @@ const MeetAgents = () => {
     <section
       className="py-16 min-h-screen w-full flex"
       style={{
-        backgroundImage: `url(${AbstractAgentBg})`,
+        backgroundImage: `url(${AbstractLatestNews})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundBlendMode: "overlay",
-        backgroundColor: "rgba(222, 221, 240, 0.9)",
+        backgroundColor: "rgba(222, 221, 240, 0.1)",
       }}
     >
       <div className="mx-auto w-[90%] mt-10">

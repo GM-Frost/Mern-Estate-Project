@@ -80,7 +80,7 @@ const FAQSection: React.FC = () => {
               src={FAQImage}
               className="rounded-md md:h-[550px] lg:h-[750px]"
             />
-            <div className="absolute bottom-0 right-0 p-2 md:p-5 bg-primaryDark text-white items-center justify-center">
+            <div className="absolute bottom-0 right-0 p-2 md:p-5  mx-auto bg-primaryDark text-white items-center justify-center">
               <div className="flex items-center justify-center">
                 <div className="w-1/3">
                   <MdOutlineSupportAgent className="text-5xl md:text-8xl" />

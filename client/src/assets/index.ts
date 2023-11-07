@@ -14,6 +14,8 @@ import Abstract11 from "./Abstract11.png";
 import AbstractAgentBg from "./AbstractAgentBg.png";
 import AbstractFAQ from "./AbstractFAQ.png";
 import FAQImage from "./FAQImage.png";
+import AbstractMobileSection from "./AbstractMobileSection.jpg";
+import AbstractLatestNews from "./AbstractLatestNews.jpg";
 
 import Building1 from "./building1.jpg";
 import Building2 from "./building2.jpg";
@@ -47,6 +49,8 @@ export {
   ForRent,
   FAQImage,
   Background404,
+  AbstractMobileSection,
+  AbstractLatestNews,
   floorplans,
   AbstractAgentBg,
 };
