@@ -67,12 +67,7 @@ const SignIn = (props: IProps) => {
 
       dispatch(signInSuccess(data));
       toast.success("Signed In Successfully!");
-      setTimeout(() => {
-        toast.info("Navigating...Please wait!");
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-      }, 1000);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (error: any) {
       toast.error("Internal Server Error");
       dispatch(signInFailure(error.message));

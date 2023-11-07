@@ -1,27 +1,31 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-import { Link, useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IUserState } from "../../redux/userSlice/userSlice";
-import { firebaseApp } from "../../firebase";
+
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import {
-  IListingFormData,
-  lFormInitialValue,
-} from "../types/CreateListing.types";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IUserState } from "../../../redux/userSlice/userSlice";
+import {
+  IListingFormData,
+  lFormInitialValue,
+} from "../../types/CreateListing.types";
+import { firebaseApp } from "../../../firebase";
+import Layout from "../../../components/Layout";
 
-const ForSale = () => {
+const EditListing = () => {
+  const params = useParams();
+
   const [files, setFiles] = useState<FileList | null>(null);
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
@@ -37,6 +41,20 @@ const ForSale = () => {
   const [imageUploadError, setImageUploadError] = useState<string | boolean>(
     false
   );
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.listingId;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+    fetchListing();
+  }, []);
 
   const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -166,13 +184,13 @@ const ForSale = () => {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-          type: "Sale",
+          type: listType,
           agentProfile: currentUser?.avatar,
         }),
       });
@@ -182,7 +200,7 @@ const ForSale = () => {
         toast.error("Failed to create listing");
         setError(data.message);
       }
-      toast.success("Listing Created");
+      toast.info("Listing Edited");
       await new Promise((resolve) => setTimeout(resolve, 2000));
       navigate("/profile");
     } catch (error) {
@@ -192,6 +210,7 @@ const ForSale = () => {
     }
   };
 
+  const listType = formData.type;
   return (
     <>
       <ToastContainer />
@@ -215,14 +234,14 @@ const ForSale = () => {
                   </Link>
                   <span>&#62;</span>
                   <Link to={"/profile/addlisting"}>
-                    <li>Listing</li>
+                    <li>Update Listing</li>
                   </Link>
                   <span>&#62;</span>
-                  <li>For Sale</li>
+                  <li>For {formData.type}</li>
                 </ul>
               </p>
             </div>
-            <h1 className="text-5xl text-white font-bold">Submit Property</h1>
+            <h1 className="text-5xl text-white font-bold">Update Property</h1>
           </div>
         </div>
       </div>
@@ -236,8 +255,8 @@ const ForSale = () => {
           className="flex flex-col w-full space-y-10 mx-auto  items-center"
         >
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
-            <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
-              Property Information - FOR SALE
+            <div className="flex bg-neutral/60  text-baseDark w-full m-0 p-4 rounded-t-lg">
+              Update Property Information - {formData.type.toUpperCase()}
             </div>
             <div className="flex flex-col p-4 space-y-8">
               <div className="flex flex-col w-full space-y-2">
@@ -370,7 +389,7 @@ const ForSale = () => {
             </div>
           </div>
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
-            <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
+            <div className="flex bg-neutral/60  text-baseDark w-full m-0 p-4 rounded-t-lg">
               Property Image
             </div>
             <div className="flex flex-col p-4 space-y-4">
@@ -464,7 +483,7 @@ const ForSale = () => {
             </div>
           </div>
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
-            <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
+            <div className="flex bg-neutral/60  text-baseDark w-full m-0 p-4 rounded-t-lg">
               Property Location
             </div>
             <div className="flex flex-col p-4 space-y-4">
@@ -519,7 +538,7 @@ const ForSale = () => {
             </div>
           </div>
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
-            <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
+            <div className="flex bg-neutral/60  text-baseDark w-full m-0 p-4 rounded-t-lg">
               Amenities
             </div>
             <div className="flex flex-wrap p-4 space-y-4">
@@ -536,6 +555,7 @@ const ForSale = () => {
                           id="amenityParking"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityParking}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -552,6 +572,7 @@ const ForSale = () => {
                           id="amenityFurnished"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityFurnished}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -568,6 +589,7 @@ const ForSale = () => {
                           id="amenityAC"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityAC}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -584,6 +606,7 @@ const ForSale = () => {
                           id="amenityHeating"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityHeating}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -600,6 +623,7 @@ const ForSale = () => {
                           id="amenityWasher"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityWasher}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -616,6 +640,7 @@ const ForSale = () => {
                           id="amenityDryer"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityDryer}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -632,6 +657,7 @@ const ForSale = () => {
                           id="amenityWifi"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityWifi}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -648,6 +674,7 @@ const ForSale = () => {
                           id="amenityGym"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenityGym}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -664,6 +691,7 @@ const ForSale = () => {
                           id="amenitySwimming"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenitySwimming}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -680,6 +708,7 @@ const ForSale = () => {
                           id="amenitySecurity"
                           className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
                           onChange={handleFormChange}
+                          checked={formData.amenitySecurity}
                         />
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -698,9 +727,9 @@ const ForSale = () => {
             <button
               disabled={loading || uploading}
               type="submit"
-              className="p-4 bg-neutral rounded-md hover:bg-neutralDark transition-all duration-300 hover:scale-105"
+              className="p-4 bg-primary rounded-md hover:bg-primaryDark text-white transition-all duration-300 hover:scale-105"
             >
-              {loading ? "Creating..." : "Create Listing"}
+              {loading ? "Updating..." : "Update Listing"}
             </button>
           </div>
         </form>
@@ -710,4 +739,4 @@ const ForSale = () => {
   );
 };
 
-export default ForSale;
+export default EditListing;

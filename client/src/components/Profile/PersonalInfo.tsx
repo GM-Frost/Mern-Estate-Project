@@ -11,6 +11,9 @@ import { FiPhoneCall } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IUserState,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -26,6 +29,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import DeleteUser from "../Navbar/DeleteUser";
 
 const PersonalInfo = () => {
   //User Details
@@ -127,6 +131,39 @@ const PersonalInfo = () => {
       dispatch(updateUserFailure(error.message));
       toast.error("Something went wrong updating");
     }
+  };
+
+  //DELETE USER FROM MODAL
+  const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    setConfirmationModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setConfirmationModalOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        toast.error(data.message);
+        return;
+      }
+      toast.success("User deleted successfully");
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+      toast.error(error.message);
+    }
+
+    setConfirmationModalOpen(false);
   };
 
   useEffect(() => {
@@ -357,6 +394,12 @@ const PersonalInfo = () => {
                   </button>
                 </div>
               </div>
+              <div
+                onClick={handleDeleteClick}
+                className="flex justify-end mt-3 text-red-500 cursor-pointer hover:text-red-700"
+              >
+                <p>Delete Account</p>
+              </div>
             </form>
           </div>
         </>
@@ -422,6 +465,11 @@ const PersonalInfo = () => {
           </div>
         </div>
       )}
+      <DeleteUser
+        isOpen={isConfirmationModalOpen}
+        onCancel={handleCancel}
+        onConfirmDelete={handleConfirmDelete}
+      />
     </>
   );
 };

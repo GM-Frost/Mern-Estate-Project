@@ -8,13 +8,14 @@ import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/listing/CreateListing";
 import UpdateListing from "./pages/listing/UpdateListing";
-import Listing from "./pages/Listing";
+import Listing from "./pages/listing/Listing";
 import ProfileDash from "./pages/ProfileDash";
 import AddListing from "./pages/listing/AddListing";
 import ForSale from "./pages/listing/ForSale";
 import ForRent from "./pages/listing/ForRent";
 import AllListings from "./pages/AllListings";
 import Page404 from "./components/Page404";
+import EditListing from "./pages/listing/crud/EditListing";
 
 function App() {
   const router = createBrowserRouter([
@@ -87,10 +88,18 @@ function App() {
       ),
     },
     {
-      path: "/update-listing/:listingId",
+      path: "/updateListing/:listingId",
       element: (
         <PrivateRoute>
           <UpdateListing />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/update-listing/:listingId",
+      element: (
+        <PrivateRoute>
+          <EditListing />
         </PrivateRoute>
       ),
     },
