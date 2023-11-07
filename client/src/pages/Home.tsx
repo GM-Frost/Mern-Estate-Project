@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import AboutSection from "./Homepage/AboutSection";
 import ExploreSearch from "./Homepage/ExploreSearch";
+import LatestProperty from "./Homepage/LatestProperty";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       />
       <ExploreSearch />
       <AboutSection />
+      <LatestProperty />
       <Layout />
     </>
   );
