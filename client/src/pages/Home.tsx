@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
+import AboutSection from "./Homepage/AboutSection";
 import ExploreSearch from "./Homepage/ExploreSearch";
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
         message="lorem ipsum dolor sit amet, consectetur adip"
       />
       <ExploreSearch />
+      <AboutSection />
       <Layout />
     </>
   );

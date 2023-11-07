@@ -6,7 +6,7 @@ type Props = {};
 
 const ExploreSearch = (props: Props) => {
   return (
-    <section className="pt-16 bg-gray-50 min-h-screen w-full flex  items-center justify-center">
+    <section className="py-16 bg-gray-50 min-h-screen w-full flex  items-center justify-center">
       <div className="mx-auto">
         <div className="flex  flex-col justify-center items-center space-y-5">
           <p className="text-primary text-lg">View All 329 New Listings</p>
@@ -44,55 +44,99 @@ const ExploreSearch = (props: Props) => {
           </div>
         </div>
 
-        <div className="mt-16 mx-auto px-5 py-2 lg:px-32 lg:pt-24">
-          <div className="-m-1 flex flex-wrap md:-m-2">
-            <div className="flex w-1/2 flex-wrap">
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
-              </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
-              </div>
-              <div className="w-full p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
+        <div className="p-5 md:p-10">
+          <div className="columns-2 md:columns-3 lg:columns-4">
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?toronto"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Toronto</h1>
+                <p className=" font-sm font-semibold">8+ Listings</p>
               </div>
             </div>
-            <div className="flex w-1/2 flex-wrap">
-              <div className="w-full p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
+
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?ottawa"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Ottawa</h1>
+                <p className=" font-sm font-semibold">5+ Listings</p>
               </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
+            </div>
+
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?vancouver"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Vancouver</h1>
+                <p className=" font-sm font-semibold">7+ Listings</p>
               </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-cover object-center"
-                  src="https://source.unsplash.com/random?house"
-                />
+            </div>
+
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?montreal"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Motreal</h1>
+                <p className=" font-sm font-semibold">9+ Listings</p>
+              </div>
+            </div>
+
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?calgary"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Calgary</h1>
+                <p className=" font-sm font-semibold">11+ Listings</p>
+              </div>
+            </div>
+
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?edmonton"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className="text-3xl font-bold mb-3">Edmonton</h1>
+                <p className="font-sm font-semibold">4+ Listings</p>
+              </div>
+            </div>
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?winnipeg"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className="text-3xl font-bold mb-3">Winnipeg</h1>
+                <p className="font-sm font-semibold">6+ Listings</p>
+              </div>
+            </div>
+            <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
+              <img
+                className="w-full rounded-md"
+                src="https://source.unsplash.com/random/canada?sarnia"
+              />
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className=" text-3xl font-bold mb-3">Sarnia</h1>
+                <p className=" font-sm font-semibold">5+ Listings</p>
               </div>
             </div>
           </div>
+        </div>
+        <div className="mt-5 flex items-center justify-center">
+          <button className="p-5 text-center rounded-md bg-primary hover:bg-primaryDark transition-all duration-500 ease-in-out hover:scale-105 text-white">
+            See all City
+          </button>
         </div>
       </div>
     </section>

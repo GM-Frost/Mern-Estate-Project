@@ -9,6 +9,7 @@ import Abstract6 from "./abstract6.jpg";
 import Abstract7 from "./abstract7.jpg";
 import Abstract8 from "./abstract8.jpg";
 import Abstract9 from "./abstract9.jpg";
+import Abstract10 from "./abstract10.jpg";
 
 import Building1 from "./building1.jpg";
 import Building2 from "./building2.jpg";
@@ -32,6 +33,7 @@ export {
   Abstract7,
   Abstract8,
   Abstract9,
+  Abstract10,
   Building1,
   Building2,
   Building3,
