@@ -51,8 +51,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?toronto"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Toronto</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Toronto
+                </h1>
                 <p className=" font-sm font-semibold">8+ Listings</p>
               </div>
             </div>
@@ -62,8 +64,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?ottawa"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Ottawa</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Ottawa
+                </h1>
                 <p className=" font-sm font-semibold">5+ Listings</p>
               </div>
             </div>
@@ -73,8 +77,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?vancouver"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Vancouver</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Vancouver
+                </h1>
                 <p className=" font-sm font-semibold">7+ Listings</p>
               </div>
             </div>
@@ -84,8 +90,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?montreal"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Motreal</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Motreal
+                </h1>
                 <p className=" font-sm font-semibold">9+ Listings</p>
               </div>
             </div>
@@ -95,8 +103,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?calgary"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Calgary</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Calgary
+                </h1>
                 <p className=" font-sm font-semibold">11+ Listings</p>
               </div>
             </div>
@@ -106,8 +116,10 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?edmonton"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className="text-3xl font-bold mb-3">Edmonton</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Edmonton
+                </h1>
                 <p className="font-sm font-semibold">4+ Listings</p>
               </div>
             </div>
@@ -116,18 +128,22 @@ const ExploreSearch = (props: Props) => {
                 className="w-full rounded-md"
                 src="https://source.unsplash.com/random/canada?winnipeg"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className="text-3xl font-bold mb-3">Winnipeg</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Winnipeg
+                </h1>
                 <p className="font-sm font-semibold">6+ Listings</p>
               </div>
             </div>
             <div className="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-50">
               <img
                 className="w-full rounded-md"
-                src="https://source.unsplash.com/random/canada?sarnia"
+                src="https://source.unsplash.com/random/canada?quebec"
               />
-              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h1 className=" text-3xl font-bold mb-3">Sarnia</h1>
+              <div className="flex flex-col space-y-5 text-white absolute bottom-12 left-1/2 transform -translate-x-1/2 mx-auto">
+                <h1 className="text-xl md:text-3xl font-bold mx-auto md:mb-3 justify-center items-center">
+                  Quebec
+                </h1>
                 <p className=" font-sm font-semibold">5+ Listings</p>
               </div>
             </div>
