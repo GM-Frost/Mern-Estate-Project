@@ -29,11 +29,20 @@ const AboutSection = () => {
               Since 5 years
             </div>
             {/* Overlap Image */}
-            <img
-              src="https://source.unsplash.com/random?city"
-              alt="Overlap Image"
-              className="absolute bottom-5 lg:bottom-32 right-2 border-2 border-white  w-48 h-48 lg:w-56 lg:h-56 rounded-lg"
-            />
+            <div className="relative">
+              <img
+                src="https://source.unsplash.com/random?city"
+                alt="Overlap Image"
+                className="absolute  bottom-5 lg:bottom-32 lg:-right-8 right-2 border-2 border-white  w-48 h-48 lg:w-56 lg:h-56 rounded-lg"
+              />
+              <div className="absolute bg-black bg-opacity-40 bg-blend-overlay bottom-5 lg:bottom-32 lg:-right-8 right-2 border-2 border-white  w-48 h-48 lg:w-56 lg:h-56 rounded-lg" />
+              <div className="items-center justify-center absolute bottom-5 lg:bottom-32 right-2 text-white p-2 text-lg">
+                <div className="flex flex-col justify-center  items-center">
+                  <h1 className="text-sm font-bold">Nayan</h1>
+                  <h1 className="text-sm font-light">CEO & Founder</h1>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="w-1/2 flex flex-col space-y-5">
@@ -56,14 +65,14 @@ const AboutSection = () => {
                 <div className="relative bg-primary text-gray-300 w-14 h-14 rounded-full flex items-center justify-center">
                   <FaUsers className="text-4xl" />
                 </div>
-                <h2 className="font-semibold my-4">4k+ Renters</h2>
+                <h2 className="font-semibold my-4 text-2xl">4k+ Renters</h2>
                 <p>believe in our service & Care</p>
               </div>
               <div className="w-full flex flex-col ">
                 <div className="relative bg-primary text-gray-300 w-14 h-14 rounded-full flex items-center justify-center">
                   <BsBuildingsFill className="text-4xl" />
                 </div>
-                <h2 className="font-semibold my-4">10k+ Sellers</h2>
+                <h2 className="font-semibold my-4 text-2xl">10k+ Sellers</h2>
                 <p>list house ready for cccupancy</p>
               </div>
             </div>

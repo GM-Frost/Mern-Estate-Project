@@ -5,7 +5,7 @@ import { IoLogoGooglePlaystore } from "react-icons/io5";
 const DownloadApp = () => {
   return (
     <section
-      className="py-16 min-h-[400px] w-full flex"
+      className="py-5 min-h-[400px] w-full flex"
       style={{
         backgroundImage: `url(${AbstractMobileSection})`,
         backgroundPosition: "center",
