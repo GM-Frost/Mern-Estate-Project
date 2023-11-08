@@ -17,6 +17,7 @@ import AllListings from "./pages/AllListings";
 import Page404 from "./components/Page404";
 import EditListing from "./pages/listing/crud/EditListing";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import Blog from "./pages/News/Blog";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ function App() {
     {
       path: "/about",
       element: <About />,
+    },
+    {
+      path: "/news",
+      element: <Blog />,
     },
     {
       path: "/sign-in",
