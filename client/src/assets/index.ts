@@ -10,6 +10,12 @@ import Abstract7 from "./abstract7.jpg";
 import Abstract8 from "./abstract8.jpg";
 import Abstract9 from "./abstract9.jpg";
 import Abstract10 from "./abstract10.jpg";
+import Abstract11 from "./Abstract11.png";
+import AbstractAgentBg from "./AbstractAgentBg.png";
+import AbstractFAQ from "./AbstractFAQ.png";
+import FAQImage from "./FAQImage.png";
+import AbstractMobileSection from "./AbstractMobileSection.jpg";
+import AbstractLatestNews from "./AbstractLatestNews.jpg";
 
 import Building1 from "./building1.jpg";
 import Building2 from "./building2.jpg";
@@ -20,6 +26,9 @@ import ForSale from "./ForSale.png";
 
 import Background404 from "./404Background.png";
 
+import AbstractContactus from "./AbstractContactus.jpg";
+import AbstractContactusForm from "./AbstractContactusForm.jpg";
+import AbstractContactCS from "./AbstractContactCS.jpg";
 import floorplans from "./floorplans.png";
 export {
   LogoLight,
@@ -34,11 +43,20 @@ export {
   Abstract8,
   Abstract9,
   Abstract10,
+  Abstract11,
+  AbstractFAQ,
   Building1,
   Building2,
   Building3,
   ForSale,
   ForRent,
+  FAQImage,
+  AbstractContactus,
+  AbstractContactusForm,
   Background404,
+  AbstractMobileSection,
+  AbstractLatestNews,
   floorplans,
+  AbstractContactCS,
+  AbstractAgentBg,
 };

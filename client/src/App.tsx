@@ -2,7 +2,7 @@ import "./global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
-import About from "./pages/About";
+import About from "./pages/About/About";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
@@ -16,6 +16,7 @@ import ForRent from "./pages/listing/ForRent";
 import AllListings from "./pages/AllListings";
 import Page404 from "./components/Page404";
 import EditListing from "./pages/listing/crud/EditListing";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 function App() {
   const router = createBrowserRouter([
@@ -106,6 +107,10 @@ function App() {
     {
       path: "/listing/:listingId",
       element: <Listing />,
+    },
+    {
+      path: "/contactus",
+      element: <ContactUs />,
     },
     {
       path: "*",
