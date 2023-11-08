@@ -136,7 +136,7 @@ const Navbar = () => {
           </li>
 
           <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-            <Link to="/Contact">Contact</Link>
+            <Link to="/Contactus">Contact</Link>
           </li>
         </ul>
         {/********************************************** ACCOUNT Dropdown **********************************************/}
@@ -266,7 +266,7 @@ const Navbar = () => {
                 </li>
 
                 <li className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300">
-                  <Link to="/Contact">Contact Us</Link>
+                  <Link to="/Contactus">Contact Us</Link>
                 </li>
               </ul>
             </motion.aside>

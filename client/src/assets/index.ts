@@ -26,6 +26,9 @@ import ForSale from "./ForSale.png";
 
 import Background404 from "./404Background.png";
 
+import AbstractContactus from "./AbstractContactus.jpg";
+import AbstractContactusForm from "./AbstractContactusForm.jpg";
+import AbstractContactCS from "./AbstractContactCS.jpg";
 import floorplans from "./floorplans.png";
 export {
   LogoLight,
@@ -48,9 +51,12 @@ export {
   ForSale,
   ForRent,
   FAQImage,
+  AbstractContactus,
+  AbstractContactusForm,
   Background404,
   AbstractMobileSection,
   AbstractLatestNews,
   floorplans,
+  AbstractContactCS,
   AbstractAgentBg,
 };
