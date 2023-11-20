@@ -38,8 +38,5 @@ export default withMT({
       extraLight: "#f5f5f5",
     },
   },
-  plugins: [
-    require("tailwind-scrollbar-hide"),
-    require("@tailwindcss/line-clamp"),
-  ],
+  plugins: [require("tailwind-scrollbar-hide")],
 });

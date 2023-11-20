@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Layout from "../../components/Layout";
+
 import { useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -7,9 +7,11 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { firebaseApp } from "../../firebase";
-import { IUserState } from "../../redux/userSlice/userSlice";
+
 import { useNavigate, useParams } from "react-router-dom";
+import Layout from "../../../components/Layout";
+import { firebaseApp } from "../../../firebase";
+import { IUserState } from "../../../redux/userSlice/userSlice";
 
 const UpdateListing = () => {
   const [files, setFiles] = useState<FileList | null>(null);

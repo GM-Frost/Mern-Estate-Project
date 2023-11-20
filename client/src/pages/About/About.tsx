@@ -21,6 +21,7 @@ const About = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    arrows: false,
     adaptiveHeight: true,
     responsive: [
       {

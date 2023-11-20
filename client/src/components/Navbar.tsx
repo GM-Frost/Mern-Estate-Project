@@ -23,7 +23,10 @@ const Navbar = () => {
     (state: { user: IUserState }) => state.user
   );
   const isNotHeroNav =
-    location.pathname === "/about" || /^\/listing\/\w+/.test(location.pathname);
+    location.pathname === "/about" ||
+    location.pathname === "/news" ||
+    /^\/listing\/\w+/.test(location.pathname) ||
+    /^\/news\/\w+/.test(location.pathname);
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
@@ -57,7 +60,7 @@ const Navbar = () => {
         return;
       }
       dispatch(signoutUserSuccess(data));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(signoutUserFailure(error.message));
     }
   };
@@ -113,6 +116,29 @@ const Navbar = () => {
     },
   };
 
+  const navmenu = [
+    {
+      link: "/",
+      title: "Home",
+    },
+    {
+      link: "/about",
+      title: "About",
+    },
+    {
+      link: "/property",
+      title: "Property",
+    },
+    {
+      link: "/news",
+      title: "News",
+    },
+    {
+      link: "/contactus",
+      title: "Contact",
+    },
+  ];
+
   return (
     <div
       style={{ backgroundColor: `${color}` }}
@@ -125,19 +151,14 @@ const Navbar = () => {
           <img src={logo} alt="" className="w-1/2 object-fit" />
         </Link>
         <ul className="hidden md:flex" style={{ color: `${textColor}` }}>
-          <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-            <Link to="/about">About</Link>
-          </li>
-          <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-            <Link to="/residency">Residency</Link>
-          </li>
-
-          <li className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer">
-            <Link to="/Contactus">Contact</Link>
-          </li>
+          {navmenu.map((items) => (
+            <li
+              key={items.title}
+              className="p-4 text-center justify-center relative text-xl w-fit block after:block hover:text-primary after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:left-1/2 after:-translate-x-1/2 cursor-pointer"
+            >
+              <Link to={items.link}>{items.title}</Link>
+            </li>
+          ))}
         </ul>
         {/********************************************** ACCOUNT Dropdown **********************************************/}
 
@@ -255,19 +276,14 @@ const Navbar = () => {
                 <li className="p-4 text-4xl cursor-pointer">
                   <img src={LogoLight} alt="" className="w-1/2 object-fit" />
                 </li>
-                <li className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300">
-                  <Link to="/">Home</Link>
-                </li>
-                <li className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300">
-                  <Link to="/about">About</Link>
-                </li>
-                <li className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300">
-                  <Link to="/residency">Residency</Link>
-                </li>
-
-                <li className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300">
-                  <Link to="/Contactus">Contact Us</Link>
-                </li>
+                {navmenu.map((items) => (
+                  <li
+                    key={items.link}
+                    className="p-4 text-4xl hover:text-primaryDark cursor-pointer transition-all ease-in duration-300"
+                  >
+                    <Link to={items.link}>{items.title}</Link>
+                  </li>
+                ))}
               </ul>
             </motion.aside>
           </>

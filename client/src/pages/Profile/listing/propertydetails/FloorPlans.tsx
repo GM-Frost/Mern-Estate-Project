@@ -4,7 +4,7 @@ import {
   AccordionHeader,
 } from "@material-tailwind/react";
 import React from "react";
-import { floorplans } from "../../../assets";
+import { floorplans } from "../../../../assets";
 
 const FloorPlans = ({ listing }) => {
   const [open, setOpen] = React.useState(1);

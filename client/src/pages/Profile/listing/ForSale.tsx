@@ -2,26 +2,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
+
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { IUserState } from "../../redux/userSlice/userSlice";
-import { firebaseApp } from "../../firebase";
+
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import {
-  IListingFormData,
-  lFormInitialValue,
-} from "../types/CreateListing.types";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IUserState } from "../../../redux/userSlice/userSlice";
+import {
+  IListingFormData,
+  lFormInitialValue,
+} from "../../types/CreateListing.types";
+import Layout from "../../../components/Layout";
 
-const ForRent = () => {
+const ForSale = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
@@ -172,7 +173,7 @@ const ForRent = () => {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-          type: "Rent",
+          type: "Sale",
           agentProfile: currentUser?.avatar,
         }),
       });
@@ -218,7 +219,7 @@ const ForRent = () => {
                     <li>Listing</li>
                   </Link>
                   <span>&#62;</span>
-                  <li>For Rent</li>
+                  <li>For Sale</li>
                 </ul>
               </p>
             </div>
@@ -237,7 +238,7 @@ const ForRent = () => {
         >
           <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
             <div className="flex bg-indigo-900 text-white w-full m-0 p-4 rounded-t-lg">
-              Property Information - FOR RENT
+              Property Information - FOR SALE
             </div>
             <div className="flex flex-col p-4 space-y-8">
               <div className="flex flex-col w-full space-y-2">
@@ -275,15 +276,7 @@ const ForRent = () => {
                   </select>
                 </div>
                 <div className="flex flex-col  w-full md:w-1/3 space-y-2">
-                  <label
-                    htmlFor="Property Price"
-                    className="flex justify-between"
-                  >
-                    <span> Property Price </span>
-                    <span className="text-sm text-primaryDark">
-                      /per month *
-                    </span>
-                  </label>
+                  <label htmlFor="Property Price">Property Price*</label>
                   <input
                     type="text"
                     placeholder="$50000.00"
@@ -718,4 +711,4 @@ const ForRent = () => {
   );
 };
 
-export default ForRent;
+export default ForSale;

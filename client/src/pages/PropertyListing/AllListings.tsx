@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Button } from "@material-tailwind/react";
-import { MdList, MdOutlineDashboard, MdSpaceDashboard } from "react-icons/md";
-import { FaRegListAlt, FaThList } from "react-icons/fa";
+import { MdList, MdOutlineDashboard } from "react-icons/md";
 
-const AllListings = () => {
+import FilterListing from "./SearchListing/FilterListing";
+import FilteredCard from "./SearchListing/FilteredCard";
+import { useState } from "react";
+
+const AllListings: React.FC = () => {
+  const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   return (
     <>
       <div
@@ -30,8 +34,8 @@ const AllListings = () => {
           </div>
         </div>
       </div>
-      {/*--------------------- Dashboard Section ---------------- */}
-      <div className="w-full flex-col space-y-10 bg-white-50 mx-auto flex items-center justify-center p-6">
+      {/*--------------------- Search Section ---------------- */}
+      <div className="w-full bg-primary/5 flex-col space-y-10 bg-white-50 mx-auto flex items-center justify-center p-6">
         <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
           <div className="flex flex-col md:flex-row space-x-5  items-center justify-between">
             <div className="p-3">
@@ -55,13 +59,37 @@ const AllListings = () => {
               <span className="text-dark">17</span> results
             </div>
             <div className="hidden md:flex gap-3 items-center text-center p-4 ">
-              <div className="bg-primaryLight text-white rounded-md p-1">
+              <div
+                className={`cursor-pointer rounded-md p-1 ${
+                  filterLayout === "grid"
+                    ? "bg-primaryLight text-white"
+                    : "hover:bg-primaryLight hover:text-white"
+                }`}
+                onClick={() => setFilterLayout("grid")}
+              >
                 <MdOutlineDashboard className="text-2xl" />
               </div>
-              <div className="bg-primaryLight text-white rounded-md p-1">
+              <div
+                className={`cursor-pointer rounded-md p-1 ${
+                  filterLayout === "list"
+                    ? "bg-primaryLight text-white"
+                    : "hover:bg-primaryLight hover:text-white"
+                }`}
+                onClick={() => setFilterLayout("list")}
+              >
                 <MdList className="text-2xl" />
               </div>
             </div>
+          </div>
+        </div>
+        {/*--------------------- Content Section ---------------- */}
+        <div className="flex w-full flex-col md:flex-row">
+          <div className="w-full md:w-1/4 space-y-10">
+            <FilterListing />
+          </div>
+
+          <div className="w-full md:w-3/4 flex flex-col">
+            <FilteredCard layout={filterLayout} />
           </div>
         </div>
       </div>

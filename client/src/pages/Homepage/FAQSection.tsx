@@ -5,7 +5,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import { FaHeadphones } from "react-icons/fa";
+
 import { MdOutlineSupportAgent } from "react-icons/md";
 
 const CUSTOM_ANIMATION = {
@@ -16,7 +16,7 @@ const CUSTOM_ANIMATION = {
 const FAQSection: React.FC = () => {
   const [open, setOpen] = useState(0);
 
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
 
   return (
     <section

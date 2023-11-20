@@ -1,5 +1,5 @@
-import React, { useEffect, useState, CSSProperties } from "react";
-import Layout from "../../components/Layout";
+import React, { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -14,9 +14,7 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import PropertyDetails from "./propertydetails/PropertyDetails";
-import { Abstract8 } from "../../assets";
-import Loading from "../../components/Loading";
-import { IListingFormData } from "../types/CreateListing.types";
+
 import {
   BsEnvelope,
   BsFacebook,
@@ -26,13 +24,18 @@ import {
   BsPhoneFlip,
   BsTwitter,
 } from "react-icons/bs";
-import Page404 from "../../components/Page404";
+
+import LocationDetails from "./propertydetails/LocationDetails";
+import FloorPlans from "./propertydetails/FloorPlans";
+import { IListingFormData } from "../../types/CreateListing.types";
 import {
   IAgentDetails,
   InitialAgentDetails,
-} from "../types/AgentDetails.types";
-import LocationDetails from "./propertydetails/LocationDetails";
-import FloorPlans from "./propertydetails/FloorPlans";
+} from "../../types/AgentDetails.types";
+import Loading from "../../../components/Loading";
+import Page404 from "../../../components/Page404";
+import { Abstract8 } from "../../../assets";
+import Layout from "../../../components/Layout";
 
 const Listing = () => {
   const params = useParams();

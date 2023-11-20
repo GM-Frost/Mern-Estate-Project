@@ -21,6 +21,7 @@ import { BiCctv, BiSolidDryer } from "react-icons/bi";
 import { CgGym } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const MyProperties = () => {
   const [showListingsError, setShowListingsError] = useState<boolean>(false);
@@ -74,11 +75,34 @@ const MyProperties = () => {
     }
   };
 
+  ////////////---- PAGINATION FUNCTIONS -----/////////
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 2;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = userListings.slice(firstIndex, lastIndex);
+  const npages = Math.ceil(userListings.length / recordsPerPage);
+  const numbers = [...Array(npages + 1).keys()].slice(1);
+
+  const prevPage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const changeCurrentPage = (id) => {
+    setCurrentPage(id);
+  };
+  const nextPage = () => {
+    if (currentPage !== npages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   useEffect(() => {
     fetchListings();
   }, []);
 
-  console.log(userListings);
   return (
     <>
       <ToastContainer />
@@ -86,7 +110,7 @@ const MyProperties = () => {
         <div className="flex flex-wrap font-bold justify-between items-start text-start">
           <h1>My Properties</h1>
           <Link to={"/profile/addlisting"}>
-            <div className="p-3 bg-primaryLight rounded-lg text-white flex flex-wrap gap-3 hover:bg-primaryDark cursor-pointer transition-colors duration-300 ease-in-out">
+            <div className="lg:p-3 p-2 mr-2 bg-primaryLight rounded-lg text-white flex flex-wrap gap-3 hover:bg-primaryDark cursor-pointer transition-colors duration-300 ease-in-out">
               Add Listing +
             </div>
           </Link>
@@ -95,8 +119,8 @@ const MyProperties = () => {
           "Loading Listing..."
         ) : (
           <>
-            {userListings && userListings.length > 0 ? (
-              userListings.map((listing: any) => (
+            {userListings.length > 0 ? (
+              records.map((listing: any) => (
                 <div
                   key={listing._id}
                   className="bg-primaryLight/10 p-4 mt-10 gap-1 flex flex-wrap flex-col  md:flex-row items-center justify-center"
@@ -109,7 +133,7 @@ const MyProperties = () => {
                         alt="Listing Image"
                       />
                     </Link>
-                    <div className="absolute -top-4 -right-4 text-white bg-green-500 p-2">
+                    <div className="absolute -top-4 -right-4  text-white bg-green-500 p-2">
                       Active
                     </div>
                   </div>
@@ -140,7 +164,7 @@ const MyProperties = () => {
                       <div>
                         <label htmlFor="amenities">
                           Amenities
-                          <div className="flex space-x-3 my-3">
+                          <div className="flex lg:flex-row flex-wrap space-x-3 my-3">
                             {listing.bedrooms ? (
                               <Tooltip
                                 content="Bedrooms"
@@ -364,6 +388,42 @@ const MyProperties = () => {
                 "You have no Listings"
               </p>
             )}
+            <nav className="flex justify-center items-center mx-auto py-10">
+              <ul className="flex">
+                <li
+                  className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-baseDark transition duration-150 ease-in-out hover:bg-light-300 cursor-pointer hover:bg-primaryLight hover:text-white"
+                  aria-label="Previous"
+                  onClick={prevPage}
+                >
+                  <span className="material-icons text-sm">
+                    <IoIosArrowBack />
+                  </span>
+                </li>
+                {numbers.map((number, index) => (
+                  <li
+                    key={index}
+                    className={`mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr ${
+                      currentPage === number
+                        ? "from-primary to-primaryDark shadow-primaryDark/20 text-white"
+                        : "border border-blue-gray-100 bg-transparent text-blue-gray-500"
+                    }  p-0 text-sm  shadow-md  transition duration-150 ease-in-out hover:bg-primaryLight hover:text-white cursor-pointer`}
+                    onClick={() => changeCurrentPage(number)}
+                  >
+                    {number}
+                  </li>
+                ))}
+
+                <li
+                  className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-baseDark transition duration-150 ease-in-out hover:bg-light-300 cursor-pointer hover:bg-primaryLight hover:text-white"
+                  aria-label="Next"
+                  onClick={nextPage}
+                >
+                  <span className="material-icons text-sm">
+                    <IoIosArrowForward />
+                  </span>
+                </li>
+              </ul>
+            </nav>
           </>
         )}
       </div>

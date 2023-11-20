@@ -19,10 +19,7 @@ import {
 import OAuth from "../components/OAuth";
 import Header from "../components/Header";
 
-type IProps = {};
-
-const SignIn = (props: IProps) => {
-  const navigate = useNavigate();
+const SignIn = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
