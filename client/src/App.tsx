@@ -6,18 +6,21 @@ import About from "./pages/About/About";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
-import CreateListing from "./pages/listing/CreateListing";
-import UpdateListing from "./pages/listing/UpdateListing";
-import Listing from "./pages/listing/Listing";
+
 import ProfileDash from "./pages/ProfileDash";
-import AddListing from "./pages/listing/AddListing";
-import ForSale from "./pages/listing/ForSale";
-import ForRent from "./pages/listing/ForRent";
-import AllListings from "./pages/AllListings";
+
+import AllListings from "./pages/PropertyListing/AllListings";
 import Page404 from "./components/Page404";
-import EditListing from "./pages/listing/crud/EditListing";
+
 import ContactUs from "./pages/ContactUs/ContactUs";
 import Blog from "./pages/News/Blog";
+import AddListing from "./pages/Profile/listing/AddListing";
+import CreateListing from "./pages/Profile/listing/CreateListing";
+import UpdateListing from "./pages/Profile/listing/UpdateListing";
+import EditListing from "./pages/Profile/listing/crud/EditListing";
+import Listing from "./pages/Profile/listing/Listing";
+import ForSale from "./pages/Profile/listing/ForSale";
+import ForRent from "./pages/Profile/listing/ForRent";
 
 function App() {
   const router = createBrowserRouter([

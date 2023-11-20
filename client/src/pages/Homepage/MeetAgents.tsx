@@ -1,5 +1,5 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { Abstract10, AbstractAgentBg, AbstractLatestNews } from "../../assets";
+import { AbstractLatestNews } from "../../assets";
 import { Link } from "react-router-dom";
 
 const MeetAgents = () => {

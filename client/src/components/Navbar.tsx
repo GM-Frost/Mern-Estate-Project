@@ -135,7 +135,7 @@ const Navbar = () => {
     },
     {
       link: "/contactus",
-      title: "Contact US",
+      title: "Contact",
     },
   ];
 

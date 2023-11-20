@@ -1,10 +1,8 @@
-import { Button, Option, Select } from "@material-tailwind/react";
-import React from "react";
+import { Option, Select } from "@material-tailwind/react";
+
 import { BsSearch } from "react-icons/bs";
 
-type Props = {};
-
-const ExploreSearch = (props: Props) => {
+const ExploreSearch = () => {
   return (
     <section className="py-16 bg-gray-50 min-h-screen w-full flex  items-center justify-center">
       <div className="mx-auto">

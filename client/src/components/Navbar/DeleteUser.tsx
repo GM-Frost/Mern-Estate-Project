@@ -1,7 +1,3 @@
-import React from "react";
-
-type Props = {};
-
 const DeleteUser = ({ isOpen, onCancel, onConfirmDelete }: any) => {
   return (
     <>

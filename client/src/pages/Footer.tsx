@@ -1,14 +1,7 @@
 import { Button } from "@material-tailwind/react";
-import {
-  Abstract8,
-  Building1,
-  Building2,
-  Building3,
-  LogoLight,
-} from "../assets";
+import { Building3, LogoLight } from "../assets";
 import {
   FaEnvelope,
-  FaFacebook,
   FaFacebookF,
   FaLinkedin,
   FaLocationArrow,
@@ -18,9 +11,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <>
       <div
@@ -186,12 +177,9 @@ const Footer = (props: Props) => {
         <aside className="items-center grid-flow-col">
           <p>
             &#169; {new Date().getFullYear()} All rights reserved by Nova Real
-            Estate (Nayan Bastola)
+            Estate (Developer @ Nayan Bastola)
           </p>
         </aside>
-        <div>
-          <p>About Company | Contact Us</p>
-        </div>
       </footer>
     </>
   );

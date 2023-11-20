@@ -1,5 +1,4 @@
 import { BiEdit, BiLogInCircle } from "react-icons/bi";
-import Layout from "../components/Layout";
 import { BsHouseAdd } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";

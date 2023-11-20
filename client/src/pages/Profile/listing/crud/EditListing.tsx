@@ -15,13 +15,10 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IUserState } from "../../../redux/userSlice/userSlice";
-import {
-  IListingFormData,
-  lFormInitialValue,
-} from "../../types/CreateListing.types";
-import { firebaseApp } from "../../../firebase";
-import Layout from "../../../components/Layout";
+import { IUserState } from "../../../../redux/userSlice/userSlice";
+import { IListingFormData } from "../../../types/CreateListing.types";
+import { firebaseApp } from "../../../../firebase";
+import Layout from "../../../../components/Layout";
 
 const EditListing = () => {
   const params = useParams();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogoDark } from "../../assets";
 import { BiLogInCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,6 @@ type LoginModalProps = {
 };
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [loginSuccess, setLoginSuccess] = useState(false);

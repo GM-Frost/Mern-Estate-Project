@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
-import { FcGoogle } from "react-icons/fc";
+import { useState, useEffect } from "react";
+
 import { BsPersonFillAdd } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,9 +8,7 @@ import { LogoLight } from "../assets";
 import OAuth from "../components/OAuth";
 import Header from "../components/Header";
 
-type IProps = {};
-
-const SignUp = (props: IProps) => {
+const SignUp = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -70,7 +67,7 @@ const SignUp = (props: IProps) => {
       setTimeout(() => {
         navigate("/sign-in");
       }, 3000);
-    } catch (error: any) {
+    } catch (error) {
       toast.error("Internal Server Error");
       setLoading(false);
       setError(error.message);

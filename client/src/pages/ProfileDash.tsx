@@ -17,7 +17,7 @@ import {
   signoutUserStart,
   signoutUserSuccess,
 } from "../redux/userSlice/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ProfileDash = () => {
   const dispatch = useDispatch();

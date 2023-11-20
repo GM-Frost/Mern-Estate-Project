@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { ForRent, ForSale } from "../../assets";
-import Layout from "../../components/Layout";
+
+import Layout from "../../../components/Layout";
+import { listingForRent, listingForSale } from "../../../assets";
 
 const AddListing = () => {
   return (
@@ -41,7 +42,7 @@ const AddListing = () => {
                 <div className="flex justify-center items-center w-32 h-32 rounded-full">
                   <img
                     className="object-cover w-28 h-28 rounded-full"
-                    src={ForRent}
+                    src={listingForRent}
                     alt="For Rent"
                   />
                 </div>
@@ -60,7 +61,7 @@ const AddListing = () => {
                 <div className="flex justify-center items-center w-32 h-32 rounded-full">
                   <img
                     className="object-cover w-28 h-28 rounded-full"
-                    src={ForSale}
+                    src={listingForSale}
                     alt="For Sale"
                   />
                 </div>
