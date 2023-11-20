@@ -64,52 +64,90 @@ export const getListing = async (req, res, next) => {
   }
 };
 
+//Get ALL Listings
+export const getAllListings = async (req, res, next) => {
+  try {
+    const listings = await Listing.find();
+    res.status(200).json(listings);
+  } catch (error) {
+    next(error);
+  }
+};
+
 //SEARCH GET LISTINGS
 export const getListings = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
-    //Start Index
     const startIndex = parseInt(req.query.startIndex) || 0;
-    //For Offer
-    let offer = req.query.offer;
-
-    if (offer === undefined || offer === "false") {
-      offer = { $in: [false, true] };
-    }
-
-    //For Furnished
-    let furnished = req.query.furnished;
-    if (furnished === undefined || furnished === "false") {
-      furnished = { $in: [false, true] };
-    }
-
-    //For parking
-    let parking = req.query.parking;
-    if (parking === undefined || parking === "false") {
-      parking = { $in: [false, true] };
-    }
-
-    //for Type Default
-    let type = req.query.type;
-    if (type === undefined || type === "all") {
-      type = { $in: ["sale", "rent"] };
-    }
-
-    //Search Term
     const searchTerm = req.query.searchTerm || "";
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
+    let amenityFurnished = req.query.amenityFurnished;
+    if (amenityFurnished === undefined || amenityFurnished === "false") {
+      amenityFurnished = { $in: [false, true] };
+    }
+
+    let amenityParking = req.query.amenityParking;
+    if (amenityParking === undefined || amenityParking === "false") {
+      amenityParking = { $in: [false, true] };
+    }
+
+    let type = req.query.type;
+    if (type === undefined || type === "all") {
+      type = { $in: ["Sale", "Rent"] };
+    }
+
+    let propertyType = req.query.propertyType;
+    if (propertyType === undefined || propertyType === "all") {
+      propertyType = { $in: ["House", "Condo", "Apartment"] };
+    }
+
+    let addressCity = req.query.addressCity;
+    if (addressCity === undefined || addressCity === "all") {
+      addressCity = {
+        $in: [
+          "Toronto",
+          "Vancouver",
+          "Calgary",
+          "Ottawa",
+          "Winnipeg",
+          "Montreal",
+          "Edmonton",
+          "QuebecCity",
+        ],
+      };
+    }
+
+    let bedrooms = {};
+    const bedroomsParam = req.query.bedrooms;
+
+    if (bedroomsParam) {
+      if (bedroomsParam === "all") {
+        bedrooms = { $in: [1, 2, 3, 4, 5] };
+      } else if (bedroomsParam === "1") {
+        bedrooms = 1;
+      } else if (bedroomsParam === "2") {
+        bedrooms = 2;
+      } else if (bedroomsParam === "3") {
+        bedrooms = 3;
+      } else if (bedroomsParam === "4") {
+        bedrooms = 4;
+      } else if (bedroomsParam === "4+") {
+        bedrooms = { $gte: 4 };
+      }
+    }
+
     const listings = await Listing.find({
-      //i is for lower or upper case
-      name: { $regex: searchTerm, $options: "i" },
-      offer,
-      furnished,
-      parking,
+      title: { $regex: searchTerm, $options: "i" },
+      amenityParking,
+      amenityFurnished,
       type,
+      propertyType,
+      bedrooms,
     })
       .sort({
-        [sort]: order, //can be descending or ascending
+        [sort]: order,
       })
       .limit(limit)
       .skip(startIndex);

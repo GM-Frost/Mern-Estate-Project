@@ -100,18 +100,21 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
           ))}
         </div>
       ) : (
-        <div className="my-12 w-full md:w-[80%]  mx-auto space-y-8">
+        <div className="my-12 w-full  md:w-[80%]  mx-auto space-y-8">
           {Array.from({ length: 5 }).map((_, index) => (
-            <div className="flex group bg-white rounded-md shadow-lg hover:-translate-y-2 transition-all duration-300 ease-in-out">
-              <div className="flex w-full">
-                <div className="w-2/5 p-2">
+            <div
+              key={index}
+              className="flex group bg-white rounded-md shadow-lg hover:-translate-y-2 transition-all duration-300 ease-in-out"
+            >
+              <div className="flex sm:flex-col md:flex-row w-full">
+                <div className="w-full md:w-2/5 p-2">
                   <div className="w-full h-64 relative overflow-hidden">
                     <img
                       src="https://source.unsplash.com/random"
                       className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-110 rounded-md"
                       alt="Property Image"
                     />
-                    <div className="w-full  cursor-pointer px-5 absolute top-2 flex justify-between ">
+                    <div className="w-full cursor-pointer px-5 absolute top-2 flex justify-between ">
                       <div
                         onMouseEnter={() => setFavIsHovered(index)}
                         onMouseLeave={() => setFavIsHovered(null)}
@@ -139,9 +142,9 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
                     </div>
                   </div>
                 </div>
-                <div className="w-3/5 flex flex-col items-center justify-center p-10">
+                <div className="w-full md:w-3/5 flex flex-col items-center justify-center p-10">
                   <div className="flex w-full flex-col space-y-3 pb-5 border-b border-gray-200">
-                    <div className="flex justify-between items-center mt-4">
+                    <div className="flex w-full justify-between items-center mt-4">
                       <p className="font-semibold text-primary text-xl">
                         $976 /month
                       </p>
@@ -159,7 +162,7 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
                       <p>1901 Thornridge Cir. Shilo Shilo Shilo</p>
                     </div>
                   </div>
-                  <div className="mt-3 flex gap-3 py-2 justify-evenly">
+                  <div className="w-full text-sm md:text-md mt-3 flex gap-3 py-2 justify-evenly">
                     <div>
                       <p className="flex items-center gap-1">
                         <MdOutlineKingBed className="text-xl text-primary" />3
@@ -169,7 +172,7 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
                     <div>
                       <p className="flex items-center gap-1">
                         <MdOutlineBathtub className="text-xl text-primary" />2
-                        Bathrooms
+                        Bath
                       </p>
                     </div>
                     <div>

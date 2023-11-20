@@ -10,9 +10,9 @@ export interface IListingFormData {
   discountPrice: number;
   totalArea: number;
   totalUnit: number;
-  bathrooms: number;
-  bedrooms: number;
-  kitchen: number;
+  bathrooms: string;
+  bedrooms: string;
+  kitchen: string;
   amenityParking: boolean;
   amenityFurnished: boolean;
   amenityAC: boolean;
@@ -32,9 +32,9 @@ export const lFormInitialValue: IListingFormData = {
   type: "",
   description: "",
   propertyType: "",
-  bedrooms: 1,
-  bathrooms: 1,
-  kitchen: 1,
+  bedrooms: "",
+  bathrooms: "",
+  kitchen: "",
   regularPrice: 50,
   discountPrice: 0,
   totalArea: 0.0,
