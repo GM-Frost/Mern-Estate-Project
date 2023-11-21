@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import PriceRange from "../PriceRange";
 import SquareFeet from "../SquareFeet";
 import { Abstract11 } from "../../../assets";
+import { Button } from "@material-tailwind/react";
 
 const settings = {
   dots: true,
@@ -110,7 +111,56 @@ const FilterListing = () => {
                 </label>
               </div>
             </label>
-
+            <label htmlFor="TotalBathrooms" className="space-y-4">
+              <span className="font-semibold">Total Bathrooms</span>
+              <div className="grid grid-cols-1 lg:grid-cols-2  items-center  gap-4">
+                <label
+                  htmlFor="bathroom1"
+                  className="cursor-pointer relative flex gap-3"
+                >
+                  <input
+                    type="checkbox"
+                    id="bathroom1"
+                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                  />
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="check-bathroom1 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                  />{" "}
+                  1 Bath
+                </label>
+                <label
+                  htmlFor="bathroom2"
+                  className="cursor-pointer relative flex gap-3"
+                >
+                  <input
+                    type="checkbox"
+                    id="bathroom2"
+                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                  />
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="check-bathroom2 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                  />{" "}
+                  2 Bath
+                </label>
+                <label
+                  htmlFor="bathroom3"
+                  className="cursor-pointer relative flex gap-3"
+                >
+                  <input
+                    type="checkbox"
+                    id="bathroom3"
+                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                  />
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="check-bathroom3 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
+                  />{" "}
+                  3+ Bath
+                </label>
+              </div>
+            </label>
             <label htmlFor="PriceRange" className="space-y-4">
               <span className="font-semibold">Price Range</span>
               <PriceRange />
@@ -119,6 +169,11 @@ const FilterListing = () => {
               <span className="font-semibold">Square Feet</span>
               <SquareFeet />
             </label>
+            <div className="flex justify-center items-center">
+              <Button className="inline-block  font-semibold bg-primary hover:bg-primaryDark">
+                Filter
+              </Button>
+            </div>
           </form>
         </div>
       </div>

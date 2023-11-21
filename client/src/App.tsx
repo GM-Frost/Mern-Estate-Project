@@ -120,10 +120,6 @@ function App() {
       path: "/contactus",
       element: <ContactUs />,
     },
-    {
-      path: "*",
-      element: <Page404 />,
-    },
   ]);
 
   return <RouterProvider router={router} />;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { MdOutlineBathtub, MdOutlineKingBed } from "react-icons/md";
@@ -7,23 +7,51 @@ import { Link } from "react-router-dom";
 
 interface IFilteredCard {
   layout: string;
+  listings: any[];
 }
-const FilteredCard = ({ layout }: IFilteredCard) => {
+const FilteredCard = ({ layout, listings }: IFilteredCard) => {
   const [isFavHovered, setFavIsHovered] = useState<number | null>(null);
+  const [agentDetails, setAgentDetails] = useState<any>({});
+
+  useEffect(() => {
+    const fetchAgentDetails = async (agentDetails: string) => {
+      try {
+        const response = await fetch(
+          `http://localhost:5173/api/agent/listings/${agentDetails}`
+        );
+        if (response.ok) {
+          const agentData = await response.json();
+          setAgentDetails((prevDetails) => ({
+            ...prevDetails,
+            [agentDetails]: agentData,
+          }));
+        } else {
+          console.error("Failed to fetch agent details");
+        }
+      } catch (error) {
+        console.error("Error fetching agent details:", error);
+      }
+    };
+
+    listings.forEach((property) => {
+      fetchAgentDetails(property._id);
+    });
+  }, [listings]);
+
   return (
     <>
       {layout === "grid" ? (
         <div className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-4">
-          {Array.from({ length: 6 }).map((_, index) => (
+          {listings.map((property, index) => (
             <div
-              key={index}
+              key={property._id}
               className="flex  group bg-white rounded-md shadow-lg hover:-translate-y-2 transition-all duration-300 ease-in-out"
             >
               <div className="flex w-full flex-col">
                 <div className="p-2">
                   <div className="relative">
                     <img
-                      src="https://source.unsplash.com/random"
+                      src={property.imageUrls[0]}
                       className="w-full h-48 object-cover "
                       alt="Property Image"
                     />
@@ -42,13 +70,17 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
                       <div className="bg-white flex px-1 py-[2px] rounded-md justify-center items-center">
                         <div>
                           <img
-                            src="https://source.unsplash.com/random"
+                            src={property.agentProfile}
                             className="w-full h-10 object-cover rounded-md"
                             alt="Agent Image"
                           />
                         </div>
                         <div className="flex flex-col text-sm justify-center items-center px-2">
-                          <h1 className="text-xs font-semibold">Agent Name</h1>
+                          <h1 className="text-xs font-semibold">
+                            {agentDetails[property._id]?.firstname +
+                              " " +
+                              agentDetails[property._id]?.lastname}
+                          </h1>
                           <p className="text-xs text-primary ">Agent</p>
                         </div>
                       </div>
@@ -58,38 +90,51 @@ const FilteredCard = ({ layout }: IFilteredCard) => {
                   <div className="p-3">
                     <div className="flex justify-between items-center mt-4">
                       <p className="font-semibold text-primary text-xl">
-                        $976 /month
+                        {property.type === "Rent"
+                          ? "$ " + property.regularPrice + "/Month"
+                          : "$ " + property.regularPrice + ".00"}
                       </p>
-                      <p className="p-2 bg-neutral/50 rounded-lg">Sale</p>
+                      <p
+                        className={`p-2 ${
+                          property.type === "Rent"
+                            ? "bg-blue-400 text-white"
+                            : "bg-neutral/50"
+                        }  rounded-lg`}
+                      >
+                        {property.type}
+                      </p>
                     </div>
                     <div className="mt-5 flex flex-col gap-3 py-5 border-b-2">
                       <h2 className="font-bold text-xl group-hover:text-primary transition-colors duration-300 ease-in-out">
-                        <Link to={""}>Northwest Office Space</Link>
+                        <Link to={""}>{property.title}</Link>
                       </h2>
                       <div className="text-baseDark flex truncate gap-1 items-center text-left">
                         <div>
                           <HiOutlineLocationMarker className="text-primary " />
                         </div>
-                        <p>1901 Thornridge Cir. Shilo Shilo Shilo</p>
+                        <p>
+                          {property.addressLine}, {property.addressCity},{" "}
+                          {property.addressProvince}{" "}
+                        </p>
                       </div>
                     </div>
                     <div className="mt-3 flex gap-3 py-2 justify-evenly">
                       <div>
                         <p className="flex items-center gap-1">
-                          <MdOutlineKingBed className="text-xl text-primary" />3
-                          Rooms
+                          <MdOutlineKingBed className="text-xl text-primary" />
+                          {property.bedrooms} Rooms
                         </p>
                       </div>
                       <div>
                         <p className="flex items-center gap-1">
                           <MdOutlineBathtub className="text-xl text-primary" />2
-                          Bathrooms
+                          {property.bathrooms} Bathrooms
                         </p>
                       </div>
                       <div>
                         <p className="flex items-center gap-1">
                           <RxDimensions className="text-xl text-primary" />
-                          425 Sq.Ft
+                          {property.totalArea} Sq.Ft
                         </p>
                       </div>
                     </div>

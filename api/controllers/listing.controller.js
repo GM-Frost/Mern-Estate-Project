@@ -83,26 +83,6 @@ export const getListings = async (req, res, next) => {
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
-    let amenityFurnished = req.query.amenityFurnished;
-    if (amenityFurnished === undefined || amenityFurnished === "false") {
-      amenityFurnished = { $in: [false, true] };
-    }
-
-    let amenityParking = req.query.amenityParking;
-    if (amenityParking === undefined || amenityParking === "false") {
-      amenityParking = { $in: [false, true] };
-    }
-
-    let type = req.query.type;
-    if (type === undefined || type === "all") {
-      type = { $in: ["Sale", "Rent"] };
-    }
-
-    let propertyType = req.query.propertyType;
-    if (propertyType === undefined || propertyType === "all") {
-      propertyType = { $in: ["House", "Condo", "Apartment"] };
-    }
-
     let addressCity = req.query.addressCity;
     if (addressCity === undefined || addressCity === "all") {
       addressCity = {
@@ -119,32 +99,48 @@ export const getListings = async (req, res, next) => {
       };
     }
 
-    let bedrooms = {};
-    const bedroomsParam = req.query.bedrooms;
+    let type = req.query.type;
+    if (type === undefined || type === "all") {
+      type = { $in: ["Sale", "Rent"] };
+    }
 
-    if (bedroomsParam) {
-      if (bedroomsParam === "all") {
-        bedrooms = { $in: [1, 2, 3, 4, 5] };
-      } else if (bedroomsParam === "1") {
-        bedrooms = 1;
-      } else if (bedroomsParam === "2") {
-        bedrooms = 2;
-      } else if (bedroomsParam === "3") {
-        bedrooms = 3;
-      } else if (bedroomsParam === "4") {
-        bedrooms = 4;
-      } else if (bedroomsParam === "4+") {
-        bedrooms = { $gte: 4 };
-      }
+    let propertyType = req.query.propertyType;
+    if (propertyType === undefined || propertyType === "all") {
+      propertyType = { $in: ["House", "Condo", "Apartment"] };
+    }
+
+    let amenityFurnished = req.query.amenityFurnished;
+    if (amenityFurnished === undefined || amenityFurnished === "all") {
+      amenityFurnished = { $in: [false, true] };
+    }
+
+    let amenityParking = req.query.amenityParking;
+    if (amenityParking === undefined || amenityParking === "all") {
+      amenityParking = { $in: [false, true] };
+    }
+    let bedrooms = req.query.bedrooms;
+    if (bedrooms === undefined || bedrooms === "all") {
+      bedrooms = { $in: [1, 2, 3, 4, 5] };
+    } else if (bedrooms === "4+") {
+      bedrooms = { $gte: 4 };
+    }
+
+    let bathrooms = req.query.bathrooms;
+    if (bathrooms === undefined || bathrooms === "all") {
+      bathrooms = { $in: [1, 2, 3, 4] };
+    } else if (bathrooms === "3+") {
+      bathrooms = { $gte: 3 };
     }
 
     const listings = await Listing.find({
       title: { $regex: searchTerm, $options: "i" },
-      amenityParking,
-      amenityFurnished,
+      addressCity,
       type,
       propertyType,
+      amenityFurnished,
+      amenityParking,
       bedrooms,
+      bathrooms,
     })
       .sort({
         [sort]: order,
