@@ -21,6 +21,7 @@ import {
   lFormInitialValue,
 } from "../../types/CreateListing.types";
 import Layout from "../../../components/Layout";
+import { firebaseApp } from "../../../firebase";
 
 const ForSale = () => {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -138,6 +139,18 @@ const ForSale = () => {
     }
 
     if (e.target.id === "propertyType") {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+    if (e.target.id === "bedrooms") {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+    if (e.target.id === "bathrooms") {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+    if (e.target.id === "kitchen") {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+    if (e.target.id === "addressCity") {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
 
@@ -300,7 +313,7 @@ const ForSale = () => {
               </div>
               <div className="flex flex-col md:gap-5 md:flex-row md:justify-evenly space-y-4 md:space-y-0">
                 <div className="flex flex-col w-full md:w-1/2 space-y-2">
-                  <label htmlFor="PropertyType">Total Area (Sq-Ft)</label>
+                  <label htmlFor="totalArea">Total Area (Sq-Ft)</label>
                   <input
                     type="text"
                     placeholder="Here is demo text"
@@ -311,7 +324,7 @@ const ForSale = () => {
                   />
                 </div>
                 <div className="flex flex-col  w-full md:w-1/2 space-y-2">
-                  <label htmlFor="PropertyType">Total Unit*</label>
+                  <label htmlFor="totalUnit">Total Unit*</label>
                   <input
                     type="number"
                     placeholder="$50000.00"
@@ -324,37 +337,61 @@ const ForSale = () => {
               </div>
               <div className="flex flex-col md:gap-5 md:flex-row md:justify-evenly space-y-4 md:space-y-0">
                 <div className="flex flex-col w-full md:w-1/3 space-y-2">
-                  <label htmlFor="PropertyType">Total Bedroom*</label>
-                  <input
-                    type="number"
-                    placeholder="2"
+                  <label htmlFor="bedrooms">Bedrooms*</label>
+                  <select
+                    name="bedrooms"
                     className="bg-primary/10 p-2 rounded-md"
+                    required
                     id="bedrooms"
                     onChange={handleFormChange}
                     value={formData.bedrooms}
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a Bedrooms
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5+</option>
+                  </select>
                 </div>
-                <div className="flex flex-col  w-full md:w-1/3 space-y-2">
-                  <label htmlFor="PropertyType">Total Bathroom*</label>
-                  <input
-                    type="number"
-                    placeholder="2"
+                <div className="flex flex-col w-full md:w-1/3 space-y-2">
+                  <label htmlFor="bathrooms">Bathrooms*</label>
+                  <select
+                    name="bathrooms"
                     className="bg-primary/10 p-2 rounded-md"
+                    required
                     id="bathrooms"
                     onChange={handleFormChange}
                     value={formData.bathrooms}
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a Bathrooms
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4+</option>
+                  </select>
                 </div>
-                <div className="flex flex-col  w-full md:w-1/3 space-y-2">
-                  <label htmlFor="PropertyType">Total Kitchen*</label>
-                  <input
-                    type="number"
-                    placeholder="1"
+                <div className="flex flex-col w-full md:w-1/3 space-y-2">
+                  <label htmlFor="kitchen">Kitchen*</label>
+                  <select
+                    name="kitchen"
                     className="bg-primary/10 p-2 rounded-md"
+                    required
                     id="kitchen"
                     onChange={handleFormChange}
                     value={formData.kitchen}
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a Kitchen
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3+</option>
+                  </select>
                 </div>
               </div>
               <div className="flex flex-col w-full space-y-2">
@@ -471,15 +508,27 @@ const ForSale = () => {
             <div className="flex flex-col p-4 space-y-4">
               <div className="flex flex-col md:gap-5 md:flex-row md:justify-evenly space-y-4 md:space-y-0">
                 <div className="flex flex-col w-full md:w-1/2 space-y-2">
-                  <label htmlFor="PropertyType">City*</label>
-                  <input
-                    type="text"
-                    placeholder="Toronto"
+                  <label htmlFor="Address City">City*</label>
+                  <select
+                    name="addressCity"
                     className="bg-primary/10 p-2 rounded-md"
+                    required
                     id="addressCity"
                     onChange={handleFormChange}
                     value={formData.addressCity}
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a City
+                    </option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Vancouver">Vancouver</option>
+                    <option value="Calgary">Calgary</option>
+                    <option value="Montreal">Montreal</option>
+                    <option value="Ottawa">Ottawa</option>
+                    <option value="Winnipeg">Winnipeg</option>
+                    <option value="Edmonton">Edmonton</option>
+                    <option value="QuebecCity">Quebec City</option>
+                  </select>
                 </div>
                 <div className="flex flex-col  w-full md:w-1/2 space-y-2">
                   <label htmlFor="PropertyType">Province*</label>

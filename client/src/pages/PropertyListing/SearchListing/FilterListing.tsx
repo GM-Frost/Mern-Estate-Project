@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import PriceRange from "../PriceRange";
 import SquareFeet from "../SquareFeet";
 import { Abstract11 } from "../../../assets";
+import { Button } from "@material-tailwind/react";
 
 const settings = {
   dots: true,
@@ -27,12 +28,14 @@ const FilterListing = () => {
             <label htmlFor="Location" className="space-y-4">
               <span className="font-semibold">City</span>
               <select className="p-2 w-full flex rounded-sm bg-white border border-gray-400">
-                <option value="Tononto">Toronto</option>
-                <option value="Tononto">Vancouver</option>
-                <option value="Tononto">Calgary</option>
-                <option value="Tononto">Ottawa</option>
-                <option value="Tononto">Montreal</option>
-                <option value="Tononto">Edmonton</option>
+                <option value="Toronto">Toronto</option>
+                <option value="Vancouver">Vancouver</option>
+                <option value="Calgary">Calgary</option>
+                <option value="Montreal">Montreal</option>
+                <option value="Ottawa">Ottawa</option>
+                <option value="Winnipeg">Winnipeg</option>
+                <option value="Edmonton">Edmonton</option>
+                <option value="QuebecCity">Quebec City</option>
               </select>
             </label>
             <label htmlFor="PropertyType" className="space-y-4">
@@ -104,22 +107,7 @@ const FilterListing = () => {
                     icon={faCheck}
                     className="check-rooms4 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
                   />{" "}
-                  4 Rooms
-                </label>
-                <label
-                  htmlFor="rooms5"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="rooms5"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-rooms5 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  5+
+                  4+ Rooms
                 </label>
               </div>
             </label>
@@ -169,22 +157,7 @@ const FilterListing = () => {
                     icon={faCheck}
                     className="check-bathroom3 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
                   />{" "}
-                  3 Bath
-                </label>
-                <label
-                  htmlFor="bathroom4"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="bathroom4"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-bathroom4 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  4 +
+                  3+ Bath
                 </label>
               </div>
             </label>
@@ -196,6 +169,11 @@ const FilterListing = () => {
               <span className="font-semibold">Square Feet</span>
               <SquareFeet />
             </label>
+            <div className="flex justify-center items-center">
+              <Button className="inline-block  font-semibold bg-primary hover:bg-primaryDark">
+                Filter
+              </Button>
+            </div>
           </form>
         </div>
       </div>

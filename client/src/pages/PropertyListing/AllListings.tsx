@@ -1,14 +1,61 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button } from "@material-tailwind/react";
 import { MdList, MdOutlineDashboard } from "react-icons/md";
 
 import FilterListing from "./SearchListing/FilterListing";
 import FilteredCard from "./SearchListing/FilteredCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoadingState from "../../components/Loading/LoadingState";
 
 const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
+  const [listings, setListings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //getting the URLS
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("searchTerm", searchTerm);
+
+    const searchQuery = urlParams.toString();
+    navigate(`/listings?${searchQuery}`);
+  };
+
+  const fetchListings = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/listing/get");
+      if (response.ok) {
+        const data = await response.json();
+        setListings(data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        console.error("Failed to fetch listings:", response.statusText);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching listings:", error);
+    }
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const urlSearchTerm = urlParams.get("searchTerm");
+    if (urlSearchTerm) {
+      setSearchTerm(urlSearchTerm);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
   return (
     <>
       <div
@@ -41,16 +88,23 @@ const AllListings: React.FC = () => {
             <div className="p-3">
               <div>
                 <div className=" p-2  bg-gray-100 rounded-lg  items-center justify-center text-center">
-                  <label>
-                    <input
-                      type="text"
-                      placeholder="Search Properties..."
-                      className="  bg-gray-100 w-56 placeholder:text-primary text-primary mr-2 p-2"
-                    />
-                    <Button className="inline-block font-semibold bg-primary hover:bg-primaryDark">
-                      Search Now
-                    </Button>
-                  </label>
+                  <form onSubmit={handleSubmit}>
+                    <label>
+                      <input
+                        type="text"
+                        placeholder="Search Properties..."
+                        className="  bg-gray-100 w-56 placeholder:text-primary text-primary mr-2 p-2"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                      <Button
+                        type="submit"
+                        className="inline-block font-semibold bg-primary hover:bg-primaryDark"
+                      >
+                        Search Now
+                      </Button>
+                    </label>
+                  </form>
                 </div>
               </div>
             </div>
@@ -89,7 +143,11 @@ const AllListings: React.FC = () => {
           </div>
 
           <div className="w-full md:w-3/4 flex flex-col">
-            <FilteredCard layout={filterLayout} />
+            {loading ? (
+              <LoadingState />
+            ) : (
+              <FilteredCard layout={filterLayout} listings={listings} />
+            )}
           </div>
         </div>
       </div>
