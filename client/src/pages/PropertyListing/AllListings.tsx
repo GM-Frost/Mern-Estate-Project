@@ -52,6 +52,30 @@ const AllListings: React.FC = () => {
     }
   }, [location.search]);
 
+  ////////////---- PAGINATION FUNCTIONS -----/////////
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 2;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = listings.slice(firstIndex, lastIndex);
+  const npages = Math.ceil(listings.length / recordsPerPage);
+  const numbers = [...Array(npages + 1).keys()].slice(1);
+
+  const prevPage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const changeCurrentPage = (id) => {
+    setCurrentPage(id);
+  };
+  const nextPage = () => {
+    if (currentPage !== npages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   useEffect(() => {
     fetchListings();
   }, []);
