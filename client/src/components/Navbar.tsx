@@ -126,7 +126,7 @@ const Navbar = () => {
       title: "About",
     },
     {
-      link: "/property",
+      link: "/listings",
       title: "Property",
     },
     {

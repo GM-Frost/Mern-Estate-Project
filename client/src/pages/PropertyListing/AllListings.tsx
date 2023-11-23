@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button } from "@material-tailwind/react";
 import { MdList, MdOutlineDashboard } from "react-icons/md";
 
-import FilterListing from "./SearchListing/FilterListing";
+import FilterListing, { IFilterFormData } from "./SearchListing/FilterListing";
 import FilteredCard from "./SearchListing/FilteredCard";
 import { useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
@@ -12,16 +12,16 @@ const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   const [listings, setListings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const urlParams = new URLSearchParams(window.location.search);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     //getting the URLS
-    const urlParams = new URLSearchParams(window.location.search);
     urlParams.set("searchTerm", searchTerm);
-
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
   };
@@ -29,7 +29,12 @@ const AllListings: React.FC = () => {
   const fetchListings = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/listing/get");
+      let apiUrl = "/api/listing/get";
+
+      if (searchTerm) {
+        apiUrl += `?searchTerm=${searchTerm}`;
+      }
+      const response = await fetch(apiUrl);
       if (response.ok) {
         const data = await response.json();
         setListings(data);
@@ -44,41 +49,21 @@ const AllListings: React.FC = () => {
     }
   };
 
+  const handleFilterFormSubmit = (formData: IFilterFormData | undefined) => {
+    setFilterSearch(formData);
+  };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const urlSearchTerm = urlParams.get("searchTerm");
     if (urlSearchTerm) {
       setSearchTerm(urlSearchTerm);
     }
-  }, [location.search]);
-
-  ////////////---- PAGINATION FUNCTIONS -----/////////
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 2;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = listings.slice(firstIndex, lastIndex);
-  const npages = Math.ceil(listings.length / recordsPerPage);
-  const numbers = [...Array(npages + 1).keys()].slice(1);
-
-  const prevPage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-  const changeCurrentPage = (id) => {
-    setCurrentPage(id);
-  };
-  const nextPage = () => {
-    if (currentPage !== npages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  }, []);
 
   useEffect(() => {
     fetchListings();
-  }, []);
+  }, [location.search]);
 
   return (
     <>
@@ -106,6 +91,7 @@ const AllListings: React.FC = () => {
         </div>
       </div>
       {/*--------------------- Search Section ---------------- */}
+
       <div className="w-full bg-primary/5 flex-col space-y-10 bg-white-50 mx-auto flex items-center justify-center p-6">
         <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
           <div className="flex flex-col md:flex-row space-x-5  items-center justify-between">
@@ -163,7 +149,7 @@ const AllListings: React.FC = () => {
         {/*--------------------- Content Section ---------------- */}
         <div className="flex w-full flex-col md:flex-row">
           <div className="w-full md:w-1/4 space-y-10">
-            <FilterListing />
+            <FilterListing onFormSubmit={handleFilterFormSubmit} />
           </div>
 
           <div className="w-full md:w-3/4 flex flex-col">

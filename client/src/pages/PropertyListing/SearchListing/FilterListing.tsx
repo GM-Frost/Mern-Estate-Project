@@ -1,11 +1,12 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import PriceRange from "../PriceRange";
 import SquareFeet from "../SquareFeet";
 import { Abstract11 } from "../../../assets";
 import { Button } from "@material-tailwind/react";
+import { useState } from "react";
 
 const settings = {
   dots: true,
@@ -19,15 +20,83 @@ const settings = {
   adaptiveHeight: true,
 };
 
-const FilterListing = () => {
+export interface IFilterFormData {
+  addressCity: string;
+  buildingType: string;
+  propertyType: string;
+  totalBedrooms: string | number | undefined;
+  totalBathrooms: string | number | undefined;
+}
+
+const initialFormData: IFilterFormData = {
+  addressCity: "all",
+  buildingType: "all",
+  propertyType: "all",
+  totalBedrooms: "all",
+  totalBathrooms: "all",
+};
+
+interface FilterListingProps {
+  onFormSubmit: (formData: IFilterFormData) => void;
+}
+
+const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
+  const [formData, setFormData] = useState<IFilterFormData>(initialFormData);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const navigate = useNavigate();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]:
+        value === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    //getting the URLS
+    const urlParams = new URLSearchParams();
+    urlParams.set("searchTerm", searchTerm);
+    urlParams.set("addressCity", formData.addressCity);
+    urlParams.set("propertyType", formData.buildingType);
+    urlParams.set("type", formData.propertyType);
+    urlParams.set("bedrooms", String(formData.totalBedrooms));
+    urlParams.set("bathrooms", String(formData.totalBathrooms));
+
+    const searchQuery = urlParams.toString();
+    navigate(`/listings?${searchQuery}`);
+
+    onFormSubmit(formData);
+  };
+
+  const bedroomOptions = ["1", "2", "3", "4+"];
+  const bathroomOptions = ["1", "2", "3+"];
+  const propertyType = ["Sale", "Rent"];
+
   return (
     <>
       <div className="flex-1">
         <div className="w-full flex bg-white rounded-md shadow-md items-center justify-center">
-          <form className="w-[80%] px-2 py-8 flex flex-col space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[80%] px-2 py-8 flex flex-col space-y-5"
+          >
             <label htmlFor="Location" className="space-y-4">
               <span className="font-semibold">City</span>
-              <select className="p-2 w-full flex rounded-sm bg-white border border-gray-400">
+              <select
+                id="addressCity"
+                className="p-2 w-full flex rounded-sm bg-white border border-gray-400"
+                value={formData.addressCity}
+                onChange={handleChange}
+                name="addressCity"
+              >
+                <option value="" disabled>
+                  Select a City
+                </option>
                 <option value="Toronto">Toronto</option>
                 <option value="Vancouver">Vancouver</option>
                 <option value="Calgary">Calgary</option>
@@ -36,129 +105,112 @@ const FilterListing = () => {
                 <option value="Winnipeg">Winnipeg</option>
                 <option value="Edmonton">Edmonton</option>
                 <option value="QuebecCity">Quebec City</option>
+                <option value="all">All</option>
               </select>
             </label>
-            <label htmlFor="PropertyType" className="space-y-4">
-              <span className="font-semibold">Property Type</span>
-              <select className="p-2 w-full flex rounded-sm bg-white border border-gray-400">
-                <option value="Tononto">House</option>
-                <option value="Tononto">Condo</option>
-                <option value="Tononto">Apartment</option>
+            <label htmlFor="buildingType" className="space-y-4">
+              <span className="font-semibold">Building Type</span>
+              <select
+                id="buildingType"
+                className="p-2 w-full flex rounded-sm bg-white border border-gray-400"
+                value={formData.buildingType}
+                onChange={handleChange}
+                name="buildingType"
+              >
+                <option value="" disabled>
+                  Select Building Type
+                </option>
+                <option value="House">House</option>
+                <option value="Condo">Condo</option>
+                <option value="Apartment">Apartment</option>
+                <option value="all">All</option>
               </select>
+            </label>
+            <label htmlFor="propertyType" className="space-y-4">
+              <span className="font-semibold">Property Type</span>
+              <div className="grid grid-cols-2  items-center  gap-4">
+                {propertyType.map((option, index) => (
+                  <label
+                    key={index}
+                    htmlFor={`propertyType${index + 1}`}
+                    className="cursor-pointer relative flex gap-3"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`propertyType${index + 1}`}
+                      className="appearance-none h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                      value={option}
+                      onChange={handleChange}
+                      name="propertyType"
+                      checked={formData.propertyType === option}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={`check-propertyType${
+                        index + 1
+                      } h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition`}
+                    />
+                    For {option}
+                  </label>
+                ))}
+              </div>
             </label>
             <label htmlFor="TotalBedrooms" className="space-y-4">
               <span className="font-semibold">Total Bedrooms</span>
               <div className="grid grid-cols-2  items-center  gap-4">
-                <label
-                  htmlFor="rooms1"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="rooms1"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-rooms1 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  1 Room
-                </label>
-                <label
-                  htmlFor="rooms2"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="rooms2"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-rooms2 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  2 Rooms
-                </label>
-                <label
-                  htmlFor="rooms3"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="rooms3"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-rooms3 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  3 Rooms
-                </label>
-                <label
-                  htmlFor="rooms4"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="rooms4"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-rooms4 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  4+ Rooms
-                </label>
+                {bedroomOptions.map((option, index) => (
+                  <label
+                    key={index}
+                    htmlFor={`bedroom${index + 1}`}
+                    className="cursor-pointer relative flex gap-3"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`bedroom${index + 1}`}
+                      className="appearance-none h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                      value={option}
+                      onChange={handleChange}
+                      name="totalBedrooms"
+                      checked={formData.totalBedrooms === option}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={`check-bedroom${
+                        index + 1
+                      } h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition`}
+                    />
+                    {option} Room
+                  </label>
+                ))}
               </div>
             </label>
-            <label htmlFor="TotalBathrooms" className="space-y-4">
+            <label htmlFor="bathroom" className="space-y-4">
               <span className="font-semibold">Total Bathrooms</span>
               <div className="grid grid-cols-1 lg:grid-cols-2  items-center  gap-4">
-                <label
-                  htmlFor="bathroom1"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="bathroom1"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-bathroom1 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  1 Bath
-                </label>
-                <label
-                  htmlFor="bathroom2"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="bathroom2"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-bathroom2 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  2 Bath
-                </label>
-                <label
-                  htmlFor="bathroom3"
-                  className="cursor-pointer relative flex gap-3"
-                >
-                  <input
-                    type="checkbox"
-                    id="bathroom3"
-                    className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
-                  />
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="check-bathroom3 h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition"
-                  />{" "}
-                  3+ Bath
-                </label>
+                {bathroomOptions.map((option, index) => (
+                  <label
+                    key={index}
+                    htmlFor={`bathroom${index + 1}`}
+                    className="cursor-pointer relative flex gap-3"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`bathroom${index + 1}`}
+                      className="appearance-none  h-5 w-5 border-2 rounded-md border-primaryLight bg-primary/20"
+                      value={option}
+                      onChange={handleChange}
+                      name="totalBathrooms"
+                      checked={formData.totalBathrooms === option}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={`check-bathroom${
+                        index + 1
+                      } h-5 w-5 text-primaryDark absolute text-opacity-0 left-0 top-0 transition`}
+                    />
+                    {option} bath
+                  </label>
+                ))}
               </div>
             </label>
             <label htmlFor="PriceRange" className="space-y-4">
@@ -170,7 +222,10 @@ const FilterListing = () => {
               <SquareFeet />
             </label>
             <div className="flex justify-center items-center">
-              <Button className="inline-block  font-semibold bg-primary hover:bg-primaryDark">
+              <Button
+                type="submit"
+                className="inline-block  font-semibold bg-primary hover:bg-primaryDark"
+              >
                 Filter
               </Button>
             </div>

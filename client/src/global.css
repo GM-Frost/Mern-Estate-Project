@@ -83,23 +83,27 @@ textarea:focus {
   animation: check-animation 0.5s 1;
 }
 
-#rooms1:checked ~ .check-rooms1 {
+#bedroom1:checked ~ .check-bedroom1 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
-#rooms2:checked ~ .check-rooms2 {
+#bedroom2:checked ~ .check-bedroom2 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
-#rooms3:checked ~ .check-rooms3 {
+#bedroom3:checked ~ .check-bedroom3 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
-#rooms4:checked ~ .check-rooms4 {
+#bedroom4:checked ~ .check-bedroom4 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
-#rooms5:checked ~ .check-rooms5 {
+#propertyType1:checked ~ .check-propertyType1 {
+  @apply text-opacity-100;
+  animation: check-animation 0.5s 1;
+}
+#propertyType2:checked ~ .check-propertyType2 {
   @apply text-opacity-100;
   animation: check-animation 0.5s 1;
 }
