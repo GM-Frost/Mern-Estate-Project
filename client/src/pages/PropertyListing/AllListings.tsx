@@ -12,7 +12,6 @@ const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   const [listings, setListings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterData, setFilterData] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,11 +20,10 @@ const AllListings: React.FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
-    fetchListings();
+    fetchListings(searchQuery); // Pass searchQuery directly to fetchListings
   };
 
   const handleFilterSubmit = (formData: IFilterFormData) => {
@@ -35,25 +33,23 @@ const AllListings: React.FC = () => {
     urlParams.set("type", formData.propertyType);
     urlParams.set("bedrooms", formData.totalBedrooms);
     urlParams.set("bathrooms", formData.totalBathrooms);
-    const searchQuery = urlParams.toString();
-    setFilterData(searchQuery);
-    navigate(`/listings?${searchQuery}`);
+    urlParams.set("minPrice", String(formData.minPrice));
+    urlParams.set("maxPrice", String(formData.maxPrice));
+    urlParams.set("minArea", String(formData.minArea));
+    urlParams.set("maxArea", String(formData.maxArea));
 
-    fetchListings();
+    const searchQuery = urlParams.toString();
+    navigate(`/listings?${searchQuery}`);
+    fetchListings(searchQuery); // Pass searchQuery directly to fetchListings
   };
 
-  const fetchListings = async () => {
-    const searchtermFromUrl = urlParams.get("searchTerm");
-
+  const fetchListings = async (searchQuery = "") => {
     try {
       setLoading(true);
       let apiUrl = `/api/listing/get`;
-      if (searchtermFromUrl) {
-        apiUrl += `?searchTerm=${searchtermFromUrl}`;
-      }
 
-      if (filterData) {
-        apiUrl += `?${filterData}`;
+      if (searchQuery) {
+        apiUrl += `?${searchQuery}`; // Append searchQuery directly
       }
 
       const response = await fetch(apiUrl);
@@ -62,26 +58,21 @@ const AllListings: React.FC = () => {
         setListings(data);
         setLoading(false);
       } else {
-        setLoading(false);
         console.error("Failed to fetch listings:", response.statusText);
       }
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching listings:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
     const urlSearchTerm = urlParams.get("searchTerm");
     if (urlSearchTerm) {
       setSearchTerm(urlSearchTerm);
     }
-    fetchListings();
-  }, []);
-
-  useEffect(() => {
-    fetchListings();
+    fetchListings(); // Fetch initial listings without any specific query
   }, []);
 
   return (
@@ -138,8 +129,8 @@ const AllListings: React.FC = () => {
               </div>
             </div>
             <div className=" text-baseLight p-4">
-              Showing <span className="text-dark">1-2</span> of{" "}
-              <span className="text-dark">17</span> results
+              Showing <span className="text-dark">total</span> of{" "}
+              <span className="text-dark">{listings.length}</span> results
             </div>
             <div className="hidden md:flex gap-3 items-center text-center p-4 ">
               <div

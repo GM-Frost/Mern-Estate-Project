@@ -1,6 +1,6 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import PriceRange from "../PriceRange";
 import SquareFeet from "../SquareFeet";
@@ -27,6 +27,10 @@ export interface IFilterFormData {
   propertyType: string;
   totalBedrooms: string;
   totalBathrooms: string;
+  minPrice: string | number;
+  maxPrice: string | number;
+  minArea: string | number;
+  maxArea: string | number;
 }
 
 const initialFormData: IFilterFormData = {
@@ -36,6 +40,10 @@ const initialFormData: IFilterFormData = {
   propertyType: "all",
   totalBedrooms: "all",
   totalBathrooms: "all",
+  minPrice: "all",
+  maxPrice: "all",
+  minArea: "all",
+  maxArea: "all",
 };
 
 interface FilterListingProps {
@@ -44,6 +52,7 @@ interface FilterListingProps {
 
 const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
   const [formData, setFormData] = useState<IFilterFormData>(initialFormData);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
@@ -58,6 +67,23 @@ const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onFormSubmit(formData);
+  };
+
+  const handlePriceChange = (newPriceRange: [number, number]) => {
+    const [minPrice, maxPrice] = newPriceRange;
+    setFormData({
+      ...formData,
+      minPrice,
+      maxPrice,
+    });
+  };
+  const handleAreaChange = (newAreaRange: [number, number]) => {
+    const [minArea, maxArea] = newAreaRange;
+    setFormData({
+      ...formData,
+      minArea,
+      maxArea,
+    });
   };
 
   const bedroomOptions = ["1", "2", "3", "4+"];
@@ -202,11 +228,11 @@ const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
             </label>
             <label htmlFor="PriceRange" className="space-y-4">
               <span className="font-semibold">Price Range</span>
-              <PriceRange />
+              <PriceRange onPriceChange={handlePriceChange} />
             </label>
             <label htmlFor="SquareFeetRange" className="space-y-4">
               <span className="font-semibold">Square Feet</span>
-              <SquareFeet />
+              <SquareFeet onAreaChange={handleAreaChange} />
             </label>
             <div className="flex justify-center items-center">
               <Button

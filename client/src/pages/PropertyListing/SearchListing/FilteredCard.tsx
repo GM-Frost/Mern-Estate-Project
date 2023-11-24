@@ -14,12 +14,11 @@ interface IFilteredCard {
   layout: string;
   listings: any[];
 }
-const FilteredCard = ({ layout, listings }: IFilteredCard) => {
+const FilteredCard = ({ listings, layout }: IFilteredCard) => {
   const [isFavHovered, setFavIsHovered] = useState<number | null>(null);
   const [agentDetails, setAgentDetails] = useState<any>({});
 
   ////////////---- PAGINATION FUNCTIONS -----/////////
-
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 4;
   const lastIndex = currentPage * recordsPerPage;
@@ -180,6 +179,7 @@ const FilteredCard = ({ layout, listings }: IFilteredCard) => {
               </p>
             )}
           </div>
+
           <nav className=" justify-center items-center mx-auto py-10">
             <ul className="flex justify-center items-center">
               <li
@@ -191,6 +191,7 @@ const FilteredCard = ({ layout, listings }: IFilteredCard) => {
                   <IoIosArrowBack />
                 </span>
               </li>
+
               {numbers.map((number, index) => (
                 <li
                   key={index}
