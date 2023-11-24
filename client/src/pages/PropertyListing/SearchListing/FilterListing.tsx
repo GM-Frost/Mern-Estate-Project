@@ -21,14 +21,16 @@ const settings = {
 };
 
 export interface IFilterFormData {
+  searchTerm: string;
   addressCity: string;
   buildingType: string;
   propertyType: string;
-  totalBedrooms: string | number | undefined;
-  totalBathrooms: string | number | undefined;
+  totalBedrooms: string;
+  totalBathrooms: string;
 }
 
 const initialFormData: IFilterFormData = {
+  searchTerm: "",
   addressCity: "all",
   buildingType: "all",
   propertyType: "all",
@@ -42,8 +44,6 @@ interface FilterListingProps {
 
 const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
   const [formData, setFormData] = useState<IFilterFormData>(initialFormData);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const navigate = useNavigate();
   const handleChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
@@ -57,19 +57,6 @@ const FilterListing: React.FC<FilterListingProps> = ({ onFormSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //getting the URLS
-    const urlParams = new URLSearchParams();
-    urlParams.set("searchTerm", searchTerm);
-    urlParams.set("addressCity", formData.addressCity);
-    urlParams.set("propertyType", formData.buildingType);
-    urlParams.set("type", formData.propertyType);
-    urlParams.set("bedrooms", String(formData.totalBedrooms));
-    urlParams.set("bathrooms", String(formData.totalBathrooms));
-
-    const searchQuery = urlParams.toString();
-    navigate(`/listings?${searchQuery}`);
-
     onFormSubmit(formData);
   };
 

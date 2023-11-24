@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button } from "@material-tailwind/react";
 import { MdList, MdOutlineDashboard } from "react-icons/md";
@@ -12,6 +12,7 @@ const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   const [listings, setListings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterData, setFilterData] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,20 +21,41 @@ const AllListings: React.FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //getting the URLS
+
     urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
+    fetchListings();
+  };
+
+  const handleFilterSubmit = (formData: IFilterFormData) => {
+    urlParams.set("searchTerm", formData.searchTerm);
+    urlParams.set("addressCity", formData.addressCity);
+    urlParams.set("propertyType", formData.buildingType);
+    urlParams.set("type", formData.propertyType);
+    urlParams.set("bedrooms", formData.totalBedrooms);
+    urlParams.set("bathrooms", formData.totalBathrooms);
+    const searchQuery = urlParams.toString();
+    setFilterData(searchQuery);
+    navigate(`/listings?${searchQuery}`);
+
+    fetchListings();
   };
 
   const fetchListings = async () => {
+    const searchtermFromUrl = urlParams.get("searchTerm");
+
     try {
       setLoading(true);
-      let apiUrl = "/api/listing/get";
-
-      if (searchTerm) {
-        apiUrl += `?searchTerm=${searchTerm}`;
+      let apiUrl = `/api/listing/get`;
+      if (searchtermFromUrl) {
+        apiUrl += `?searchTerm=${searchtermFromUrl}`;
       }
+
+      if (filterData) {
+        apiUrl += `?${filterData}`;
+      }
+
       const response = await fetch(apiUrl);
       if (response.ok) {
         const data = await response.json();
@@ -49,21 +71,18 @@ const AllListings: React.FC = () => {
     }
   };
 
-  const handleFilterFormSubmit = (formData: IFilterFormData | undefined) => {
-    setFilterSearch(formData);
-  };
-
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     const urlSearchTerm = urlParams.get("searchTerm");
     if (urlSearchTerm) {
       setSearchTerm(urlSearchTerm);
     }
+    fetchListings();
   }, []);
 
   useEffect(() => {
     fetchListings();
-  }, [location.search]);
+  }, []);
 
   return (
     <>
@@ -149,7 +168,7 @@ const AllListings: React.FC = () => {
         {/*--------------------- Content Section ---------------- */}
         <div className="flex w-full flex-col md:flex-row">
           <div className="w-full md:w-1/4 space-y-10">
-            <FilterListing onFormSubmit={handleFilterFormSubmit} />
+            <FilterListing onFormSubmit={handleFilterSubmit} />
           </div>
 
           <div className="w-full md:w-3/4 flex flex-col">
