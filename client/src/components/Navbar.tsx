@@ -60,8 +60,12 @@ const Navbar = () => {
         return;
       }
       dispatch(signoutUserSuccess(data));
-    } catch (error) {
-      dispatch(signoutUserFailure(error.message));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(signoutUserFailure(error.message));
+      } else {
+        dispatch(signoutUserFailure("An unknown error occurred"));
+      }
     }
   };
 
@@ -78,7 +82,7 @@ const Navbar = () => {
       }
     };
     window.addEventListener("scroll", changeColor);
-  }, []);
+  });
 
   const handleEsc = (e: KeyboardEvent) => {
     if (e.key === "Escape") {

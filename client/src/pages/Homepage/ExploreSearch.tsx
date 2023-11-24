@@ -1,8 +1,35 @@
-import { Option, Select } from "@material-tailwind/react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 import { BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-const ExploreSearch = () => {
+interface ISearchCity {
+  addressCity: string;
+}
+const initialData: ISearchCity = {
+  addressCity: "",
+};
+const ExploreSearch: React.FC = () => {
+  const [formData, setFormData] = useState<ISearchCity>(initialData);
+  const navigate = useNavigate();
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const handleCityChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    urlParams.set("addressCity", formData.addressCity);
+    const searchQuery = urlParams.toString();
+    navigate(`/listings?${searchQuery}`);
+  };
+  console.log(formData);
   return (
     <section className="py-16 bg-gray-50 min-h-screen w-full flex  items-center justify-center">
       <div className="mx-auto">
@@ -14,31 +41,43 @@ const ExploreSearch = () => {
         </div>
         <div className="mt-16 flex flex-col justify-center items-center space-y-5">
           <div className="mx-auto md:w-1/2 ">
-            <div className=" p-4 flex gap-3  bg-white shadow-lg rounded-lg justify-evenly items-center">
-              <div className="w-52 md:w-1/2 flex-wrap">
-                <label>
-                  <Select
-                    variant="static"
-                    color="indigo"
-                    label="Select Location"
-                    className="text-center items-center justify-center"
+            <form onSubmit={handleSubmit}>
+              <div className=" p-4 flex gap-3  bg-white shadow-lg rounded-lg justify-evenly items-center">
+                <div className="w-52 md:w-1/2 flex-wrap">
+                  <label>
+                    <select
+                      id="addressCity"
+                      className="p-2 w-full flex rounded-sm bg-white border border-gray-400"
+                      value={formData.addressCity}
+                      onChange={handleCityChange}
+                      name="addressCity"
+                    >
+                      <option value="" disabled>
+                        Select a City
+                      </option>
+                      <option value="Toronto">Toronto</option>
+                      <option value="Vancouver">Vancouver</option>
+                      <option value="Calgary">Calgary</option>
+                      <option value="Montreal">Montreal</option>
+                      <option value="Ottawa">Ottawa</option>
+                      <option value="Winnipeg">Winnipeg</option>
+                      <option value="Edmonton">Edmonton</option>
+                      <option value="QuebecCity">Quebec City</option>
+                      <option value="all">All</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="flex md:w-1/3 items-center justify-center gap-5 p-4 bg-primary rounded-md text-white hover:bg-primaryDark transition-colors duration-500 ease-in-out cursor-pointer">
+                  <BsSearch />
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center"
                   >
-                    <Option>Toronto</Option>
-                    <Option>Montreal</Option>
-                    <Option>Ottawa</Option>
-                    <Option>Vancouver</Option>
-                    <Option>Calgary</Option>
-                    <Option>Edmonton</Option>
-                  </Select>
-                </label>
+                    Search
+                  </button>
+                </div>
               </div>
-              <div className="flex md:w-1/3 items-center justify-center gap-5 p-4 bg-primary rounded-md text-white hover:bg-primaryDark transition-colors duration-500 ease-in-out cursor-pointer">
-                <BsSearch />
-                <button className="flex w-full items-center justify-center">
-                  Search
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
 

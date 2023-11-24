@@ -158,7 +158,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
                           <div>
                             <p className="flex items-center gap-1">
                               <MdOutlineBathtub className="text-xl text-primary" />
-                              2{property.bathrooms} Bath
+                              {property.bathrooms} Bath
                             </p>
                           </div>
                           <div>

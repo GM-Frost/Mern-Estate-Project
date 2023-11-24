@@ -5,7 +5,7 @@ import { MdList, MdOutlineDashboard } from "react-icons/md";
 
 import FilterListing, { IFilterFormData } from "./SearchListing/FilterListing";
 import FilteredCard from "./SearchListing/FilteredCard";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
 
 const AllListings: React.FC = () => {
@@ -18,12 +18,12 @@ const AllListings: React.FC = () => {
 
   const urlParams = new URLSearchParams(window.location.search);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
-    fetchListings(searchQuery); // Pass searchQuery directly to fetchListings
+    fetchListings(searchQuery);
   };
 
   const handleFilterSubmit = (formData: IFilterFormData) => {
@@ -40,16 +40,17 @@ const AllListings: React.FC = () => {
 
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
-    fetchListings(searchQuery); // Pass searchQuery directly to fetchListings
+    fetchListings(); // Pass searchQuery directly to fetchListings
   };
 
-  const fetchListings = async (searchQuery = "") => {
+  const fetchListings = async () => {
     try {
       setLoading(true);
+      const urlParams = new URLSearchParams(window.location.search);
       let apiUrl = `/api/listing/get`;
 
-      if (searchQuery) {
-        apiUrl += `?${searchQuery}`; // Append searchQuery directly
+      if (urlParams) {
+        apiUrl += `?${urlParams}`;
       }
 
       const response = await fetch(apiUrl);
