@@ -44,9 +44,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
   useEffect(() => {
     const fetchAgentDetails = async (agentDetails: string) => {
       try {
-        const response = await fetch(
-          `http://localhost:5173/api/agent/listings/${agentDetails}`
-        );
+        const response = await fetch(`/api/agent/listings/${agentDetails}`);
         if (response.ok) {
           const agentData = await response.json();
           setAgentDetails((prevDetails) => ({
@@ -136,7 +134,9 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
                         </div>
                         <div className="mt-5 flex flex-col gap-3 py-5 border-b-2">
                           <h2 className="font-bold text-xl group-hover:text-primary transition-colors duration-300 ease-in-out">
-                            <Link to={""}>{property.title}</Link>
+                            <Link to={`listing/${property._id}`}>
+                              {property.title}
+                            </Link>
                           </h2>
                           <div className="text-baseDark flex truncate gap-1 items-center text-left">
                             <div>

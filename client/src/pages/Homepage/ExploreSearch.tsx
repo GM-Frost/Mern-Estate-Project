@@ -51,6 +51,7 @@ const ExploreSearch: React.FC = () => {
                       value={formData.addressCity}
                       onChange={handleCityChange}
                       name="addressCity"
+                      required
                     >
                       <option value="" disabled>
                         Select a City
@@ -187,7 +188,10 @@ const ExploreSearch: React.FC = () => {
           </div>
         </div>
         <div className="mt-5 flex items-center justify-center">
-          <button className="p-5 text-center rounded-md bg-primary hover:bg-primaryDark transition-all duration-500 ease-in-out hover:scale-105 text-white">
+          <button
+            onClick={() => navigate(`/listings?addressCity=all`)}
+            className="p-5 text-center rounded-md bg-primary hover:bg-primaryDark transition-all duration-500 ease-in-out hover:scale-105 text-white"
+          >
             See all City
           </button>
         </div>

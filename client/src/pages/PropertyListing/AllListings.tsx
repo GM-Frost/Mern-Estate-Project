@@ -23,7 +23,7 @@ const AllListings: React.FC = () => {
     urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
-    fetchListings(searchQuery);
+    fetchListings();
   };
 
   const handleFilterSubmit = (formData: IFilterFormData) => {

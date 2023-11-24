@@ -39,6 +39,9 @@ const Navbar = () => {
     isNotHeroNav ? `${LogoDark}` : `${LogoLight}`
   );
 
+  const [profileIconColor, setProfileIconColor] = useState(
+    isNotHeroNav ? "text-primaryDark" : "text-white"
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openSigninModal = () => {
@@ -75,10 +78,12 @@ const Navbar = () => {
         setColor("#ffffff");
         setTextColor("#000000");
         setLogo(`${LogoDark}`);
+        setProfileIconColor("text-primaryDark");
       } else {
         setColor(isNotHeroNav ? "white" : "transparent");
         setTextColor(isNotHeroNav ? "black" : "#ffffff");
         setLogo(isNotHeroNav ? `${LogoDark}` : `${LogoLight}`);
+        setProfileIconColor(isNotHeroNav ? "text-primaryDark" : "text-white");
       }
     };
     window.addEventListener("scroll", changeColor);
@@ -182,7 +187,9 @@ const Navbar = () => {
             ) : (
               <FaUserTie
                 onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className="relative cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight"
+                className={`relative
+                ${profileIconColor}
+                cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight`}
               />
             )}
 
@@ -205,7 +212,7 @@ const Navbar = () => {
                   >
                     <Link to={"/profile"} className="flex justify-between">
                       Profile
-                      <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary ">
+                      <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary">
                         {currentUser ? currentUser.firstname : "N/A"}
                       </span>
                     </Link>
