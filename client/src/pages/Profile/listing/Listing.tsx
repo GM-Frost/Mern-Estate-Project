@@ -141,7 +141,7 @@ const Listing = () => {
 
   return (
     <>
-      <main className="mt-20 min-h-screen w-screen flex flex-col items-center">
+      <main className="mt-20 min-h-screen w-screen-auto flex flex-col items-center">
         {loading && <Loading loadingactive />}
         {error && <Page404 />}
         {listing && !loading && !error && (

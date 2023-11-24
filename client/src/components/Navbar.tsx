@@ -172,11 +172,11 @@ const Navbar = () => {
         {/********************************************** ACCOUNT Dropdown **********************************************/}
 
         <div className="mr-6">
-          <div className="relative">
+          <div className="relative ">
             {currentUser ? (
               <button
                 onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight hover:border-primaryLight"
+                className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight hover:bg-primaryLight p-1"
               >
                 <img
                   src={currentUser?.avatar}
@@ -189,7 +189,7 @@ const Navbar = () => {
                 onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
                 className={`relative
                 ${profileIconColor}
-                cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight`}
+                cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:bg-primaryLight hover:bg-primaryLight hover:text-white p-1`}
               />
             )}
 

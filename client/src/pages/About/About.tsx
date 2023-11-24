@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import FAQSection from "../Homepage/FAQSection";
 import DownloadApp from "../Homepage/DownloadApp";
+import { useEffect, useState } from "react";
+import { IAgent, agentinitialValue } from "../types/Agents.types";
 
 const About = () => {
   const settings = {
@@ -49,6 +51,36 @@ const About = () => {
         },
       },
     ],
+  };
+
+  const [agentList, setAgentList] = useState<IAgent[]>([agentinitialValue]);
+
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        const response = await fetch("/api/agent/getAgents");
+        if (!response.ok) {
+          throw new Error("Failed to fetch agents");
+        }
+        const data = await response.json();
+        const shuffledAgents = shuffleArray(data);
+        setAgentList(shuffledAgents);
+      } catch (error) {
+        console.error("Error fetching agents:", error);
+      }
+    };
+
+    fetchAgents();
+  }, []);
+
+  // Function to shuffle the array randomly (Fisher-Yates algorithm)
+  const shuffleArray = (array: IAgent[]): IAgent[] => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
   };
   return (
     <>
@@ -178,7 +210,9 @@ const About = () => {
         <div className="w-full md:w-[80%] ">
           <div className="flex flex-col md:flex-row justify-between items-center md:space-x-10">
             <div className="space-y-4 items-center">
-              <p className="text-primary text-lg">View all 234 Agent</p>
+              <p className="text-primary text-lg">
+                View all {agentList.length} Agent
+              </p>
               <h1 className="text-2xl font-bold md:text-5xl">
                 Meet Properties Agents
               </h1>
@@ -193,21 +227,23 @@ const About = () => {
           <div className="m-auto">
             <div className="mt-20">
               <Slider {...settings}>
-                {Array.from({ length: 8 }).map((_, index) => (
+                {agentList.map((agent) => (
                   <div
-                    key={index}
+                    key={agent._id}
                     className="flex  group bg-white rounded-md shadow-lg hover:-translate-y-2 transition-all duration-300 ease-in-out"
                   >
                     <div className="flex w-full flex-col">
                       <img
-                        src="https://source.unsplash.com/random"
+                        src={agent.avatar}
                         className="w-full h-48 object-cover rounded-t-md"
-                        alt="Property Image"
+                        alt={agent.firstname}
                       />
                       <div className="p-3">
                         <div className="mt-5 flex flex-col gap-3">
                           <h2 className="font-semibold text-2xl group-hover:text-primaryDark transition-colors duration-300 ease-in-out">
-                            <Link to={""}>Ester Holland</Link>
+                            <Link to={""}>
+                              {agent.firstname + " " + agent.lastname}
+                            </Link>
                           </h2>
                           <div className="text-baseLight items-center text-left">
                             <p>Real Estate Agent</p>
