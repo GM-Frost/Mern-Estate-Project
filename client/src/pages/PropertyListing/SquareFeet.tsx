@@ -4,13 +4,25 @@ import Slider from "react-slider";
 const MIN = 10;
 const MAX = 2500;
 
-const SquareFeet = () => {
-  const [values, setValues] = useState([MIN, MAX]);
+interface AreaRangeProps {
+  onAreaChange?: (newValues: [number, number]) => void;
+}
+
+const SquareFeet: React.FC<AreaRangeProps> = ({ onAreaChange }) => {
+  const [values, setValues] = useState<[number, number]>([MIN, MAX]);
+
+  const handleValueChange = (newValues: [number, number]) => {
+    setValues(newValues);
+    if (onAreaChange) {
+      onAreaChange(newValues);
+    }
+  };
+
   return (
     <div className="border border-gray-200 p-5 rounded-sm">
       <Slider
         className="slider"
-        onChange={setValues}
+        onChange={handleValueChange}
         pearling
         value={values}
         min={MIN}

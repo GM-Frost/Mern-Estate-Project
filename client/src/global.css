@@ -23,94 +23,98 @@ textarea:focus {
 }
 
 #amenityParking:checked ~ .check-1 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 
 #amenityFurnished:checked ~ .check-2 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenityAC:checked ~ .check-3 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenityHeating:checked ~ .check-4 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenityWasher:checked ~ .check-5 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenityDryer:checked ~ .check-6 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 
 #amenityWifi:checked ~ .check-7 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenityGym:checked ~ .check-8 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenitySwimming:checked ~ .check-9 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #amenitySecurity:checked ~ .check-10 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 
 /** ------------- FOR FILTER MENU IN ALL LISTING  ------------------------------------------------*/
 #bathroom1:checked ~ .check-bathroom1 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #bathroom2:checked ~ .check-bathroom2 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #bathroom3:checked ~ .check-bathroom3 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 #bathroom4:checked ~ .check-bathroom4 {
-  @apply text-opacity-100;
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 
-#rooms1:checked ~ .check-rooms1 {
-  @apply text-opacity-100;
+#bedroom1:checked ~ .check-bedroom1 {
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
-#rooms2:checked ~ .check-rooms2 {
-  @apply text-opacity-100;
+#bedroom2:checked ~ .check-bedroom2 {
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
-#rooms3:checked ~ .check-rooms3 {
-  @apply text-opacity-100;
+#bedroom3:checked ~ .check-bedroom3 {
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
-#rooms4:checked ~ .check-rooms4 {
-  @apply text-opacity-100;
+#bedroom4:checked ~ .check-bedroom4 {
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
-#rooms5:checked ~ .check-rooms5 {
-  @apply text-opacity-100;
+#propertyType1:checked ~ .check-propertyType1 {
+  --tw-text-opacity: 1;
+  animation: check-animation 0.5s 1;
+}
+#propertyType2:checked ~ .check-propertyType2 {
+  --tw-text-opacity: 1;
   animation: check-animation 0.5s 1;
 }
 
 @keyframes check-animation {
   0%,
   100% {
-    @apply transform scale-100;
+    transform: scale(1);
   }
   50% {
-    @apply transform scale-150 text-opacity-0;
+    transform: scale(1.5);
   }
 }
 

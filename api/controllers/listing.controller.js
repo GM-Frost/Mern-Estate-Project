@@ -83,6 +83,11 @@ export const getListings = async (req, res, next) => {
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
+    const minPrice = parseInt(req.query.minPrice); // Minimum price
+    const maxPrice = parseInt(req.query.maxPrice); // Maximum price
+    const minArea = parseInt(req.query.minArea); // Minimum TotalArea
+    const maxArea = parseInt(req.query.maxArea); // Maximum TotalArea
+
     let addressCity = req.query.addressCity;
     if (addressCity === undefined || addressCity === "all") {
       addressCity = {
@@ -132,7 +137,7 @@ export const getListings = async (req, res, next) => {
       bathrooms = { $gte: 3 };
     }
 
-    const listings = await Listing.find({
+    const filterCriteria = {
       title: { $regex: searchTerm, $options: "i" },
       addressCity,
       type,
@@ -141,7 +146,39 @@ export const getListings = async (req, res, next) => {
       amenityParking,
       bedrooms,
       bathrooms,
-    })
+    };
+
+    // Construct the price filter object based on the provided minPrice and maxPrice
+    const priceFilter = {};
+
+    if (!isNaN(minPrice)) {
+      priceFilter.$gte = minPrice;
+    }
+    if (!isNaN(maxPrice)) {
+      priceFilter.$lte = maxPrice;
+    }
+
+    // If priceFilter has properties, add it to filterCriteria for regularPrice filtering
+    if (Object.keys(priceFilter).length > 0) {
+      filterCriteria.regularPrice = priceFilter;
+    }
+
+    // Construct the areaFilter filter object based on the provided minTotalArea and maxTotalArea
+    const areaFilter = {};
+
+    if (!isNaN(minArea)) {
+      areaFilter.$gte = minArea;
+    }
+    if (!isNaN(maxArea)) {
+      areaFilter.$lte = maxArea;
+    }
+
+    // If areaFilter has properties, add it to filterCriteria for totalArea filtering
+    if (Object.keys(areaFilter).length > 0) {
+      filterCriteria.totalArea = areaFilter;
+    }
+
+    const listings = await Listing.find(filterCriteria)
       .sort({
         [sort]: order,
       })

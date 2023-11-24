@@ -16,7 +16,7 @@ import AbstractFAQ from "./AbstractFAQ.png";
 import FAQImage from "./FAQImage.png";
 import AbstractMobileSection from "./AbstractMobileSection.jpg";
 import AbstractLatestNews from "./AbstractLatestNews.jpg";
-
+import AbstractLatestProperty from "./AbstractLatestPropertyBG.jpg";
 import Building1 from "./building1.jpg";
 import Building2 from "./building2.jpg";
 import Building3 from "./building3.jpg";
@@ -56,6 +56,7 @@ export {
   Background404,
   AbstractMobileSection,
   AbstractLatestNews,
+  AbstractLatestProperty,
   floorplans,
   AbstractContactCS,
   AbstractAgentBg,

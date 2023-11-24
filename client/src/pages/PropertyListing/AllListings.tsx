@@ -3,57 +3,77 @@ import Layout from "../../components/Layout";
 import { Button } from "@material-tailwind/react";
 import { MdList, MdOutlineDashboard } from "react-icons/md";
 
-import FilterListing from "./SearchListing/FilterListing";
+import FilterListing, { IFilterFormData } from "./SearchListing/FilterListing";
 import FilteredCard from "./SearchListing/FilteredCard";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
 
 const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   const [listings, setListings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const urlParams = new URLSearchParams(window.location.search);
 
-    //getting the URLS
-    const urlParams = new URLSearchParams(window.location.search);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/listings?${searchQuery}`);
+    fetchListings();
+  };
+
+  const handleFilterSubmit = (formData: IFilterFormData) => {
+    urlParams.set("searchTerm", formData.searchTerm);
+    urlParams.set("addressCity", formData.addressCity);
+    urlParams.set("propertyType", formData.buildingType);
+    urlParams.set("type", formData.propertyType);
+    urlParams.set("bedrooms", formData.totalBedrooms);
+    urlParams.set("bathrooms", formData.totalBathrooms);
+    urlParams.set("minPrice", String(formData.minPrice));
+    urlParams.set("maxPrice", String(formData.maxPrice));
+    urlParams.set("minArea", String(formData.minArea));
+    urlParams.set("maxArea", String(formData.maxArea));
 
     const searchQuery = urlParams.toString();
     navigate(`/listings?${searchQuery}`);
+    fetchListings(); // Pass searchQuery directly to fetchListings
   };
 
   const fetchListings = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/listing/get");
+      const urlParams = new URLSearchParams(window.location.search);
+      let apiUrl = `/api/listing/get`;
+
+      if (urlParams) {
+        apiUrl += `?${urlParams}`;
+      }
+
+      const response = await fetch(apiUrl);
       if (response.ok) {
         const data = await response.json();
         setListings(data);
         setLoading(false);
       } else {
-        setLoading(false);
         console.error("Failed to fetch listings:", response.statusText);
       }
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching listings:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
     const urlSearchTerm = urlParams.get("searchTerm");
     if (urlSearchTerm) {
       setSearchTerm(urlSearchTerm);
     }
-  }, [location.search]);
-
-  useEffect(() => {
-    fetchListings();
+    fetchListings(); // Fetch initial listings without any specific query
   }, []);
 
   return (
@@ -82,6 +102,7 @@ const AllListings: React.FC = () => {
         </div>
       </div>
       {/*--------------------- Search Section ---------------- */}
+
       <div className="w-full bg-primary/5 flex-col space-y-10 bg-white-50 mx-auto flex items-center justify-center p-6">
         <div className="bg-white rounded-md shadow-md w-full lg:w-[80%]">
           <div className="flex flex-col md:flex-row space-x-5  items-center justify-between">
@@ -109,8 +130,8 @@ const AllListings: React.FC = () => {
               </div>
             </div>
             <div className=" text-baseLight p-4">
-              Showing <span className="text-dark">1-2</span> of{" "}
-              <span className="text-dark">17</span> results
+              Showing <span className="text-dark">total</span> of{" "}
+              <span className="text-dark">{listings.length}</span> results
             </div>
             <div className="hidden md:flex gap-3 items-center text-center p-4 ">
               <div
@@ -139,7 +160,7 @@ const AllListings: React.FC = () => {
         {/*--------------------- Content Section ---------------- */}
         <div className="flex w-full flex-col md:flex-row">
           <div className="w-full md:w-1/4 space-y-10">
-            <FilterListing />
+            <FilterListing onFormSubmit={handleFilterSubmit} />
           </div>
 
           <div className="w-full md:w-3/4 flex flex-col">
