@@ -3,7 +3,6 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { firebaseApp } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/userSlice/userSlice";
-import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +13,7 @@ type IProps = {
 
 const OAuth = ({ googlePage }: IProps) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -38,10 +37,8 @@ const OAuth = ({ googlePage }: IProps) => {
       const data = await res.json();
       dispatch(signInSuccess(data));
       toast.success("Signed In Successfully!");
-      setTimeout(() => {
-        toast.info("Navigating...Please wait!");
-        navigate("/");
-      }, 3000);
+      toast.info("Navigating...Please wait!");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (error) {
       console.log("Could not sign in with google", error);
       toast.error("Could not sign in with google");

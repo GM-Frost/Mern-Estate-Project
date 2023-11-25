@@ -1,16 +1,15 @@
 import "./global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
+import SignIn from "./pages/Authentication/SignIn";
 import About from "./pages/About/About";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/Authentication/SignUp";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 
 import ProfileDash from "./pages/ProfileDash";
 
 import AllListings from "./pages/PropertyListing/AllListings";
-import Page404 from "./components/Page404";
 
 import ContactUs from "./pages/ContactUs/ContactUs";
 import Blog from "./pages/News/Blog";

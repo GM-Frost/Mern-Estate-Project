@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { LogoLight } from "../assets";
-import Layout from "../components/Layout";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { LogoLight } from "../../assets";
+
 import { FiTwitter } from "react-icons/fi";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { BiLogInCircle } from "react-icons/bi";
@@ -15,12 +15,13 @@ import {
   signInFailure,
   signInSuccess,
   IUserState,
-} from "../redux/userSlice/userSlice";
-import OAuth from "../components/OAuth";
-import Header from "../components/Header";
+} from "../../redux/userSlice/userSlice";
+import OAuth from "../../components/OAuth";
+import Header from "../../components/Header";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
   );
@@ -35,7 +36,7 @@ const SignIn = () => {
     (state: { user: IUserState }) => state.user
   );
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setFormData({
       ...formData,
@@ -43,7 +44,7 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -61,16 +62,21 @@ const SignIn = () => {
         dispatch(signInFailure(data.message));
         return;
       }
-
       dispatch(signInSuccess(data));
       toast.success("Signed In Successfully!");
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error("Internal Server Error");
       dispatch(signInFailure(error.message));
     }
   };
 
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser, navigate]);
   return (
     <>
       <Header />
@@ -86,17 +92,18 @@ const SignIn = () => {
           <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
             <h1 className="text-5xl font-bold text-left tracking-wide">
-              Keep it special
+              Join us again!
             </h1>
             <p className="text-3xl my-4">
-              Capture your personal memory in unique way, anywhere.
+              {" "}
+              Sign in to discover the latest listings and updates.
             </p>
           </div>
           <div className="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
             <span>
               <a
                 href="#"
-                className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                className="hover:text-primary transition-colors ease-in-out duration-300"
               >
                 <FiTwitter className="h-10 w-10" />
               </a>
@@ -104,7 +111,7 @@ const SignIn = () => {
             <span>
               <a
                 href="#"
-                className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                className="hover:text-primary transition-colors ease-in-out duration-300"
               >
                 <FaFacebookF className="h-10 w-10" />
               </a>
@@ -112,7 +119,7 @@ const SignIn = () => {
             <span>
               <a
                 href="#"
-                className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                className="hover:text-primary transition-colors ease-in-out duration-300"
               >
                 <FaInstagram className="h-10 w-10" />
               </a>
@@ -133,7 +140,7 @@ const SignIn = () => {
             <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
           </div>
           <div className="w-full py-6 z-20">
-            <h1 className="my-6 justify-center items-center flex">
+            <h1 className="my-6 justify-center items-center hidden md:flex">
               <img src={LogoLight} alt="" width={200} />
             </h1>
             <div className="py-6 space-x-2">
@@ -178,7 +185,7 @@ const SignIn = () => {
               <div className="px-4 pb-2 pt-4">
                 <button
                   type="submit"
-                  className="uppercase justify-center items-center text-center w-full p-4 text-lg rounded-full bg-cyan-500 hover:bg-cyan-600 focus:outline-none flex gap-1 transition-all ease-in-out duration-300 hover:gap-3"
+                  className="uppercase justify-center items-center text-center w-full p-4 text-lg rounded-full bg-primary hover:bg-primaryDark focus:outline-none flex gap-1 transition-all ease-in-out duration-300 hover:gap-3"
                 >
                   {loading ? "Verifying..." : "sign in"}
                   <span>
@@ -190,7 +197,7 @@ const SignIn = () => {
                 Dont have an account?{" "}
                 <Link
                   to={"/sign-up"}
-                  className="hover:text-cyan-500 transition-colors ease-in-out duration-300"
+                  className="hover:text-primaryLight transition-colors ease-in-out duration-300"
                 >
                   Register Here
                 </Link>
@@ -206,7 +213,7 @@ const SignIn = () => {
                 <span>
                   <a
                     href="#"
-                    className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                    className="hover:text-primary transition-colors ease-in-out duration-300"
                   >
                     <FiTwitter className="h-10 w-10" />
                   </a>
@@ -214,7 +221,7 @@ const SignIn = () => {
                 <span>
                   <a
                     href="#"
-                    className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                    className="hover:text-primary transition-colors ease-in-out duration-300"
                   >
                     <FaFacebookF className="h-10 w-10" />
                   </a>
@@ -222,7 +229,7 @@ const SignIn = () => {
                 <span>
                   <a
                     href="#"
-                    className="hover:text-cyan-400 transition-colors ease-in-out duration-300"
+                    className="hover:text-primary transition-colors ease-in-out duration-300"
                   >
                     <FaInstagram className="h-10 w-10" />
                   </a>

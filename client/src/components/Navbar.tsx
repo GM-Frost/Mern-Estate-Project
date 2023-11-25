@@ -231,12 +231,12 @@ const Navbar = () => {
                       Sign Out
                     </a>
                   ) : (
-                    <a
-                      onClick={openSigninModal}
+                    <Link
+                      to={"/sign-in"}
                       className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
                       Sign-In
-                    </a>
+                    </Link>
                   )}
                 </motion.div>
               </>
