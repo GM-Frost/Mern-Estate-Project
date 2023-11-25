@@ -148,7 +148,10 @@ const Navbar = () => {
         <Link to="/">
           <img src={logo} alt="" className="w-1/2 object-fit" />
         </Link>
-        <ul className="hidden md:flex" style={{ color: `${textColor}` }}>
+        <ul
+          className="hidden md:flex items-center justify-center"
+          style={{ color: `${textColor}` }}
+        >
           {navmenu.map((items) => (
             <li
               key={items.title}
@@ -157,83 +160,82 @@ const Navbar = () => {
               <Link to={items.link}>{items.title}</Link>
             </li>
           ))}
-        </ul>
-        {/********************************************** ACCOUNT Dropdown **********************************************/}
-
-        <div className="mr-6">
-          <div className="relative ">
-            {currentUser ? (
-              <button
-                onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight hover:bg-primaryLight p-1"
-              >
-                <img
-                  src={currentUser?.avatar}
-                  alt="Profile"
-                  className="h-full w-full object-cover"
-                />
-              </button>
-            ) : (
-              <FaUserTie
-                onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-                className={`relative
+          {/********************************************** ACCOUNT Dropdown **********************************************/}
+          <div className="ml-6">
+            <div className="relative ">
+              {currentUser ? (
+                <button
+                  onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+                  className="relative z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-primaryLight hover:bg-primaryLight p-1"
+                >
+                  <img
+                    src={currentUser?.avatar}
+                    alt="Profile"
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ) : (
+                <FaUserTie
+                  onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+                  className={`relative
                 ${profileIconColor}
                 cursor-pointer z-10 transition-all duration-700 ease-in-out block h-10 w-10 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:bg-primaryLight hover:bg-primaryLight hover:text-white p-1`}
-              />
-            )}
+                />
+              )}
 
-            {dropdownIsOpen ? (
-              <>
-                <button
-                  tabIndex={-1}
-                  onClick={() => setDropdownIsOpen(false)}
-                  className="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
-                ></button>
-                <motion.div
-                  initial="exit"
-                  animate={dropdownIsOpen ? "enter" : "exit"}
-                  variants={subMenuAnimate}
-                  className="absolute ease-in-out right-0 mt-2 w-48 bg-white shadow-xl text-black rounded-lg py-2"
-                >
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+              {dropdownIsOpen ? (
+                <>
+                  <button
+                    tabIndex={-1}
+                    onClick={() => setDropdownIsOpen(false)}
+                    className="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"
+                  ></button>
+                  <motion.div
+                    initial="exit"
+                    animate={dropdownIsOpen ? "enter" : "exit"}
+                    variants={subMenuAnimate}
+                    className="absolute ease-in-out right-0 mt-2 w-48 bg-white shadow-xl text-black rounded-lg py-2"
                   >
-                    <Link to={"/profile"} className="flex justify-between">
-                      Profile
-                      <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary">
-                        {currentUser ? currentUser.firstname : "N/A"}
-                      </span>
-                    </Link>
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
-                  >
-                    Account Setting
-                  </a>
-                  {currentUser ? (
                     <a
-                      onClick={handleSignOut}
-                      className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      href="#"
+                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
-                      Sign Out
+                      <Link to={"/profile"} className="flex justify-between">
+                        Profile
+                        <span className="inline-flex items-center rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary">
+                          {currentUser ? currentUser.firstname : "N/A"}
+                        </span>
+                      </Link>
                     </a>
-                  ) : (
                     <Link
-                      to={"/sign-in"}
-                      className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      to={currentUser ? "/profile" : "/sign-in"}
+                      className="block px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
                     >
-                      Sign-In
+                      Account Setting
                     </Link>
-                  )}
-                </motion.div>
-              </>
-            ) : (
-              ""
-            )}
+                    {currentUser ? (
+                      <a
+                        onClick={handleSignOut}
+                        className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      >
+                        Sign Out
+                      </a>
+                    ) : (
+                      <Link
+                        to={"/sign-in"}
+                        className="block cursor-pointer px-4 py-2 text-baseDark hover:bg-extraLight hover:text-primary transition-all duration-200 ease-in-out"
+                      >
+                        Sign-In
+                      </Link>
+                    )}
+                  </motion.div>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
-        </div>
+        </ul>
 
         {/********************************************** MOBILE Button **********************************************/}
         <div
@@ -281,6 +283,65 @@ const Navbar = () => {
                     <Link to={items.link}>{items.title}</Link>
                   </li>
                 ))}
+                {/********************************************** ACCOUNT Dropdown **********************************************/}
+
+                <div className="relative border-t border-gray-700">
+                  <div className="flex flex-col gap-2 justify-center items-center mt-4">
+                    {currentUser ? (
+                      <>
+                        <img
+                          src="https://source.unsplash.com/person"
+                          alt="Profile"
+                          className="h-14 w-14 rounded-md  border-2 border-primary focus:outline-none object-cover"
+                        />
+                        <span className="w-[30%] rounded-lg px-2 py-1 text-xs font-medium text-light bg-primary">
+                          {currentUser ? currentUser.firstname : "N/A"}
+                        </span>
+                      </>
+                    ) : (
+                      <FaUserTie
+                        onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
+                        className={`relative
+                   ${profileIconColor}
+                   cursor-pointer z-10 transition-all duration-700 ease-in-out block h-14 w-14 rounded-md  overflow-hidden border-2 border-gray-600 focus:outline-none focus:bg-primaryLight hover:bg-primaryLight hover:text-white p-1`}
+                      />
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <Link
+                      to="/profile"
+                      className="block text-gray-400 transition-all ease-in duration-300 hover:text-white"
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      to={currentUser ? "/profile" : "/sign-in"}
+                      className="block text-gray-400 transition-all ease-in duration-300 mt-2 hover:text-white"
+                    >
+                      Account Settings
+                    </Link>
+                    <Link
+                      to=""
+                      className="block text-gray-400 transition-all ease-in duration-300 mt-2 hover:text-white"
+                    >
+                      {currentUser ? (
+                        <div
+                          onClick={handleSignOut}
+                          className="block text-gray-400 transition-all ease-in duration-300 hover:text-white"
+                        >
+                          Sign Out
+                        </div>
+                      ) : (
+                        <Link
+                          to="/sign-in"
+                          className="block text-gray-400 transition-all ease-in duration-300 hover:text-white"
+                        >
+                          Sign in
+                        </Link>
+                      )}
+                    </Link>
+                  </div>
+                </div>
               </ul>
             </motion.aside>
           </>
