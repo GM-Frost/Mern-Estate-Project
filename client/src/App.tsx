@@ -4,17 +4,15 @@ import Home from "./pages/Home";
 import SignIn from "./pages/Authentication/SignIn";
 import About from "./pages/About/About";
 import SignUp from "./pages/Authentication/SignUp";
-import Profile from "./pages/Profile";
+import ProfileDash from "./pages/Profile/dashboard/ProfileDash";
 import PrivateRoute from "./components/PrivateRoute";
-
-import ProfileDash from "./pages/ProfileDash";
 
 import AllListings from "./pages/PropertyListing/AllListings";
 
 import ContactUs from "./pages/ContactUs/ContactUs";
 import Blog from "./pages/News/Blog";
 import AddListing from "./pages/Profile/listing/AddListing";
-import CreateListing from "./pages/Profile/listing/CreateListing";
+
 import UpdateListing from "./pages/Profile/listing/UpdateListing";
 import EditListing from "./pages/Profile/listing/crud/EditListing";
 import Listing from "./pages/Profile/listing/Listing";
@@ -42,14 +40,6 @@ function App() {
     {
       path: "/sign-up",
       element: <SignUp />,
-    },
-    {
-      path: "/profileold",
-      element: (
-        <PrivateRoute>
-          <Profile />
-        </PrivateRoute>
-      ),
     },
     {
       path: "/profile",
@@ -86,14 +76,6 @@ function App() {
     {
       path: "/listings",
       element: <AllListings />,
-    },
-    {
-      path: "/create-listing",
-      element: (
-        <PrivateRoute>
-          <CreateListing />
-        </PrivateRoute>
-      ),
     },
     {
       path: "/updateListing/:listingId",

@@ -2,6 +2,9 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IUserState,
+  signoutUserFailure,
+  signoutUserStart,
+  signoutUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -12,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const ChangePassword: React.FC = () => {
-  const { currentUser, loading, error } = useSelector(
+  const { currentUser, loading } = useSelector(
     (state: { user: IUserState }) => state.user
   );
 
@@ -54,7 +57,7 @@ const ChangePassword: React.FC = () => {
         body: JSON.stringify({ password: formData.password }),
       });
       const data = await res.json();
-      if (data.sucess === false) {
+      if (data.success === false) {
         dispatch(updateUserFailure(data.message));
         toast.error("Failed to Update");
         setUpdateSuccess(false);
@@ -63,7 +66,11 @@ const ChangePassword: React.FC = () => {
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
       toast.success("Password updated");
-    } catch (error) {
+      toast.warning("Signing out!");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      handleSignOut();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       dispatch(updateUserFailure(error.message));
       toast.error("Something went wrong updating");
     }
@@ -75,6 +82,26 @@ const ChangePassword: React.FC = () => {
 
   const handleVisibilityConfirm = () => {
     setToggleEyeConfirm(!toggleEyeConfirm);
+  };
+
+  //HANDLE SIGNOUT
+  const handleSignOut = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutUserFailure(data.message));
+        return;
+      }
+      dispatch(signoutUserSuccess(data));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(signoutUserFailure(error.message));
+      } else {
+        dispatch(signoutUserFailure("An unknown error occurred"));
+      }
+    }
   };
 
   return (

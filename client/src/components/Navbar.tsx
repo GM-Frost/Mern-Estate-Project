@@ -11,8 +11,6 @@ import {
   signoutUserSuccess,
 } from "../redux/userSlice/userSlice";
 
-import LoginModal from "./Navbar/LoginModal";
-
 import "react-toastify/dist/ReactToastify.css";
 import { FaUserTie } from "react-icons/fa";
 
@@ -42,15 +40,6 @@ const Navbar = () => {
   const [profileIconColor, setProfileIconColor] = useState(
     isNotHeroNav ? "text-primaryDark" : "text-white"
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openSigninModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeSigninModal = () => {
-    setIsModalOpen(false);
-  };
 
   //HANDLE SIGNOUT
   const handleSignOut = async () => {
@@ -245,9 +234,6 @@ const Navbar = () => {
             )}
           </div>
         </div>
-        {/********************************************** Dropdown **********************************************/}
-
-        <LoginModal isOpen={isModalOpen} onClose={closeSigninModal} />
 
         {/********************************************** MOBILE Button **********************************************/}
         <div

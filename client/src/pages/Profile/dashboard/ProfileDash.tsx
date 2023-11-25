@@ -7,16 +7,16 @@ import {
   BiSolidDashboard,
   BiUser,
 } from "react-icons/bi";
-import Dashboard from "../components/Profile/Dashboard";
-import MyProperties from "../components/Profile/MyProperties";
-import PersonalInfo from "../components/Profile/PersonalInfo";
-import ChangePassword from "../components/Profile/ChangePassword";
-import Layout from "../components/Layout";
+import Dashboard from "../../../components/Profile/Dashboard";
+import MyProperties from "../../../components/Profile/MyProperties";
+import PersonalInfo from "../../../components/Profile/PersonalInfo";
+import ChangePassword from "../../../components/Profile/ChangePassword";
+import Layout from "../../../components/Layout";
 import {
   signoutUserFailure,
   signoutUserStart,
   signoutUserSuccess,
-} from "../redux/userSlice/userSlice";
+} from "../../../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
 
 const ProfileDash = () => {
@@ -40,7 +40,8 @@ const ProfileDash = () => {
         return;
       }
       dispatch(signoutUserSuccess(data));
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       dispatch(signoutUserFailure(error.message));
     }
   };
