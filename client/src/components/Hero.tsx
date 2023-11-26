@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 type Props = {
   heading: string;
   message: string;
@@ -55,11 +56,13 @@ const Hero = ({ heading, message }: Props) => {
         <h2 className="text-5xl font-bold capitalize">
           Luxary Apartment In the town city
         </h2>
-        <p className="py-5 text-xl capitalize">439 Street, nicholas Dev, USA</p>
+        <p className="py-5 text-xl capitalize">439 Street, Calgary, Canada</p>
         <div className="items-center flex justify-center gap-4">
-          <button className="px-8 py-2 border font-bold leading-5 bg-black text-white hover:bg-primary hover:text-white hover:border-primary">
-            $5022
-          </button>
+          <Link to="/listings">
+            <button className="px-8 py-2 border font-bold leading-5 bg-black text-white hover:bg-primary hover:text-white hover:border-primary">
+              $5022
+            </button>
+          </Link>
         </div>
       </motion.div>
     </div>

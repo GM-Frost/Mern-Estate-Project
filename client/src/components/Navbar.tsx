@@ -13,7 +13,6 @@ import {
 
 import "react-toastify/dist/ReactToastify.css";
 import { FaUserTie } from "react-icons/fa";
-import { Button } from "@material-tailwind/react";
 import { MdAddHomeWork } from "react-icons/md";
 
 const Navbar = () => {
