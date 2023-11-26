@@ -9,6 +9,18 @@ import { MdMarkEmailRead } from "react-icons/md";
 import Layout from "../../components/Layout";
 import DownloadApp from "../Homepage/DownloadApp";
 
+import { motion } from "framer-motion";
+const scaleVariants = {
+  whileInView: {
+    scale: [0, 1],
+    opacity: [0, 1],
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
+
 const ContactUs = () => {
   return (
     <>
@@ -36,7 +48,11 @@ const ContactUs = () => {
         </div>
       </div>
       {/** ----------------- CONTACT SECTION BEGINS ------------ */}
-      <section
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        exit={{ opacity: 0 }}
         className="py-16 h-screen w-full flex  items-center justify-center"
         style={{
           backgroundImage: `url(${AbstractContactus})`,
@@ -61,55 +77,87 @@ const ContactUs = () => {
           >
             <h1 className="font-semibold text-xl">Contact Now</h1>
             <form action="" className="padding-3 flex flex-col space-y-4">
-              <div className="w-full mt-5">
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+                className="w-full mt-5"
+              >
                 <input
                   type="text"
                   placeholder="John Doe"
                   className="bg-transparent border border-gray-50 p-3 w-full rounded-lg focus:border-neutral"
                 />
-              </div>
+              </motion.div>
 
-              <div className="w-full mt-5">
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+                className="w-full mt-5"
+              >
                 <input
                   type="email"
                   placeholder="email@email.com"
                   className="bg-transparent border border-gray-50 p-3 w-full rounded-lg focus:border-neutral"
                 />
-              </div>
-              <div className="w-full mt-5">
+              </motion.div>
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+                className="w-full mt-5"
+              >
                 <input
                   type="text"
                   placeholder="Phone Number"
                   className="bg-transparent border border-gray-50 p-3 w-full rounded-lg focus:border-neutral"
                 />
-              </div>
-              <div className="w-full mt-5">
+              </motion.div>
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+                className="w-full mt-5"
+              >
                 <textarea
                   rows={5}
                   placeholder="Your Message"
                   className="bg-transparent border border-gray-50 p-3 w-full rounded-lg focus:border-neutral"
                 />
-              </div>
-              <div className="w-full mt-5 flex justify-center items-center">
+              </motion.div>
+              <motion.div
+                variants={scaleVariants}
+                whileInView={scaleVariants.whileInView}
+                className="w-full mt-5 flex justify-center items-center"
+              >
                 <button className="p-2 bg-neutral hover:bg-neutralDark rounded-lg text-dark hover:scale-105 transition-transform ease-in-out duration-300">
                   Send Message
                 </button>
-              </div>
+              </motion.div>
             </form>
           </div>
           <div className="w-full h-full flex justify-center items-center">
-            <img
+            <motion.img
               src={AbstractContactCS}
               alt="Customer Care"
+              variants={scaleVariants}
+              whileInView={scaleVariants.whileInView}
               className="rounded-md h-full object-cover shadow-xl"
             />
           </div>
         </div>
-      </section>
-      <section className="py-16  w-full flex  justify-center">
+      </motion.section>
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        exit={{ opacity: 0 }}
+        className="py-16  w-full flex  justify-center"
+      >
         <div className="w-[80%]">
           <div className="flex lg:flex-row flex-col gap-3 bg-primaryLight/10 rounded-lg p-5 justify-evenly items-center w-full">
-            <div className="flex items-center  w-full justify-evenly">
+            <motion.div
+              variants={scaleVariants}
+              whileInView={scaleVariants.whileInView}
+              className="flex items-center  w-full justify-evenly"
+            >
               <div className="rounded-full flex  justify-center  items-center text-center bg-primary/10 p-2 h-20 w-20">
                 <BiSolidPhoneCall className="text-primaryDark text-4xl flex justify-center items-center" />
               </div>
@@ -117,8 +165,12 @@ const ContactUs = () => {
                 <p className="text-baseLight">Contact Information</p>
                 <h1 className="font-semibold">+1 123 456 789</h1>
               </div>
-            </div>
-            <div className="flex items-center  w-full justify-evenly">
+            </motion.div>
+            <motion.div
+              variants={scaleVariants}
+              whileInView={scaleVariants.whileInView}
+              className="flex items-center  w-full justify-evenly"
+            >
               <div className="rounded-full flex  justify-center  items-center text-center bg-primary/10 p-2 h-20 w-20">
                 <BiMapPin className="text-primaryDark text-4xl flex justify-center items-center" />
               </div>
@@ -126,8 +178,12 @@ const ContactUs = () => {
                 <p className="text-baseLight">Location</p>
                 <h1 className="font-semibold">Toronto, ON, Canada</h1>
               </div>
-            </div>
-            <div className="flex items-center  w-full justify-evenly">
+            </motion.div>
+            <motion.div
+              variants={scaleVariants}
+              whileInView={scaleVariants.whileInView}
+              className="flex items-center  w-full justify-evenly"
+            >
               <div className="rounded-full flex  justify-center  items-center text-center bg-primary/10 p-2 h-20 w-20">
                 <MdMarkEmailRead className="text-primaryDark text-4xl flex justify-center items-center" />
               </div>
@@ -135,10 +191,10 @@ const ContactUs = () => {
                 <p className="text-baseLight">Email</p>
                 <h1 className="font-semibold">example@gmail.com</h1>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
       <div className="pt-15 flex justify-center items-center mx-auto">
         <div className="w-[90%]">
           <div

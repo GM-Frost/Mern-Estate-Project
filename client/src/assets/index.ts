@@ -30,6 +30,8 @@ import AbstractContactus from "./AbstractContactus.jpg";
 import AbstractContactusForm from "./AbstractContactusForm.jpg";
 import AbstractContactCS from "./AbstractContactCS.jpg";
 import floorplans from "./floorplans.png";
+
+import phone from "./phone.png";
 export {
   LogoLight,
   LogoDark,
@@ -50,6 +52,7 @@ export {
   Building3,
   listingForRent,
   listingForSale,
+  phone,
   FAQImage,
   AbstractContactus,
   AbstractContactusForm,

@@ -3,6 +3,7 @@ import { AbstractLatestNews } from "../../assets";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IAgent, agentinitialValue } from "../types/Agents.types";
+import { motion } from "framer-motion";
 
 const MeetAgents = () => {
   const [agentList, setAgentList] = useState<IAgent[]>([agentinitialValue]);
@@ -48,15 +49,23 @@ const MeetAgents = () => {
       }}
     >
       <div className="mx-auto w-[90%] mt-10">
-        <div className="flex flex-col justify-center items-center space-y-5">
+        <motion.div
+          whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+          transition={{ duration: 1.5 }}
+          className="flex flex-col justify-center items-center space-y-5"
+        >
           <p className="text-primary text-lg">
             View All {agentList.length} Agents
           </p>
           <h1 className="text-2xl font-bold md:text-5xl text-center">
             Meet Properties Agents
           </h1>
-        </div>
-        <div className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        </motion.div>
+        <motion.div
+          whileInView={{ y: [0, 50], x: [0, 0], opacity: [0, 1] }}
+          transition={{ duration: 1.5 }}
+          className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 "
+        >
           {agentList.map((agent) => (
             <div
               key={agent._id}
@@ -104,7 +113,7 @@ const MeetAgents = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

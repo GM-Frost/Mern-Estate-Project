@@ -8,6 +8,19 @@ import { useEffect, useState } from "react";
 import { IPropertyList } from "../types/PropertyList.types";
 import LoadingState from "../../components/Loading/LoadingState";
 
+import { motion } from "framer-motion";
+
+const scaleVariants = {
+  whileInView: {
+    scale: [0, 1],
+    opacity: [0, 1],
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
+
 const LatestProperty: React.FC = () => {
   const [latestProperties, setLatestProperties] = useState<IPropertyList[]>([]);
 
@@ -36,7 +49,6 @@ const LatestProperty: React.FC = () => {
     fetchListings();
   }, []);
 
-  console.log(latestProperties);
   return (
     <section
       className="py-16 min-h-screen w-full flex"
@@ -50,18 +62,26 @@ const LatestProperty: React.FC = () => {
       }}
     >
       <div className="mx-auto w-[90%] mt-10">
-        <div className="flex  flex-col justify-center items-center space-y-5">
+        <motion.div
+          variants={scaleVariants}
+          whileInView={scaleVariants.whileInView}
+          className="flex  flex-col justify-center items-center space-y-5"
+        >
           <p className="text-primary text-lg">View All 329 New Listings</p>
           <h1 className="text-2xl font-bold md:text-5xl text-white">
             Latest Properties
           </h1>
-        </div>
+        </motion.div>
         {loading ? (
           <div className="mt-20 text-white">
             <LoadingState />
           </div>
         ) : (
-          <div className="my-12 items-center justify-center mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4">
+          <motion.div
+            whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+            transition={{ duration: 1.5 }}
+            className="my-12 items-center justify-center mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-4"
+          >
             {latestProperties.map((property) => (
               <div
                 key={property._id}
@@ -134,16 +154,20 @@ const LatestProperty: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
         )}
-        <div className="flex my-20 mx-auto items-center justify-center">
+        <motion.div
+          whileInView={{ y: [0, 50], x: [0, 0], opacity: [0, 1] }}
+          transition={{ duration: 1.0 }}
+          className="flex my-20 mx-auto items-center justify-center"
+        >
           <button
             onClick={() => navigate(`/listings`)}
             className="p-3 capitalize bg-primaryLight hover:bg-primaryDark text-white rounded-lg transition-all ease-in-out duration-500 hover:scale-105"
           >
             See all properties
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

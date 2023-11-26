@@ -7,6 +7,17 @@ import { IoArrowRedoCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import { BlogData } from "./Data";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { motion } from "framer-motion";
+const scaleVariants = {
+  whileInView: {
+    scale: [0, 1],
+    opacity: [0, 1],
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,14 +67,24 @@ const Blog = () => {
         </div>
       </div>
       {/** ----------------- CONTACT SECTION BEGINS ------------ */}
-      <section className="py-5 min-h-screen w-full flex">
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        exit={{ opacity: 0 }}
+        className="py-5 min-h-screen w-full flex"
+      >
         <div className="mx-auto w-[90%] mt-10">
-          <div className="flex flex-col justify-center items-center space-y-5">
+          <motion.div
+            variants={scaleVariants}
+            whileInView={scaleVariants.whileInView}
+            className="flex flex-col justify-center items-center space-y-5"
+          >
             <p className="text-primary text-lg">Get our Information</p>
             <h1 className="text-2xl font-bold md:text-5xl text-center">
               Our Latest News
             </h1>
-          </div>
+          </motion.div>
           <div className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
             {records.map((items) => (
               <div
@@ -142,7 +163,7 @@ const Blog = () => {
             </ul>
           </nav>
         </div>
-      </section>
+      </motion.section>
       <Layout />
     </>
   );

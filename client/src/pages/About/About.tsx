@@ -13,6 +13,7 @@ import FAQSection from "../Homepage/FAQSection";
 import DownloadApp from "../Homepage/DownloadApp";
 import { useEffect, useState } from "react";
 import { IAgent, agentinitialValue } from "../types/Agents.types";
+import { motion } from "framer-motion";
 
 const About = () => {
   const settings = {
@@ -82,6 +83,7 @@ const About = () => {
     }
     return newArray;
   };
+
   return (
     <>
       <div
@@ -120,80 +122,75 @@ const About = () => {
             backgroundSize: "cover",
           }}
         ></div>
-        <div className="relative flex lg:flex-row flex-col mt-20 bg-white w-[90%] mx-auto p-10 shadow-lg rounded-md">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          exit={{ opacity: 0 }}
+          className="relative flex lg:flex-row flex-col mt-20 bg-white w-[90%] mx-auto p-10 shadow-lg rounded-md"
+        >
           <div className="w-full lg:w-1/3 flex flex-col space-y-5">
-            <h1 className="text-3xl font-bold"> Fun Facts</h1>
-            <p>
-              There are many variations of passages of Lorem Ipsum available,
-              majority have suffered.
-            </p>
-            <div className="flex flex-wrap gap-4">
+            <motion.div>
+              <h1 className="text-3xl font-bold"> Fun Facts</h1>
+              <p>
+                There are many variations of passages of Lorem Ipsum available,
+                majority have suffered.
+              </p>
+            </motion.div>
+            <motion.div
+              whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.0 }}
+              className="flex flex-wrap gap-4"
+            >
               <AiFillCheckCircle className="text-primary text-3xl" />
               <p>Suspe ndisse suscipit sagittis leo.</p>
-            </div>
-            <div className="flex flex-wrap gap-4">
+            </motion.div>
+            <motion.div
+              whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.0 }}
+              className="flex flex-wrap gap-4"
+            >
               <AiFillCheckCircle className="text-primary text-3xl" />
               <p>Suspe ndisse suscipit sagittis leo.</p>
-            </div>
-            <div className="flex flex-wrap gap-4">
+            </motion.div>
+            <motion.div
+              whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.0 }}
+              className="flex flex-wrap gap-4"
+            >
               <AiFillCheckCircle className="text-primary text-3xl" />
               <p>Suspe ndisse suscipit sagittis leo.</p>
-            </div>
+            </motion.div>
+
             <div className="flex justify-center items-center">
-              <button className="p-3 text-white bg-primary hover:bg-primaryDark rounded-lg hover:scale-105 transition-all ease-in-out duration-300 shadow-md cursor-pointer">
+              <motion.button className="p-3 text-white bg-primary hover:bg-primaryDark rounded-lg hover:scale-105 transition-all ease-in-out duration-300 shadow-md cursor-pointer">
                 Need a Home
-              </button>
+              </motion.button>
             </div>
           </div>
           <div className="mt-10 w-full mx-auto lg:w-2/3 p-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
-              <div className="relative group hover:bg-primaryDark hover:text-white bg-primary/10 rounded-md px-3 py-10 justify-center items-center">
-                <div className="text-center space-y-2">
-                  <h1 className="text-2xl font-bold">435k</h1>
-                  <p className="text-baseLight group-hover:text-white">
-                    Happy Customer
-                  </p>
-                </div>
-                <div className="absolute group-hover:border-2 group-hover:border-neutral text-white -top-12 right-1/2 transform translate-x-1/2 bg-primaryDark w-20 h-20 rounded-full flex justify-center items-center">
-                  <TbStars className="text-3xl text-center" />
-                </div>
-              </div>
-              <div className="relative group hover:bg-primaryDark hover:text-white bg-primary/10 rounded-md px-3 py-10 justify-center items-center">
-                <div className="text-center space-y-2">
-                  <h1 className="text-2xl font-bold">435k</h1>
-                  <p className="text-baseLight group-hover:text-white">
-                    Happy Customer
-                  </p>
-                </div>
-                <div className="absolute group-hover:border-2 group-hover:border-neutral text-white -top-12 right-1/2 transform translate-x-1/2 bg-primaryDark w-20 h-20 rounded-full flex justify-center items-center">
-                  <TbStars className="text-3xl text-center" />
-                </div>
-              </div>
-              <div className="relative group hover:bg-primaryDark hover:text-white bg-primary/10 rounded-md px-3 py-10 justify-center items-center">
-                <div className="text-center space-y-2">
-                  <h1 className="text-2xl font-bold">435k</h1>
-                  <p className="text-baseLight group-hover:text-white">
-                    Happy Customer
-                  </p>
-                </div>
-                <div className="absolute group-hover:border-2 group-hover:border-neutral text-white -top-12 right-1/2 transform translate-x-1/2 bg-primaryDark w-20 h-20 rounded-full flex justify-center items-center">
-                  <TbStars className="text-3xl text-center" />
-                </div>
-              </div>
-              <div className="relative group hover:bg-primaryDark hover:text-white bg-primary/10 rounded-md px-3 py-10 justify-center items-center">
-                <div className="text-center space-y-2">
-                  <h1 className="text-2xl font-bold">435k</h1>
-                  <p className="text-baseLight group-hover:text-white">
-                    Happy Customer
-                  </p>
-                </div>
-                <div className="absolute group-hover:border-2 group-hover:border-neutral text-white -top-12 right-1/2 transform translate-x-1/2 bg-primaryDark w-20 h-20 rounded-full flex justify-center items-center">
-                  <TbStars className="text-3xl text-center" />
-                </div>
-              </div>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <motion.div
+                  key={index}
+                  whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                  transition={{ duration: 1.0 }}
+                  className="relative group hover:bg-primaryDark hover:text-white bg-primary/10 rounded-md px-3 py-10 justify-center items-center"
+                >
+                  <div className="text-center space-y-2">
+                    <h1 className="text-2xl font-bold">435k</h1>
+                    <p className="text-baseLight group-hover:text-white">
+                      Happy Customer
+                    </p>
+                  </div>
+                  <div className="absolute group-hover:border-2 group-hover:border-neutral text-white -top-12 right-1/2 transform translate-x-1/2 bg-primaryDark w-20 h-20 rounded-full flex justify-center items-center">
+                    <TbStars className="text-3xl text-center" />
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <section
@@ -209,14 +206,18 @@ const About = () => {
       >
         <div className="w-full md:w-[80%] ">
           <div className="flex flex-col md:flex-row justify-between items-center md:space-x-10">
-            <div className="space-y-4 items-center">
+            <motion.div
+              whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.0 }}
+              className="space-y-4 items-center"
+            >
               <p className="text-primary text-lg">
                 View all {agentList.length} Agent
               </p>
               <h1 className="text-2xl font-bold md:text-5xl">
                 Meet Properties Agents
               </h1>
-            </div>
+            </motion.div>
             <div>
               <button className="mt-10 capitalized p-4 bg-primary hover:bg-primaryDark text-white hover:scale-105 transition-all duration-300 ease-in-out rounded-md shadow-md">
                 See All Agents
