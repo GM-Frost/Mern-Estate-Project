@@ -4,7 +4,6 @@ import {
   FaInstagram,
   FaLinkedin,
   FaMapMarkerAlt,
-  FaPhone,
   FaTwitter,
 } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
@@ -18,7 +17,7 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../../redux/userSlice/userSlice";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { AiOutlinePicture } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,6 +29,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import DeleteUser from "../Navbar/DeleteUser";
+import { IPersonalInfo } from "../../pages/types/PersonalInfo.types";
 
 const PersonalInfo = () => {
   //User Details
@@ -40,7 +40,18 @@ const PersonalInfo = () => {
 
   //EDIT FORM DETAILS
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<IPersonalInfo>({
+    avatar: currentUser?.avatar || "",
+    firstname: currentUser?.firstname || "",
+    lastname: currentUser?.lastname || "",
+    email: currentUser?.email || "",
+    username: currentUser?.username || "",
+    title: currentUser?.title || "",
+    phone: currentUser?.phone || "",
+    address: currentUser?.address || "",
+    about: currentUser?.about || "",
+  });
+
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const [socialLinks, setSocialLinks] = useState({
@@ -53,7 +64,7 @@ const PersonalInfo = () => {
 
   const dispatch = useDispatch();
 
-  const handleSocialLinksChange = (e) => {
+  const handleSocialLinksChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setSocialLinks({ ...socialLinks, [id]: value });
   };
@@ -84,7 +95,8 @@ const PersonalInfo = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePercentage(Math.round(progress));
       },
-      (error) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      (_error: Error) => {
         setFileUploadError(true);
       },
       () => {
@@ -98,11 +110,13 @@ const PersonalInfo = () => {
   const handleEditClick = () => {
     setEditMode(!editMode);
   };
-  const handleEditChange = (e) => {
+  const handleEditChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleEditSubmit = async (e) => {
+  const handleEditSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
@@ -127,7 +141,8 @@ const PersonalInfo = () => {
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
       toast.success("User updated successfully");
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       dispatch(updateUserFailure(error.message));
       toast.error("Something went wrong updating");
     }
@@ -158,7 +173,8 @@ const PersonalInfo = () => {
       }
       toast.success("User deleted successfully");
       dispatch(deleteUserSuccess(data));
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       dispatch(deleteUserFailure(error.message));
       toast.error(error.message);
     }
@@ -170,7 +186,7 @@ const PersonalInfo = () => {
     if (file) {
       handleFileUpload(file);
     }
-  }, [file]);
+  }, []);
 
   return (
     <>

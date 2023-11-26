@@ -1,6 +1,16 @@
 import { BiSolidMapPin } from "react-icons/bi";
 
-const LocationDetails = ({ listing }) => {
+interface Listing {
+  addressLine: string;
+  addressCity: string;
+  addressProvince: string;
+}
+
+interface LocationDetailsProps {
+  listing: Listing;
+}
+
+const LocationDetails: React.FC<LocationDetailsProps> = ({ listing }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="bg-white group shadow-lg rounded-md w-full flex flex-col text-center justify-center p-4">

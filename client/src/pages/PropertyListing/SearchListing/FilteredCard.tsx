@@ -9,14 +9,18 @@ import {
 import { MdOutlineBathtub, MdOutlineKingBed } from "react-icons/md";
 import { RxDimensions } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { IListing, IListingAgentDetails } from "../../types/ListingCard";
 
 interface IFilteredCard {
   layout: string;
-  listings: any[];
+  listings: IListing[];
 }
+
 const FilteredCard = ({ listings, layout }: IFilteredCard) => {
   const [isFavHovered, setFavIsHovered] = useState<number | null>(null);
-  const [agentDetails, setAgentDetails] = useState<any>({});
+  const [agentDetails, setAgentDetails] = useState<{
+    [key: string]: IListingAgentDetails;
+  }>({});
 
   ////////////---- PAGINATION FUNCTIONS -----/////////
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +36,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const changeCurrentPage = (id) => {
+  const changeCurrentPage = (id: number) => {
     setCurrentPage(id);
   };
   const nextPage = () => {

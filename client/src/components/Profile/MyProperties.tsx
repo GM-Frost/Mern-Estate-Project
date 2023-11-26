@@ -63,8 +63,10 @@ const MyProperties = () => {
         console.log(data.message);
         return;
       }
-      setUserListings((prev) =>
-        prev.filter((listing) => listing._id !== listingId)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setUserListings((prev: any) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        prev.filter((listing: any) => listing._id !== listingId)
       );
       toast.info("Listing deleted");
     } catch (error) {
@@ -114,9 +116,7 @@ const MyProperties = () => {
             </div>
           </Link>
         </div>
-        <p className="text-red-700 text-sm">
-          {showListingsError ? showListingsError : ""}
-        </p>
+        <p className="text-red-700 text-sm">{showListingsError || ""}</p>
         {loadingListing ? (
           "Loading Listing..."
         ) : (

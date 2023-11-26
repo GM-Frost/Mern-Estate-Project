@@ -1,5 +1,4 @@
-import { LogoDark } from "../../assets";
-import { useState, CSSProperties } from "react";
+import { CSSProperties } from "react";
 import { MoonLoader } from "react-spinners";
 
 const override: CSSProperties = {

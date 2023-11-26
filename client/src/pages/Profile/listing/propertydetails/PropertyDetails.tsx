@@ -6,8 +6,13 @@ import { FaBed, FaParking, FaShower, FaSwimmer } from "react-icons/fa";
 import { GiWifiRouter } from "react-icons/gi";
 import { LuSofa } from "react-icons/lu";
 import { TbAirConditioning, TbWashMachine } from "react-icons/tb";
+import { IPropertyListing } from "../../../types/ListingCard";
 
-const PropertyDetails = ({ listing }) => {
+interface PropertyDetailsProps {
+  listing: IPropertyListing;
+}
+
+const PropertyDetails: React.FC<PropertyDetailsProps> = ({ listing }) => {
   return (
     <div className="space-y-5">
       <div>{listing.description}</div>

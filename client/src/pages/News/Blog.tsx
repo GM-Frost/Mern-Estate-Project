@@ -33,7 +33,7 @@ const Blog = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const changeCurrentPage = (id) => {
+  const changeCurrentPage = (id: number) => {
     setCurrentPage(id);
   };
   const nextPage = () => {

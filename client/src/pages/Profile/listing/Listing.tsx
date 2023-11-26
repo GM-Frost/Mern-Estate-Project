@@ -43,7 +43,7 @@ const Listing = () => {
 
   const [activeTab, setActiveTab] = React.useState("propertyDetails");
 
-  const [listing, setListing] = useState<IListingFormData>(null);
+  const [listing, setListing] = useState<IListingFormData>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [coverImage, setCoverImage] = useState<string>("");
@@ -55,12 +55,15 @@ const Listing = () => {
 
   const slideLeft = () => {
     const slider: HTMLElement | null = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft - 500;
+    if (slider) {
+      slider.scrollLeft = slider.scrollLeft - 500;
+    }
   };
-
   const slideRight = () => {
     const slider: HTMLElement | null = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft + 500;
+    if (slider) {
+      slider.scrollLeft = slider.scrollLeft + 500;
+    }
   };
 
   const changeCover = (url: string) => {
@@ -71,17 +74,17 @@ const Listing = () => {
     {
       label: "Property Details",
       value: "propertyDetails",
-      desc: <PropertyDetails listing={listing} />,
+      desc: listing ? <PropertyDetails listing={listing} /> : null,
     },
     {
       label: "Locations",
       value: "location",
-      desc: <LocationDetails listing={listing} />,
+      desc: listing ? <LocationDetails listing={listing} /> : null,
     },
     {
       label: "Floor Plans",
       value: "floorplans",
-      desc: <FloorPlans listing={listing} />,
+      desc: <FloorPlans />,
     },
 
     {
