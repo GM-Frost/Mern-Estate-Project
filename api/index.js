@@ -30,6 +30,21 @@ app.listen(process.env.SERVER_PORT, () => {
   console.log(`Listening on ${process.env.SERVER_PORT}`);
 });
 
+// Define a test route
+app.get("/test", (req, res) => {
+  try {
+    const testMessage = test();
+    res.status(200).json({ message: testMessage });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Function returning a test message
+const test = () => {
+  return "Test is running";
+};
+
 // API endpoint
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);

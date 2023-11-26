@@ -3,10 +3,25 @@ import { AbstractLatestNews } from "../../assets";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoArrowRedoCircleOutline } from "react-icons/io5";
+import { motion } from "framer-motion";
+const scaleVariants = {
+  whileInView: {
+    scale: [0, 1],
+    opacity: [0, 1],
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
 
 const LatestNews = () => {
   return (
-    <section
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      exit={{ opacity: 0 }}
       className="py-16 min-h-screen w-full flex"
       style={{
         backgroundImage: `url(${AbstractLatestNews})`,
@@ -18,13 +33,21 @@ const LatestNews = () => {
       }}
     >
       <div className="mx-auto w-[90%] mt-10">
-        <div className="flex flex-col justify-center items-center space-y-5">
+        <motion.div
+          variants={scaleVariants}
+          whileInView={scaleVariants.whileInView}
+          className="flex flex-col justify-center items-center space-y-5"
+        >
           <p className="text-primary text-lg">Get our Information</p>
           <h1 className="text-2xl font-bold md:text-5xl text-center">
             Our Latest News
           </h1>
-        </div>
-        <div className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        </motion.div>
+        <motion.div
+          whileInView={{ y: [0, 50], x: [0, 0], opacity: [0, 1] }}
+          transition={{ duration: 1.0 }}
+          className="my-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 "
+        >
           {Array.from({ length: 3 }).map((_, index) => (
             <div
               key={index}
@@ -66,9 +89,9 @@ const LatestNews = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.div>
   );
 };
 

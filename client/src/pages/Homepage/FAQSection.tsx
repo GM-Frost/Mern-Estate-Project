@@ -8,6 +8,7 @@ import {
 
 import { MdOutlineSupportAgent } from "react-icons/md";
 
+import { motion } from "framer-motion";
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
   unmount: { scale: 0.9 },
@@ -19,7 +20,11 @@ const FAQSection: React.FC = () => {
   const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
 
   return (
-    <section
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      exit={{ opacity: 0 }}
       className="py-16 min-h-screen w-full flex flex-col"
       style={{
         backgroundImage: `url(${AbstractFAQ})`,
@@ -33,11 +38,20 @@ const FAQSection: React.FC = () => {
       <div className="mx-auto w-[90%]  mt-10 flex flex-col md:flex-row justify-center items-center space-y-5 gap-12">
         <div className="w-full md:w-1/2">
           <div className="flex flex-col space-y-5">
-            <h2 className="text-2xl capitalize">FAQ</h2>
-            <h1 className="text-4xl capitalize font-bold">
-              If you want to know Frequently Asked Questions
-            </h1>
-            <div className="mt-5">
+            <motion.div
+              whileInView={{ x: [-50, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.5 }}
+            >
+              <h2 className="text-2xl capitalize">FAQ</h2>
+              <h1 className="text-4xl capitalize font-bold">
+                If you want to know Frequently Asked Questions
+              </h1>
+            </motion.div>
+            <motion.div
+              whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+              transition={{ duration: 1.0 }}
+              className="mt-5"
+            >
               <Accordion open={open === 1} animate={CUSTOM_ANIMATION}>
                 <AccordionHeader onClick={() => handleOpen(1)}>
                   What is Nova Estate?
@@ -71,11 +85,15 @@ const FAQSection: React.FC = () => {
                   and actualize our dreams.
                 </AccordionBody>
               </Accordion>
-            </div>
+            </motion.div>
           </div>
         </div>
         <div className="w-full md:w-1/2 h-full">
-          <div className="relative">
+          <motion.div
+            whileInView={{ x: [50, 0], opacity: [0, 1] }}
+            transition={{ duration: 1.5 }}
+            className="relative"
+          >
             <img
               src={FAQImage}
               className="rounded-md md:h-[550px] lg:h-[750px]"
@@ -91,10 +109,10 @@ const FAQSection: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.div>
   );
 };
 

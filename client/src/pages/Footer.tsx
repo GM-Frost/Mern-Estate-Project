@@ -1,5 +1,6 @@
 import { Button } from "@material-tailwind/react";
 import { Building3, LogoLight } from "../assets";
+import { motion } from "framer-motion";
 import {
   FaEnvelope,
   FaFacebookF,
@@ -26,7 +27,13 @@ const Footer = () => {
       >
         <div className="mx-auto p-4 max-w-screen-xl">
           <footer className="footer mx-auto flex flex-col p-10 text-neutral-content">
-            <div className="w-full flex flex-col md:flex-row justify-between text-gray-500 bg-white p-4 rounded-lg">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1.5 }}
+              exit={{ opacity: 0 }}
+              className="w-full flex flex-col md:flex-row justify-between text-gray-500 bg-white p-4 rounded-lg"
+            >
               <div className="w-full md:w-2/3 ">
                 <div className="space-y-2">
                   <p className="text-primary">For Rent and Sell Offer</p>
@@ -49,7 +56,7 @@ const Footer = () => {
                   </label>
                 </div>
               </div>
-            </div>
+            </motion.div>
             <div className="footer text-baseLight">
               <footer className="flex flex-col items-center bg-neutral-100 text-center dark:bg-neutral-600 lg:text-left">
                 <div className="container p-6">

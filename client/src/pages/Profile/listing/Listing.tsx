@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 
+import { motion } from "framer-motion";
 import {
   Button,
   Tab,
@@ -139,29 +140,50 @@ const Listing = () => {
     fetchAgentDetails();
   }, []);
 
+  const scaleVariants = {
+    whileInView: {
+      scale: [0, 1],
+      opacity: [0, 1],
+      transition: {
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <>
-      <main className="mt-20 min-h-screen w-screen flex flex-col items-center">
+      <main className="mt-20 min-h-screen w-screen-auto flex flex-col items-center">
         {loading && <Loading loadingactive />}
         {error && <Page404 />}
         {listing && !loading && !error && (
           <>
             <div className="relative w-full">
-              <img
+              <motion.img
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1.5 }}
+                exit={{ opacity: 0 }}
                 className="w-full h-[550px] object-cover bg-center transition-opacity"
                 src={coverImage}
                 alt="Property Image"
                 style={{ opacity: coverImage ? 1 : 0 }}
               />
-              <div className="absolute bottom-10 left-0 p-4 space-y-5 text-white bg-black bg-opacity-50">
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+                className="absolute bottom-10 left-0 p-4 space-y-5 text-white bg-black bg-opacity-50"
+              >
                 <h1 className="font-semibold text-5xl">{listing.title}</h1>
                 <p className="flex gap-2 text-xl text-white">
                   <IoLocationOutline className="text-white" />
                   {listing.addressLine}, {listing.addressCity},{" "}
                   {listing.addressProvince}
                 </p>
-              </div>
-              <div
+              </motion.div>
+              <motion.div
+                variants={scaleVariants}
+                whileInView={scaleVariants.whileInView}
                 className={`absolute right-4 -bottom-8 hidden md:block  md:px-8 md:py-12 ml-auto ${
                   listing.type === "Sale"
                     ? "bg-neutral text-black"
@@ -174,10 +196,16 @@ const Listing = () => {
                   </h1>
                   <p className="text-center">{listing.type}</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            <div className="relative flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 2.5 }}
+              exit={{ opacity: 0 }}
+              className="relative flex items-center justify-center"
+            >
               <MdChevronLeft
                 onClick={slideLeft}
                 size={40}
@@ -206,7 +234,7 @@ const Listing = () => {
                 size={40}
                 className="absolute -right-2 md:-right-2 sm:right-1 z-10 bg-primary text-white rounded-full hover:bg-primaryDark cursor-pointer "
               />
-            </div>
+            </motion.div>
             <div className="relative md:hidden bg-gray-200 w-full py-7">
               <div className="absolute flex w-full text-center md:hidden justify-center -top-8  ml-auto bg-neutral">
                 <div className="flex flex-col">
@@ -270,34 +298,69 @@ const Listing = () => {
                   {/* Right side (Form) */}
                   <div className="w-full md:w-2/3 p-4">
                     <div className="relative w-full bg-cover bg-center p-4 rounded-lg glass bg-primaryDark/80">
-                      <form>
+                      <motion.form
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 1.5 }}
+                        exit={{ opacity: 0 }}
+                      >
                         {/* Form fields and submit button */}
                         <div className="flex flex-col flex-wrap ">
-                          <h1 className="my-5 text-start text-white font-bold text-3xl">
-                            Property Agent
-                          </h1>
+                          <motion.div
+                            whileInView={{
+                              y: [50, 0],
+                              x: [0, 0],
+                              opacity: [0, 1],
+                            }}
+                            transition={{ duration: 1.0 }}
+                          >
+                            <h1 className="my-5 text-start text-white font-bold text-3xl">
+                              Property Agent
+                            </h1>
+                          </motion.div>
                           {loadingAgent ? (
                             "Loading..."
                           ) : (
                             <div className="flex flex-row justify-start gap-4 ">
-                              <div className="avatar">
-                                <div className="w-24 rounded-full ring ring-primaryDark ring-offset-base-100 ring-offset-2">
+                              <motion.div
+                                variants={scaleVariants}
+                                whileInView={scaleVariants.whileInView}
+                                className="avatar rounded-full"
+                              >
+                                <div className="w-24 h-24 rounded-full ring ring-primaryDark ring-offset-base-100 ring-offset-2">
                                   <img
                                     src={agent?.avatar}
-                                    className="rounded-full object-cover"
+                                    className="w-24 h-24  object-cover rounded-full"
                                   />
                                 </div>
-                              </div>
+                              </motion.div>
                               <div className="space-y-5">
                                 <div className="text-white">
-                                  <h2 className="font-bold text-xl">
-                                    {agent?.firstname} {agent?.lastname}
-                                  </h2>
-                                  <p className="font-bold text-sm">
-                                    {agent?.title}
-                                  </p>
+                                  <motion.div
+                                    whileInView={{
+                                      y: [-50, 0],
+                                      x: [0, 0],
+                                      opacity: [0, 1],
+                                    }}
+                                    transition={{ duration: 1.0 }}
+                                  >
+                                    <h2 className="font-bold text-xl">
+                                      {agent?.firstname} {agent?.lastname}
+                                    </h2>
+                                    <p className="font-bold text-sm">
+                                      {agent?.title}
+                                    </p>
+                                  </motion.div>
                                 </div>
-                                <div className="text-white">
+                                <motion.div
+                                  whileInView={{
+                                    y: [-50, 0],
+                                    x: [0, 0],
+                                    opacity: [0, 1],
+                                  }}
+                                  transition={{ duration: 1.0 }}
+                                  className="text-white"
+                                >
                                   <p className="flex gap-2">
                                     <BsEnvelope className="text-xl" />
                                     {agent?.email}
@@ -306,8 +369,12 @@ const Listing = () => {
                                     <BsPhoneFlip className="text-xl" />
                                     {agent?.phone}
                                   </p>
-                                </div>
-                                <div className="text-white flex gap-4">
+                                </motion.div>
+                                <motion.div
+                                  variants={scaleVariants}
+                                  whileInView={scaleVariants.whileInView}
+                                  className="text-white flex gap-4"
+                                >
                                   <a href={agent?.socialLinks.linkedin}>
                                     <BsLinkedin className="text-xl hover:text-neutral cursor-pointer" />
                                   </a>
@@ -323,7 +390,7 @@ const Listing = () => {
                                   <a href={agent?.socialLinks.portfolio}>
                                     <BsGlobe2 className="text-xl hover:text-neutral cursor-pointer" />
                                   </a>
-                                </div>
+                                </motion.div>
                               </div>
                             </div>
                           )}
@@ -332,33 +399,59 @@ const Listing = () => {
                         </div>
 
                         <div className="space-y-3">
-                          <div>
+                          <motion.div
+                            whileInView={{
+                              y: [50, 0],
+                              x: [0, 0],
+                              opacity: [0, 1],
+                            }}
+                            transition={{ duration: 2.0 }}
+                          >
                             <input
                               type="text"
                               placeholder="Full Name"
                               className="input input-bordered w-full border border-1 rounded-md p-2 border-baseLight focus:border-neutral bg-transparent text-white placeholder:text-gray-300"
                             />
-                          </div>
-                          <div>
+                          </motion.div>
+
+                          <motion.div
+                            whileInView={{
+                              y: [50, 0],
+                              x: [0, 0],
+                              opacity: [0, 1],
+                            }}
+                            transition={{ duration: 2.4 }}
+                          >
                             <input
                               type="email"
                               placeholder="Your email"
                               className="input input-bordered w-full bg-transparent border border-1 border-baseLight focus:border-neutral rounded-md p-2  text-white placeholder:text-gray-300"
                             />
-                          </div>
-                          <div>
+                          </motion.div>
+                          <motion.div
+                            whileInView={{
+                              y: [50, 0],
+                              x: [0, 0],
+                              opacity: [0, 1],
+                            }}
+                            transition={{ duration: 2.8 }}
+                          >
                             <textarea
                               placeholder="Your message"
                               className="textarea textarea-bordered textarea-lg w-full  bg-transparent border border-1 border-baseLight focus:border-neutral rounded-md p-2  text-white placeholder:text-gray-300"
                             />
-                          </div>
-                          <div className="flex flex-wrap justify-center">
+                          </motion.div>
+                          <motion.div
+                            variants={scaleVariants}
+                            whileInView={scaleVariants.whileInView}
+                            className="flex flex-wrap justify-center"
+                          >
                             <Button className=" p-5 hover:bg-white hover:text-primary transition-colors duration-300 ease-in-out">
                               Send Message Now
                             </Button>
-                          </div>
+                          </motion.div>
                         </div>
-                      </form>
+                      </motion.form>
                     </div>
                   </div>
                 </div>

@@ -8,6 +8,18 @@ import FilteredCard from "./SearchListing/FilteredCard";
 import { FormEvent, useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
 
+import { motion } from "framer-motion";
+const scaleVariants = {
+  whileInView: {
+    scale: [0, 1],
+    opacity: [0, 1],
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
+
 const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
   const [listings, setListings] = useState([]);
@@ -158,7 +170,13 @@ const AllListings: React.FC = () => {
           </div>
         </div>
         {/*--------------------- Content Section ---------------- */}
-        <div className="flex w-full flex-col md:flex-row">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          exit={{ opacity: 0 }}
+          className="flex w-full flex-col md:flex-row"
+        >
           <div className="w-full md:w-1/4 space-y-10">
             <FilterListing onFormSubmit={handleFilterSubmit} />
           </div>
@@ -167,10 +185,15 @@ const AllListings: React.FC = () => {
             {loading ? (
               <LoadingState />
             ) : (
-              <FilteredCard layout={filterLayout} listings={listings} />
+              <motion.div
+                whileInView={{ y: [50, 0], x: [0, 0], opacity: [0, 1] }}
+                transition={{ duration: 1.0 }}
+              >
+                <FilteredCard layout={filterLayout} listings={listings} />
+              </motion.div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
       <Layout />
     </>

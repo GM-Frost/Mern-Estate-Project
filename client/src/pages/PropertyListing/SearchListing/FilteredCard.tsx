@@ -68,7 +68,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
     <>
       {layout === "grid" ? (
         <>
-          <div className="my-12 mx-auto  grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-4 overflow-y-auto">
+          <div className="my-12 mx-auto w-full  md:w-[80%] grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-4 overflow-y-auto">
             {listings.length > 0 ? (
               records.map((property, index) => (
                 <div
@@ -134,7 +134,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
                         </div>
                         <div className="mt-5 flex flex-col gap-3 py-5 border-b-2">
                           <h2 className="font-bold text-xl group-hover:text-primary transition-colors duration-300 ease-in-out">
-                            <Link to={`listing/${property._id}`}>
+                            <Link to={`/listing/${property._id}`}>
                               {property.title}
                             </Link>
                           </h2>
@@ -286,9 +286,13 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
                           </p>
                         </div>
                         <div className="text-center">
-                          <h1 className="text-xl font-bold capitalize">
-                            {property.title}
-                          </h1>
+                          <Link to={`/listing/${property._id}`}>
+                            <h2 className="font-bold text-xl group-hover:text-primary transition-colors duration-300 ease-in-out">
+                              <Link to={`/listing/${property._id}`}>
+                                {property.title}
+                              </Link>
+                            </h2>
+                          </Link>
                         </div>
                         <div className="text-baseDark flex truncate gap-1 items-center text-center justify-center">
                           <div>
