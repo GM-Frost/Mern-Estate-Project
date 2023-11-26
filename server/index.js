@@ -6,10 +6,10 @@ import cors from "cors";
 dotenv.config();
 
 //IMPORTING ROUTERS
-import userRouter from "./routes/user.route.js";
-import authRouter from "./routes/auth.route.js";
-import listingRouter from "./routes/listing.route.js";
-import agentRouter from "./routes/agent.route.js";
+import userRouter from "./api/routes/user.route.js";
+import authRouter from "./api/routes/auth.route.js";
+import listingRouter from "./api/routes/listing.route.js";
+import agentRouter from "./api/routes/agent.route.js";
 import helmet from "helmet";
 import compression from "compression";
 
@@ -21,17 +21,19 @@ export const remote_client_app = process.env.REMOTE_CLIENT_APP;
 export const local_server_api = process.env.LOCAL_SERVER_API;
 export const remote_server_api = process.env.REMOTE_SERVER_API;
 
+// mongoose
+//   .connect(process.env.MONGODB_SERVER_PORT)
+//   .then(() => {
+//     console.log("Connected to MongoDB!!!");
+//   })
+//   .catch((err) => {
+//     console.log("Failed to connect to MongoDB", err);
+//   });
+mongoose.set("strictQuery", true); //useful when working with search functionality
 mongoose
-  .connect(process.env.MONGODB_SERVER_PORT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB!");
-  })
-  .catch((err) => {
-    console.log("Failed to connect to MongoDB", err);
-  });
+  .connect(process.env.MONGODB_SERVER_PORT)
+  .then(() => console.log("Mongo DB Connected"))
+  .catch((err) => console.log(err));
 
 const app = express();
 app.use(
@@ -53,7 +55,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.listen(port, () => {
-  console.log(`Listening on ${port}`);
+  console.log(`Listening on ${port} & NODE Server is ${process.env.NODE_ENV}`);
 });
 
 // Define a test route
