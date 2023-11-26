@@ -13,6 +13,8 @@ import {
 
 import "react-toastify/dist/ReactToastify.css";
 import { FaUserTie } from "react-icons/fa";
+import { Button } from "@material-tailwind/react";
+import { MdAddHomeWork } from "react-icons/md";
 
 const Navbar = () => {
   const location = useLocation();
@@ -39,6 +41,10 @@ const Navbar = () => {
 
   const [profileIconColor, setProfileIconColor] = useState(
     isNotHeroNav ? "text-primaryDark" : "text-white"
+  );
+
+  const [addListingBtn, setAddListingBtn] = useState(
+    isNotHeroNav ? "text-primaryDark border border-primaryLight" : "text-white"
   );
 
   //HANDLE SIGNOUT
@@ -68,11 +74,17 @@ const Navbar = () => {
         setTextColor("#000000");
         setLogo(`${LogoDark}`);
         setProfileIconColor("text-primaryDark");
+        setAddListingBtn("text-primaryDark border border-primaryDark");
       } else {
         setColor(isNotHeroNav ? "white" : "transparent");
         setTextColor(isNotHeroNav ? "black" : "#ffffff");
         setLogo(isNotHeroNav ? `${LogoDark}` : `${LogoLight}`);
-        setProfileIconColor(isNotHeroNav ? "text-primaryDark" : "text-white");
+        setProfileIconColor(isNotHeroNav ? "text-primaryDark " : "text-white");
+        setAddListingBtn(
+          isNotHeroNav
+            ? "text-primaryDark border border-primaryDark"
+            : "text-white"
+        );
       }
     };
     window.addEventListener("scroll", changeColor);
@@ -235,6 +247,15 @@ const Navbar = () => {
               )}
             </div>
           </div>
+          <li className="flex justify-end ml-5">
+            <Link to={"/profile"}>
+              <button
+                className={`lg:p-3 p-2 mr-2 border flex text-sm ${addListingBtn} hover:bg-primary hover:border-primaryDark hover:text-white  rounded-lg  flex-wrap gap-3  cursor-pointer transition-colors duration-300 ease-in-out`}
+              >
+                Add Listing <MdAddHomeWork className="text-xl" />
+              </button>
+            </Link>
+          </li>
         </ul>
 
         {/********************************************** MOBILE Button **********************************************/}

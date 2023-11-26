@@ -6,7 +6,7 @@ import { HiClipboardDocumentList } from "react-icons/hi2";
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full ">
       <div className="bg-primary/10  transition-all duration-500 ease-in-out rounded-md p-4 text-center flex flex-col flex-wrap w-full justify-center items-center space-y-3 hover:bg-primaryDark hover:text-white">
         <div className="p-3 bg-white rounded-md text-primaryDark text-2xl ">
           <AiFillHome />

@@ -13,7 +13,6 @@ import ContactUs from "./pages/ContactUs/ContactUs";
 import Blog from "./pages/News/Blog";
 import AddListing from "./pages/Profile/listing/AddListing";
 
-import UpdateListing from "./pages/Profile/listing/UpdateListing";
 import EditListing from "./pages/Profile/listing/crud/EditListing";
 import Listing from "./pages/Profile/listing/Listing";
 import ForSale from "./pages/Profile/listing/ForSale";
@@ -77,14 +76,7 @@ function App() {
       path: "/listings",
       element: <AllListings />,
     },
-    {
-      path: "/updateListing/:listingId",
-      element: (
-        <PrivateRoute>
-          <UpdateListing />
-        </PrivateRoute>
-      ),
-    },
+
     {
       path: "/update-listing/:listingId",
       element: (

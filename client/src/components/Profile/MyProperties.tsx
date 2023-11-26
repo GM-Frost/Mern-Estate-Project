@@ -7,7 +7,7 @@ import {
   FaSwimmer,
 } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IUserState } from "../../redux/userSlice/userSlice";
 import { useEffect, useState } from "react";
@@ -28,9 +28,7 @@ const MyProperties = () => {
   const [loadingListing, setLoadingListing] = useState<boolean>(true);
   const [userListings, setUserListings] = useState([]);
 
-  //UPDATE USER SLICE
-  const dispatch = useDispatch();
-  const { currentUser, loading, error } = useSelector(
+  const { currentUser } = useSelector(
     (state: { user: IUserState }) => state.user
   );
 
@@ -90,7 +88,8 @@ const MyProperties = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const changeCurrentPage = (id) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const changeCurrentPage = (id: any) => {
     setCurrentPage(id);
   };
   const nextPage = () => {
@@ -107,7 +106,7 @@ const MyProperties = () => {
     <>
       <ToastContainer />
       <div className="flex flex-col flex-wrap w-full h-full space-y-3">
-        <div className="flex flex-wrap font-bold justify-between items-start text-start">
+        <div className="flex flex-wrap font-bold justify-between items-start text-start ">
           <h1>My Properties</h1>
           <Link to={"/profile/addlisting"}>
             <div className="lg:p-3 p-2 mr-2 bg-primaryLight rounded-lg text-white flex flex-wrap gap-3 hover:bg-primaryDark cursor-pointer transition-colors duration-300 ease-in-out">
@@ -115,6 +114,9 @@ const MyProperties = () => {
             </div>
           </Link>
         </div>
+        <p className="text-red-700 text-sm">
+          {showListingsError ? showListingsError : ""}
+        </p>
         {loadingListing ? (
           "Loading Listing..."
         ) : (
