@@ -9,16 +9,6 @@ import { FormEvent, useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
 
 import { motion } from "framer-motion";
-const scaleVariants = {
-  whileInView: {
-    scale: [0, 1],
-    opacity: [0, 1],
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-};
 
 const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");

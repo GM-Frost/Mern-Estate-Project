@@ -6,10 +6,10 @@ import {
 import React from "react";
 import { floorplans } from "../../../../assets";
 
-const FloorPlans = ({ listing }) => {
-  const [open, setOpen] = React.useState(1);
+const FloorPlans = () => {
+  const [open, setOpen] = React.useState<number>(1);
 
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
 
   return (
     <div className="flex flex-col gap-3">

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 dotenv.config();
 
 //IMPORTING ROUTERS
@@ -9,16 +10,41 @@ import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import agentRouter from "./routes/agent.route.js";
+import helmet from "helmet";
+import compression from "compression";
+
+//env config
+
+export const port = process.env.SERVER_PORT;
+export const local_client_app = process.env.LOCAL_CLIENT_APP;
+export const remote_client_app = process.env.REMOTE_CLIENT_APP;
+export const local_server_api = process.env.LOCAL_SERVER_API;
+export const remote_server_api = process.env.REMOTE_SERVER_API;
 
 mongoose
-  .connect(process.env.MONGODB_SERVER_PORT)
+  .connect(process.env.MONGODB_SERVER_PORT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB!");
   })
   .catch((err) => {
-    console.log("Failed to connect to MongoDB");
+    console.log("Failed to connect to MongoDB", err);
   });
+
 const app = express();
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [remote_client_app, remote_server_api]
+        : [local_client_app, local_server_api],
+  })
+);
+
+app.use(helmet());
+app.use(compression());
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
 app.use(express.json());
@@ -26,8 +52,8 @@ app.use(express.json());
 //COOKIE PARSER
 app.use(cookieParser());
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Listening on ${process.env.SERVER_PORT}`);
+app.listen(port, () => {
+  console.log(`Listening on ${port}`);
 });
 
 // Define a test route

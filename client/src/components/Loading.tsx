@@ -7,7 +7,11 @@ const override: CSSProperties = {
   borderColor: "red",
 };
 
-const Loading = ({ loadingactive }) => {
+interface LoadingProps {
+  loadingactive: boolean;
+}
+
+const Loading: React.FC<LoadingProps> = ({ loadingactive }) => {
   return (
     <p className="text-center my-7 text-2xl">
       Please Wait.

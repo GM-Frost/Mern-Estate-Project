@@ -84,10 +84,12 @@ const EditListing = () => {
       }
       //waiting of all the images
       try {
-        const urls = await Promise.all(promises); // Use try-catch for error handling
+        const urls = await Promise.all(promises);
         setFormData({
           ...formData,
-          imageUrls: formData.imageUrls.concat(urls),
+          imageUrls: formData.imageUrls.concat(
+            urls.filter((url): url is string => typeof url === "string")
+          ),
         });
         setImageUploadError(false);
       } catch (err) {
@@ -131,6 +133,13 @@ const EditListing = () => {
       imageUrls: formData.imageUrls.filter((_, i) => i !== index),
     });
   };
+
+  function isCheckboxInput(
+    element: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  ): element is HTMLInputElement {
+    return (element as HTMLInputElement).type === "checkbox";
+  }
+
   /// HANDLE FORM CHANGE
   const handleFormChange = (
     e: React.ChangeEvent<
@@ -179,12 +188,6 @@ const EditListing = () => {
     }
   };
 
-  function isCheckboxInput(
-    element: HTMLInputElement
-  ): element is HTMLInputElement {
-    return element.type === "checkbox";
-  }
-
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -215,7 +218,8 @@ const EditListing = () => {
       toast.info("Listing Edited");
       await new Promise((resolve) => setTimeout(resolve, 2000));
       navigate("/profile");
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setError(error.message);
       toast.error("Failed to create listing");
       setLoading(false);

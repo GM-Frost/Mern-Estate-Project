@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 
-
+.htaccess
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,3 +24,5 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env.development
+.env.production

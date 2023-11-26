@@ -1,6 +1,7 @@
 {
   "name": "client",
   "private": true,
+  "homepage": "https://nova-estate.nayanbastola.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -49,6 +50,7 @@
     "slick-carousel": "^1.8.1",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-env-compatible": "^1.1.1"
   }
 }
