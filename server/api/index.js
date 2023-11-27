@@ -35,12 +35,8 @@ const app = express();
 
 const whitelist = ["*"];
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
+   origin: '*',
+  credentials: true,
   },
   credentials: true,
 };
