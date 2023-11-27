@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import PriceRange from "../PriceRange";
 import SquareFeet from "../SquareFeet";
-import { Abstract11 } from "../../../assets";
+import { Abstract11 } from "../../../assets/index.js";
 import { Button } from "@material-tailwind/react";
 import { useState } from "react";
 

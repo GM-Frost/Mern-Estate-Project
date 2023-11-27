@@ -1,5 +1,5 @@
 import { FaApple } from "react-icons/fa";
-import { AbstractMobileSection, phone } from "../../assets";
+import { AbstractMobileSection, phone } from "../../assets/index.js";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { motion } from "framer-motion";
 

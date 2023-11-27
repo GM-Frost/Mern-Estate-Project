@@ -1,4 +1,4 @@
-import { LogoLight, LogoDark } from "../assets";
+import { LogoLight, LogoDark } from "../assets/index.js";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState, useEffect } from "react";

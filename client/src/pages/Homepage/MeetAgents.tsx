@@ -1,5 +1,5 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { AbstractLatestNews } from "../../assets";
+import { AbstractLatestNews } from "../../assets/index.js";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IAgent, agentinitialValue } from "../types/Agents.types";

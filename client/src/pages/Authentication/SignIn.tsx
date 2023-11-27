@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { LogoLight } from "../../assets";
+import { LogoLight } from "../../assets/index.js";
 
 import { FiTwitter } from "react-icons/fi";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";

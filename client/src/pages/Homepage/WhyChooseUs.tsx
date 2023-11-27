@@ -1,5 +1,5 @@
 import { FaRegHandshake } from "react-icons/fa";
-import { Abstract11 } from "../../assets";
+import { Abstract11 } from "../../assets/index.js";
 import { MdSupportAgent } from "react-icons/md";
 import { GiHouseKeys, GiReceiveMoney } from "react-icons/gi";
 import { motion } from "framer-motion";

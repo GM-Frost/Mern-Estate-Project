@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AbstractLatestNews } from "../../assets";
+import { AbstractLatestNews } from "../../assets/index.js";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoArrowRedoCircleOutline } from "react-icons/io5";

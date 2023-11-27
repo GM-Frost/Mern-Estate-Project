@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import AboutSection from "../Homepage/AboutSection";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbStars } from "react-icons/tb";
-import { AbstractContactus } from "../../assets";
+import { AbstractContactus } from "../../assets/index.js";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
