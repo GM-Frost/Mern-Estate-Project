@@ -35,7 +35,7 @@ import {
 } from "../../types/AgentDetails.types";
 import Loading from "../../../components/Loading";
 import Page404 from "../../../components/Page404";
-import { Abstract8 } from "../../../assets/index.js";
+import { Abstract8 } from "../../../assets/";
 import Layout from "../../../components/Layout";
 
 const Listing = () => {
