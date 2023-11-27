@@ -13,9 +13,9 @@ import listingRouter from "./routes/listing.route.js";
 import agentRouter from "./routes/agent.route.js";
 
 //PORTS
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3000;
 const mongo_port = process.env.MONGODB_SERVER_PORT;
-const node_end = process.env.NODE_ENV;
+const node_end = process.env.NODE_ENV || "development";
 
 mongoose
   .connect(mongo_port)
@@ -32,7 +32,7 @@ const __dirname = path.resolve();
 const app = express();
 
 const corsOptions = {
-  origin: '*',
+  origin: "*",
   credentials: true,
 };
 
@@ -69,7 +69,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
 
-app.use(express.static(path.join(__dirname, "/client/dist/")));
+app.use(express.static(path.join(__dirname, "client", "dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
