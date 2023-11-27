@@ -32,7 +32,7 @@ const __dirname = path.resolve();
 const app = express();
 
 // Allow requests from frontend domain
-const whitelist = ["https://nova-estate.nayanbastola.com"];
+const whitelist = ["https://nova-estate.nayanbastola.com", "http://localhost:5173"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.includes(origin)) {
