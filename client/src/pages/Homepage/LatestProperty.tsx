@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineBathtub, MdOutlineKingBed } from "react-icons/md";
 import { RxDimensions } from "react-icons/rx";
-import { AbstractLatestProperty } from "../../assets";
+import { AbstractLatestProperty } from "../../assets/index.js";
 import { useEffect, useState } from "react";
 
 import { IPropertyList } from "../types/PropertyList.types";

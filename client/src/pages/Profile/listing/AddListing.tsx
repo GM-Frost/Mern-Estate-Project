@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Layout from "../../../components/Layout";
-import { listingForRent, listingForSale } from "../../../assets";
+import { listingForRent, listingForSale } from "../../../assets/index.js";
 
 const AddListing = () => {
   return (

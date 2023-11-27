@@ -3,7 +3,7 @@ import {
   AbstractContactCS,
   AbstractContactus,
   AbstractContactusForm,
-} from "../../assets";
+} from "../../assets/index.js";
 import { BiMapPin, BiSolidPhoneCall } from "react-icons/bi";
 import { MdMarkEmailRead } from "react-icons/md";
 import Layout from "../../components/Layout";

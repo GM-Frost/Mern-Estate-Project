@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AbstractFAQ, FAQImage } from "../../assets";
+import { AbstractFAQ, FAQImage } from "../../assets/index.js";
 import {
   Accordion,
   AccordionHeader,

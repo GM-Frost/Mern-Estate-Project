@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Background404 } from "../assets";
+import { Background404 } from "../assets/index.js";
 
 const Page404 = () => {
   const navigate = useNavigate();

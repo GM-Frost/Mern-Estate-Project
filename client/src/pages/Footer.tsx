@@ -1,5 +1,5 @@
 import { Button } from "@material-tailwind/react";
-import { Building3, LogoLight } from "../assets";
+import { Building3, LogoLight } from "../assets/index.js";
 import { motion } from "framer-motion";
 import {
   FaEnvelope,
