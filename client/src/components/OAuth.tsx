@@ -24,17 +24,20 @@ const OAuth = ({ googlePage }: IProps) => {
       const result = await signInWithPopup(auth, provider);
 
       //SENDING THE FIREBASE RESULT TO BACKEND
-      const res = await fetch(`${hostURI}api/auth/google`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: result.user.displayName,
-          email: result.user.email,
-          photo: result.user.photoURL,
-        }),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/auth/google`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: result.user.displayName,
+            email: result.user.email,
+            photo: result.user.photoURL,
+          }),
+        }
+      );
       const data = await res.json();
       dispatch(signInSuccess(data));
       toast.success("Signed In Successfully!");
