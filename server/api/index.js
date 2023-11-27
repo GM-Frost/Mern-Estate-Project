@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import path from "path";
 dotenv.config();
 
@@ -29,6 +30,21 @@ mongoose
 const __dirname = path.resolve();
 
 const app = express();
+
+// Allow requests from frontend domain
+const whitelist = ["https://nova-estate.nayanbastola.com"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
 app.use(express.json());
@@ -61,7 +77,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
 
-app.use(express.static(path.join(__dirname, "https://nova-estate.nayanbastola.com/")));
+app.use(express.static(path.join(__dirname, "/client/dist/")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
