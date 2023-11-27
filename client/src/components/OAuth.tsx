@@ -6,7 +6,6 @@ import { signInSuccess } from "../redux/userSlice/userSlice";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { hostURI } from "../host";
 
 type IProps = {
   googlePage: string;
