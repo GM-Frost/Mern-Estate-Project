@@ -9,11 +9,7 @@
     "start": "node api/index.js",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
-  "keywords": [
-    "react",
-    "javascript",
-    "nodejs"
-  ],
+  "keywords": [],
   "author": "Nayan Bastola",
   "license": "MIT",
   "dependencies": {
