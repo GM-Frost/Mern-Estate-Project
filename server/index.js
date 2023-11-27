@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 import path from "path";
 dotenv.config();
 
@@ -11,43 +10,22 @@ import userRouter from "./api/routes/user.route.js";
 import authRouter from "./api/routes/auth.route.js";
 import listingRouter from "./api/routes/listing.route.js";
 import agentRouter from "./api/routes/agent.route.js";
-import helmet from "helmet";
-import compression from "compression";
 
-//env config
+//PORTS
+const port = process.env.SERVER_PORT;
+const mongo_port = process.env.MONGODB_SERVER_PORT;
+const node_end = process.env.NODE_ENV;
 
-export const port = process.env.SERVER_PORT;
-export const local_client_app = process.env.LOCAL_CLIENT_APP;
-export const remote_client_app = process.env.REMOTE_CLIENT_APP;
-export const local_server_api = process.env.LOCAL_SERVER_API;
-export const remote_server_api = process.env.REMOTE_SERVER_API;
-
-// mongoose
-//   .connect(process.env.MONGODB_SERVER_PORT)
-//   .then(() => {
-//     console.log("Connected to MongoDB!!!");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to connect to MongoDB", err);
-//   });
-mongoose.set("strictQuery", true); //useful when working with search functionality
 mongoose
-  .connect(process.env.MONGODB_SERVER_PORT)
-  .then(() => console.log("Mongo DB Connected"))
-  .catch((err) => console.log(err));
+  .connect(mongo_port)
+  .then(() => {
+    console.log("Connected to MongoDB!!!");
+  })
+  .catch((err) => {
+    console.log("Failed to connect to MongoDB", err);
+  });
 
 const app = express();
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [remote_client_app, remote_server_api]
-        : [local_client_app, local_server_api],
-  })
-);
-
-app.use(helmet());
-app.use(compression());
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
 app.use(express.json());
@@ -59,7 +37,7 @@ app.use(cookieParser());
 const __dirname = path.resolve();
 
 app.listen(port, () => {
-  console.log(`Listening on ${port} & NODE Server is ${process.env.NODE_ENV}`);
+  console.log(`Listening on ${port} & NODE Server is ${node_end}`);
 });
 
 // Define a test route
@@ -83,7 +61,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
 
-app.use(express.static(path.join(__dirname, "/")));
+app.use(
+  express.static(path.join(__dirname, "https://nova-estate.nayanbastola.com/"))
+);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
