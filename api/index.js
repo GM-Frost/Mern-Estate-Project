@@ -6,10 +6,10 @@ import path from "path";
 dotenv.config();
 
 //IMPORTING ROUTERS
-import userRouter from "./api/routes/user.route.js";
-import authRouter from "./api/routes/auth.route.js";
-import listingRouter from "./api/routes/listing.route.js";
-import agentRouter from "./api/routes/agent.route.js";
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
+import listingRouter from "./routes/listing.route.js";
+import agentRouter from "./routes/agent.route.js";
 
 //PORTS
 const port = process.env.SERVER_PORT;
@@ -61,9 +61,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
 
-app.use(
-  express.static(path.join(__dirname, "https://nova-estate.nayanbastola.com/"))
-);
+app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
