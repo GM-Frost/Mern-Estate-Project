@@ -1,7 +1,8 @@
 import { FaUsers } from "react-icons/fa";
-import { Abstract10 } from "../../assets";
+
 import { BsBuildingsFill } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { Abstract10 } from "../../assets/index.js";
 
 const scaleVariants = {
   whileInView: {
