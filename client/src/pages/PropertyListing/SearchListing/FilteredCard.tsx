@@ -10,7 +10,6 @@ import { MdOutlineBathtub, MdOutlineKingBed } from "react-icons/md";
 import { RxDimensions } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { IListing, IListingAgentDetails } from "../../types/ListingCard";
-import { hostURI } from "../../../host";
 
 interface IFilteredCard {
   layout: string;
@@ -50,7 +49,7 @@ const FilteredCard = ({ listings, layout }: IFilteredCard) => {
     const fetchAgentDetails = async (agentDetails: string) => {
       try {
         const response = await fetch(
-          `${hostURI}/api/agent/listings/${agentDetails}`
+          `https://nova-estate-server.onrender.com/api/agent/listings/${agentDetails}`
         );
         if (response.ok) {
           const agentData = await response.json();

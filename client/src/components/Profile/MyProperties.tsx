@@ -22,6 +22,7 @@ import { CgGym } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { hostURI } from "../../host";
 
 const MyProperties = () => {
   const [showListingsError, setShowListingsError] = useState<boolean>(false);
@@ -37,7 +38,9 @@ const MyProperties = () => {
   const fetchListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(
+        `${hostURI}/api/user/listings/${currentUser._id}`
+      );
       const data = await res.json();
 
       if (data.success === false) {

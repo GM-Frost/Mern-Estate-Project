@@ -9,7 +9,6 @@ import { IPropertyList } from "../types/PropertyList.types";
 import LoadingState from "../../components/Loading/LoadingState";
 
 import { motion } from "framer-motion";
-import { hostURI } from "../../host.js";
 
 const scaleVariants = {
   whileInView: {
@@ -31,7 +30,7 @@ const LatestProperty: React.FC = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${hostURI}/api/listing/get?sortBy=createdAt&limit=6`
+        `https://nova-estate-server.onrender.com/api/listing/get?sortBy=createdAt&limit=6`
       );
       console.log("Response status:", response.status); // Log response status
       if (response.ok) {

@@ -9,7 +9,6 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { hostURI } from "../../host";
 
 const SignUpNew = () => {
   const navigate = useNavigate();
@@ -49,13 +48,16 @@ const SignUpNew = () => {
 
     try {
       setLoading(true);
-      const res = await fetch(`${hostURI}/api/auth/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/auth/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
 
       if (data.success === false) {

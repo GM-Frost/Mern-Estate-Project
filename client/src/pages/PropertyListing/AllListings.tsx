@@ -9,7 +9,6 @@ import { FormEvent, useEffect, useState } from "react";
 import LoadingState from "../../components/Loading/LoadingState";
 
 import { motion } from "framer-motion";
-import { hostURI } from "../../host";
 
 const AllListings: React.FC = () => {
   const [filterLayout, setFilterLayout] = useState<"grid" | "list">("grid");
@@ -50,7 +49,7 @@ const AllListings: React.FC = () => {
     try {
       setLoading(true);
       const urlParams = new URLSearchParams(window.location.search);
-      let apiUrl = `${hostURI}/api/listing/get`;
+      let apiUrl = `https://nova-estate-server.onrender.com/api/listing/get`;
 
       if (urlParams) {
         apiUrl += `?${urlParams}`;

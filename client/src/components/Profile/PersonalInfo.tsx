@@ -30,6 +30,7 @@ import {
 } from "firebase/storage";
 import DeleteUser from "../Navbar/DeleteUser";
 import { IPersonalInfo } from "../../pages/types/PersonalInfo.types";
+import { hostURI } from "../../host";
 
 const PersonalInfo = () => {
   //User Details
@@ -125,7 +126,7 @@ const PersonalInfo = () => {
         socialLinks: { ...socialLinks },
       };
 
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${hostURI}/api/user/update/${currentUser._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -22,7 +22,6 @@ import {
 } from "../../../types/CreateListing.types";
 import { firebaseApp } from "../../../../firebase";
 import Layout from "../../../../components/Layout";
-import { hostURI } from "../../../../host";
 
 const EditListing = () => {
   const params = useParams();
@@ -46,7 +45,9 @@ const EditListing = () => {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId;
-      const res = await fetch(`${hostURI}/api/listing/get/${listingId}`);
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/listing/get/${listingId}`
+      );
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);

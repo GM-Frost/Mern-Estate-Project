@@ -22,7 +22,6 @@ import {
 } from "../../types/CreateListing.types";
 import { firebaseApp } from "../../../firebase";
 import Layout from "../../../components/Layout";
-import { hostURI } from "../../../host";
 
 const ForRent = () => {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -184,16 +183,19 @@ const ForRent = () => {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`${hostURI}/api/listing/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,
-          type: "Rent",
-          agentProfile: currentUser?.avatar,
-        }),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/listing/create`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            userRef: currentUser._id,
+            type: "Rent",
+            agentProfile: currentUser?.avatar,
+          }),
+        }
+      );
       const data = await res.json();
       setLoading(false);
       if (data.success === false) {

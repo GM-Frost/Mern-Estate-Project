@@ -37,7 +37,6 @@ import Loading from "../../../components/Loading";
 import Page404 from "../../../components/Page404";
 import { Abstract8 } from "../../../assets/";
 import Layout from "../../../components/Layout";
-import { hostURI } from "../../../host";
 
 const Listing = () => {
   const params = useParams();
@@ -105,7 +104,7 @@ const Listing = () => {
       try {
         setLoading(true);
         const res = await fetch(
-          `${hostURI}/api/listing/get/${params.listingId}`
+          `https://nova-estate-server.onrender.com/api/listing/get/${params.listingId}`
         );
         const data = await res.json();
         if (data.success === false) {
@@ -128,7 +127,9 @@ const Listing = () => {
   useEffect(() => {
     const fetchAgentDetails = async () => {
       try {
-        const res = await fetch(`/api/agent/listings/${params.listingId}`);
+        const res = await fetch(
+          `https://nova-estate-server.onrender.com/api/agent/listings/${params.listingId}`
+        );
         const data = await res.json();
         if (data.success === false) {
           setError(true);
