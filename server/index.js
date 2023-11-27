@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 dotenv.config();
 
 //IMPORTING ROUTERS
@@ -54,6 +55,9 @@ app.use(express.json());
 //COOKIE PARSER
 app.use(cookieParser());
 
+//dynamic dir name
+const __dirname = path.resolve();
+
 app.listen(port, () => {
   console.log(`Listening on ${port} & NODE Server is ${process.env.NODE_ENV}`);
 });
@@ -78,6 +82,11 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
+
+app.use(express.static(path.join(__dirname, "/")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 //CREATE MIDDLEWARE
 app.use((err, req, res, next) => {
