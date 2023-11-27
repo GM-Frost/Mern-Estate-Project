@@ -2,7 +2,7 @@
   "name": "client",
   "private": true,
   "version": "0.0.0",
-  "homepage": "http://nova-estate.nayanbastola.com",
+  "homepage": "https://mern-estate-project.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",
