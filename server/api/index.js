@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import path from "path";
 dotenv.config();
 
@@ -29,6 +30,13 @@ mongoose
 const __dirname = path.resolve();
 
 const app = express();
+
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
 app.use(express.json());

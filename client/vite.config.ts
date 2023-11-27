@@ -6,10 +6,12 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://nova-estate-server.onrender.com",
+        changeOrigin: true,
         secure: false,
       },
     },
+    host: true,
   },
   plugins: [react()],
 });
