@@ -14,6 +14,7 @@ import DownloadApp from "../Homepage/DownloadApp";
 import { useEffect, useState } from "react";
 import { IAgent, agentinitialValue } from "../types/Agents.types";
 import { motion } from "framer-motion";
+import { hostURI } from "../../host.js";
 
 const About = () => {
   const settings = {
@@ -59,7 +60,7 @@ const About = () => {
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const response = await fetch("/api/agent/getAgents");
+        const response = await fetch(`${hostURI}/api/agent/getAgents`);
         if (!response.ok) {
           throw new Error("Failed to fetch agents");
         }

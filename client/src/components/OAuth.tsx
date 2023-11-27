@@ -6,6 +6,7 @@ import { signInSuccess } from "../redux/userSlice/userSlice";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { hostURI } from "../host";
 
 type IProps = {
   googlePage: string;
@@ -23,7 +24,7 @@ const OAuth = ({ googlePage }: IProps) => {
       const result = await signInWithPopup(auth, provider);
 
       //SENDING THE FIREBASE RESULT TO BACKEND
-      const res = await fetch("api/auth/google", {
+      const res = await fetch(`${hostURI}api/auth/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -9,6 +9,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { hostURI } from "../../host";
 
 const SignUpNew = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const SignUpNew = () => {
 
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch(`${hostURI}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

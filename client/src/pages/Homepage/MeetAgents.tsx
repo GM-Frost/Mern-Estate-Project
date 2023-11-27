@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IAgent, agentinitialValue } from "../types/Agents.types";
 import { motion } from "framer-motion";
+import { hostURI } from "../../host.js";
 
 const MeetAgents = () => {
   const [agentList, setAgentList] = useState<IAgent[]>([agentinitialValue]);
@@ -11,7 +12,7 @@ const MeetAgents = () => {
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const response = await fetch("/api/agent/getAgents?limit=6");
+        const response = await fetch(`${hostURI}/api/agent/getAgents?limit=6`);
         if (!response.ok) {
           throw new Error("Failed to fetch agents");
         }

@@ -37,6 +37,7 @@ import Loading from "../../../components/Loading";
 import Page404 from "../../../components/Page404";
 import { Abstract8 } from "../../../assets/";
 import Layout from "../../../components/Layout";
+import { hostURI } from "../../../host";
 
 const Listing = () => {
   const params = useParams();
@@ -103,7 +104,9 @@ const Listing = () => {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const res = await fetch(
+          `${hostURI}/api/listing/get/${params.listingId}`
+        );
         const data = await res.json();
         if (data.success === false) {
           setError(true);

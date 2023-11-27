@@ -22,6 +22,7 @@ import {
 } from "../../types/CreateListing.types";
 import Layout from "../../../components/Layout";
 import { firebaseApp } from "../../../firebase";
+import { hostURI } from "../../../host";
 
 const ForSale = () => {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -182,7 +183,7 @@ const ForSale = () => {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`${hostURI}/api/listing/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

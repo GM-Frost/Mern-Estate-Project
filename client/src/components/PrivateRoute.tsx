@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }: IProps) => {
     (state: { user: IUserState }) => state.user
   );
 
-  return <>{currentUser ? children : <Navigate to="/sign-in" replace />}</>;
+  return <>{currentUser ? children : <Navigate to={`/sign-in`} replace />}</>;
 };
 
 export default PrivateRoute;

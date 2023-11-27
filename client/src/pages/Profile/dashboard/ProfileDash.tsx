@@ -18,6 +18,7 @@ import {
   signoutUserSuccess,
 } from "../../../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
+import { hostURI } from "../../../host";
 
 const ProfileDash = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const ProfileDash = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signoutUserStart());
-      const res = await fetch(`/api/auth/signout`);
+      const res = await fetch(`${hostURI}/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signoutUserFailure(data.message));
