@@ -34,10 +34,9 @@ const app = express();
 // Allow requests from frontend domain
 
 const whitelist = ["*"];
+
 const corsOptions = {
-   origin: '*',
-  credentials: true,
-  },
+  origin: '*',
   credentials: true,
 };
 
