@@ -25,6 +25,9 @@ mongoose
     console.log("Failed to connect to MongoDB", err);
   });
 
+//dynamic dir name
+const __dirname = path.resolve();
+
 const app = express();
 
 //ALLOW JSON TO BE ALLOWED TO COMMUNICATE WITH SERVER
@@ -32,9 +35,6 @@ app.use(express.json());
 
 //COOKIE PARSER
 app.use(cookieParser());
-
-//dynamic dir name
-const __dirname = path.resolve();
 
 app.listen(port, () => {
   console.log(`Listening on ${port} & NODE Server is ${node_end}`);
@@ -62,6 +62,7 @@ app.use("/api/listing", listingRouter);
 app.use("/api/agent", agentRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
