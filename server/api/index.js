@@ -32,7 +32,7 @@ const __dirname = path.resolve();
 const app = express();
 
 const corsOptions = {
-  origin: "*",
+  origin: '*',
   credentials: true,
 };
 
