@@ -19,7 +19,7 @@ const node_end = process.env.NODE_ENV;
 mongoose
   .connect(mongo_port)
   .then(() => {
-    console.log("Connected to MongoDB!!!");
+    console.log("Connected to MongoDB!");
   })
   .catch((err) => {
     console.log("Failed to connect to MongoDB", err);
