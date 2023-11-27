@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
-    "build": "npm install && npm install cd client && npm vite build"
+    "build": "npm install && npm install cd client && npm run build"
   },
   "keywords": [],
   "author": "Nayan Bastola",
