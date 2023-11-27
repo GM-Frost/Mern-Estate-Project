@@ -30,7 +30,6 @@ import {
 } from "firebase/storage";
 import DeleteUser from "../Navbar/DeleteUser";
 import { IPersonalInfo } from "../../pages/types/PersonalInfo.types";
-import { hostURI } from "../../host";
 
 const PersonalInfo = () => {
   //User Details
@@ -126,13 +125,16 @@ const PersonalInfo = () => {
         socialLinks: { ...socialLinks },
       };
 
-      const res = await fetch(`${hostURI}/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/user/update/${currentUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
       const data = await res.json();
       if (data.sucess === false) {
         dispatch(updateUserFailure(data.message));
@@ -163,9 +165,12 @@ const PersonalInfo = () => {
   const handleConfirmDelete = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));

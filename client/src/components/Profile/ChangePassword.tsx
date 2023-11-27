@@ -13,7 +13,6 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { hostURI } from "../../host";
 
 const ChangePassword: React.FC = () => {
   const { currentUser, loading } = useSelector(
@@ -50,13 +49,16 @@ const ChangePassword: React.FC = () => {
 
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`${hostURI}/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password: formData.password }),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/user/update/${currentUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password: formData.password }),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -89,7 +91,9 @@ const ChangePassword: React.FC = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signoutUserStart());
-      const res = await fetch(`/api/auth/signout`);
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/auth/signout`
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(signoutUserFailure(data.message));

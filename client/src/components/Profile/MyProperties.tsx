@@ -22,7 +22,6 @@ import { CgGym } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { hostURI } from "../../host";
 
 const MyProperties = () => {
   const [showListingsError, setShowListingsError] = useState<boolean>(false);
@@ -39,7 +38,7 @@ const MyProperties = () => {
     try {
       setShowListingsError(false);
       const res = await fetch(
-        `${hostURI}/api/user/listings/${currentUser._id}`
+        `https://nova-estate-server.onrender.com/api/user/listings/${currentUser._id}`
       );
       const data = await res.json();
 
@@ -58,9 +57,12 @@ const MyProperties = () => {
 
   const handleDeleteListing = async (listingId: string) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -125,6 +127,7 @@ const MyProperties = () => {
         ) : (
           <>
             {userListings.length > 0 ? (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               records.map((listing: any) => (
                 <div
                   key={listing._id}

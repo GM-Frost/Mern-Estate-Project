@@ -14,7 +14,6 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { FaUserTie } from "react-icons/fa";
 import { MdAddHomeWork } from "react-icons/md";
-import { hostURI } from "../host.js";
 
 const Navbar = () => {
   const location = useLocation();
@@ -51,7 +50,9 @@ const Navbar = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signoutUserStart());
-      const res = await fetch(`${hostURI}/api/auth/signout`);
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/auth/signout`
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(signoutUserFailure(data.message));

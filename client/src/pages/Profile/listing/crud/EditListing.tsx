@@ -201,16 +201,19 @@ const EditListing = () => {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,
-          type: listType,
-          agentProfile: currentUser?.avatar,
-        }),
-      });
+      const res = await fetch(
+        `https://nova-estate-server.onrender.com/api/listing/update/${params.listingId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            userRef: currentUser._id,
+            type: listType,
+            agentProfile: currentUser?.avatar,
+          }),
+        }
+      );
       const data = await res.json();
       setLoading(false);
       if (data.success === false) {
